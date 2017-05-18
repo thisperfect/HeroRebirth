@@ -1,0 +1,20 @@
+ManifestFileVersion: 0
+CRC: 2317782424
+AssetBundleManifest:
+  AssetBundleInfos:
+    Info_0:
+      Name: ui_dialog
+      Dependencies: {}
+    Info_1:
+      Name: tiled2unity
+      Dependencies: {}
+    Info_2:
+      Name: mapprefab
+      Dependencies: {}
+    Info_3:
+      Name: scene_game
+      Dependencies: {}
+    Info_4:
+      Name: scene_launcher
+      Dependencies:
+        Dependency_0: ui_dialog

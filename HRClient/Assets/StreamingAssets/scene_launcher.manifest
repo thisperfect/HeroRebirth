@@ -1,0 +1,15 @@
+ManifestFileVersion: 0
+CRC: 1871828653
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 143dfbedea953586506dfed4a3cd5243
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 31d6cfe0d16ae931b73c59d7e0c089c0
+HashAppended: 0
+ClassTypes: []
+Assets:
+- Assets/launcher.unity
+Dependencies:
+- D:/OfflineWar/OfflineWarClient/Assets/../StreamingAssetsUpload/ui_dialog
