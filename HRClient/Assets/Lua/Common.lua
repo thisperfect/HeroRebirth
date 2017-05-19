@@ -750,3 +750,41 @@ function cc.ptInLine( point, lineStartPoint, lineEndPoint, fTolerance )
 
 	return bResult;
 end
+
+-- 接收一个整数 seed 作为随机序列种子。
+function random_number.set_randomseed(seed)
+    previous = seed
+end
+-- 1> 无参调用， 产生 （0,1） 之间的浮点随机数
+-- 2> 只有参数 n， 产生 1-n 之间的整数
+-- 3> 有两个参数 n， m， 产生 n-m 之间的随机整数
+function random_number.get_random()
+    local r = random_number.get_random_lower_upper(0,1000) -- 取0到1000的随机数,可按照自己意愿随意取值
+    r =  r * 1.0
+    while true do
+        r =  r/10
+        if r < 1 then
+            break
+        end
+    end
+    return r
+end
+
+
+function random_number.get_random_upper(upper)
+    return random_number.get_random_lower_upper(1,upper)
+end
+
+
+function random_number.get_random_lower_upper(lower,upper)
+    if not upper or not lower or upper <= lower then
+        print( "get random number error" );
+    end
+    local r = a * previous + c
+    previous = r
+    if r < 0 then
+        r =  -r
+    end
+    r = lower + r%(upper-lower)
+    return r
+end

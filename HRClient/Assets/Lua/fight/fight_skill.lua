@@ -8,7 +8,7 @@ function FightSkill:Reset()
 
 end
 
--- 帧逻辑
+-- 回合逻辑
 function FightSkill:Logic( unit )
 	
 end

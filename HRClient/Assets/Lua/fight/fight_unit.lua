@@ -51,7 +51,7 @@ function FightUnit:Reset()
 	self.m_events			=	{};
 end
 
--- 帧逻辑
+-- 回合逻辑
 function FightUnit:Logic()
 	for k, v in pairs( self.m_buffs ) do
 		v:Logic( self );

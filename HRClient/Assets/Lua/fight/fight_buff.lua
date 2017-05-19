@@ -8,7 +8,7 @@ function FightBuff:Reset()
 	
 end
 
--- 帧逻辑
+-- 回合逻辑
 function FightBuff:Logic( unit )
 	
 end
