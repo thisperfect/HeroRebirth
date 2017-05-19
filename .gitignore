@@ -22,3 +22,6 @@
 /LKEngine/hiredis_win/msvs/vs-solutions/vs2013/tmp/win32_interop/x64/Debug/*.idb
 /LKEngine/hiredis_win/msvs/vs-solutions/vs2013/tmp/hiredis/x86/Debug/*.idb
 /LKEngine/hiredis_win/msvs/vs-solutions/vs2013/tmp/hiredis/x64/Debug/*.idb
+/HRClient/Log
+/HRClient/Temp
+/HRClient/Library
