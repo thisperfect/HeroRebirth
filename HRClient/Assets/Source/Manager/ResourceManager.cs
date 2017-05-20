@@ -430,8 +430,21 @@ public class ResourceManager : MonoBehaviour
     static public T LoadAny<T>( String reskeyname ) where T : UnityEngine.Object
     {
 #if UNITY_EDITOR
-        //if ( m_resmap_object == null )
-        //    Init();
+        if ( m_resmap_object == null )
+        {
+            // object资源映射表
+            m_resmap_object = new Dictionary<string, string[]>();
+            TableUtil objectTable = new TableUtil();
+            objectTable.OpenFromData( "resmap_object.txt" );
+            for ( int row = 0; row < objectTable.GetRecordsNum(); row++ )
+            {
+                string[] s = new string[3];
+                s[0] = objectTable.GetValue( row, 1 );
+                s[1] = objectTable.GetValue( row, 2 );
+                s[2] = objectTable.GetValue( row, 3 );
+                m_resmap_object.Add( objectTable.GetValue( row, 0 ), s );
+            }
+        }
 #endif
         if ( m_resmap_object == null || m_resmap_object.ContainsKey( reskeyname ) == false )
         {
