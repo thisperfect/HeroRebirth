@@ -786,7 +786,7 @@ public class Utils : MonoBehaviour
     public static void GotoMarket()
     {
         if ( Application.platform == RuntimePlatform.Android )
-            Application.OpenURL( "market://details?id=" + Application.bundleIdentifier );
+            Application.OpenURL( "market://details?id=" + Application.identifier );
         else if ( Application.platform == RuntimePlatform.IPhonePlayer )
             Application.OpenURL( "itms-apps://itunes.apple.com/app/id1131456470" );
     }

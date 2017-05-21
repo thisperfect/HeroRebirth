@@ -364,7 +364,7 @@ public class PackageManager : MonoBehaviour
             if ( appVersion < forceVersion )
             {
                 // 请前去下载最新版本游戏
-                m_uiForceUpdateBox.transform.FindChild( "Text" ).GetComponent<UIText>().text = Localization.text( 425 );
+                m_uiForceUpdateBox.transform.Find( "Text" ).GetComponent<UIText>().text = Localization.text( 425 );
                 m_uiForceUpdateBox.SetActive( true );
                 yield break;
             }
@@ -461,7 +461,7 @@ public class PackageManager : MonoBehaviour
             long nTotalSize = m_downloadsize_total;
             if ( nTotalSize < 1024 )
                 nTotalSize = 1024;
-            m_uiWarningBox.transform.FindChild( "Text" ).GetComponent<UIText>().text = string.Format( Localization.text( 407 ), nTotalSize / 1024.0 / 1024.0 );
+            m_uiWarningBox.transform.Find( "Text" ).GetComponent<UIText>().text = string.Format( Localization.text( 407 ), nTotalSize / 1024.0 / 1024.0 );
             m_uiWarningBox.SetActive( true );
         }
         else

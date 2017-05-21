@@ -88,7 +88,7 @@ public class UIClippingLoop : MonoBehaviour
         for (int i = 0; i < mScrollRect.content.childCount; i++)
         {
             RectTransform child = mScrollRect.content.GetChild(i).GetComponent<RectTransform>();
-            Transform obj = child.FindChild("Content");
+            Transform obj = child.Find("Content");
             if (obj != null)
             {
                 if (!IsInBound(child))

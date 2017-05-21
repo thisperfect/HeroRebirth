@@ -30,7 +30,7 @@ public class UIManager : MonoBehaviour
         }
         _UIRoot = uiRoot.transform;
 
-        Transform uicamera = _UIRoot.FindChild( "UICamera" );
+        Transform uicamera = _UIRoot.Find( "UICamera" );
         if ( uicamera == null )
         {
             Debug.LogError( "Can't Find UICamera!" );
@@ -40,7 +40,7 @@ public class UIManager : MonoBehaviour
         
 		for( int i = 0; i < _Layers.Length; i++ )
 		{
-			Transform layer = _UIRoot.FindChild( "Layer" + i );
+			Transform layer = _UIRoot.Find( "Layer" + i );
 			if( layer == null )
 			{
 				Debug.LogError( "Can't Find Layer" + i );
@@ -352,6 +352,6 @@ public class UIManager : MonoBehaviour
     // 开启全屏遮挡
     public void ShowMask( bool show )
     {
-        GameObject.Find( "UIRoot" ).transform.FindChild( "Mask" ).gameObject.SetActive( show );
+        GameObject.Find( "UIRoot" ).transform.Find( "Mask" ).gameObject.SetActive( show );
     }
 }

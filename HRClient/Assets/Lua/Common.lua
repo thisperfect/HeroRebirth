@@ -752,7 +752,7 @@ function cc.ptInLine( point, lineStartPoint, lineEndPoint, fTolerance )
 end
 
 -- 接收一个整数 seed 作为随机序列种子。
-function random_number.set_randomseed(seed)
+--[[function random_number.set_randomseed(seed)
     previous = seed
 end
 -- 1> 无参调用， 产生 （0,1） 之间的浮点随机数
@@ -788,3 +788,4 @@ function random_number.get_random_lower_upper(lower,upper)
     r = lower + r%(upper-lower)
     return r
 end
+--]]

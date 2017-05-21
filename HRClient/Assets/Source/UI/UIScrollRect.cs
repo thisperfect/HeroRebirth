@@ -55,7 +55,7 @@ public class UIScrollRect : ScrollRect
             m_LoadingItem.GetComponent<LayoutElement>().preferredHeight = 100;
             if (m_IsLoadingTop)
             {
-                RectTransform rectTrans = m_LoadingItem.transform.FindChild("Content").GetComponent<RectTransform>();
+                RectTransform rectTrans = m_LoadingItem.transform.Find("Content").GetComponent<RectTransform>();
                 rectTrans.localPosition = new Vector3(0, -0, 0);
                 
             }
@@ -141,7 +141,7 @@ public class UIScrollRect : ScrollRect
         m_LoadingItem.transform.localScale = Vector3.one;
         UIText text = m_LoadingItem.GetComponentInChildren<UIText>();
         //text.text = "Loading";
-        RectTransform rectTrans = m_LoadingItem.transform.FindChild("Content").GetComponent<RectTransform>();
+        RectTransform rectTrans = m_LoadingItem.transform.Find("Content").GetComponent<RectTransform>();
         if (isTop == true)
         {
             m_LoadingItem.GetComponent<LayoutElement>().preferredHeight = 100;

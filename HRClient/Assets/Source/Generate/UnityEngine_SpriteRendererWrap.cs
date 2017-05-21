@@ -11,6 +11,10 @@ public class UnityEngine_SpriteRendererWrap
 		L.RegFunction("__eq", op_Equality);
 		L.RegFunction("__tostring", ToLua.op_ToString);
 		L.RegVar("sprite", get_sprite, set_sprite);
+		L.RegVar("drawMode", get_drawMode, set_drawMode);
+		L.RegVar("size", get_size, set_size);
+		L.RegVar("adaptiveModeThreshold", get_adaptiveModeThreshold, set_adaptiveModeThreshold);
+		L.RegVar("tileMode", get_tileMode, set_tileMode);
 		L.RegVar("color", get_color, set_color);
 		L.RegVar("flipX", get_flipX, set_flipX);
 		L.RegVar("flipY", get_flipY, set_flipY);
@@ -75,6 +79,82 @@ public class UnityEngine_SpriteRendererWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index sprite on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_drawMode(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.SpriteRenderer obj = (UnityEngine.SpriteRenderer)o;
+			UnityEngine.SpriteDrawMode ret = obj.drawMode;
+			ToLua.Push(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index drawMode on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_size(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.SpriteRenderer obj = (UnityEngine.SpriteRenderer)o;
+			UnityEngine.Vector2 ret = obj.size;
+			ToLua.Push(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index size on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_adaptiveModeThreshold(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.SpriteRenderer obj = (UnityEngine.SpriteRenderer)o;
+			float ret = obj.adaptiveModeThreshold;
+			LuaDLL.lua_pushnumber(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index adaptiveModeThreshold on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_tileMode(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.SpriteRenderer obj = (UnityEngine.SpriteRenderer)o;
+			UnityEngine.SpriteTileMode ret = obj.tileMode;
+			ToLua.Push(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index tileMode on a nil value" : e.Message);
 		}
 	}
 
@@ -151,6 +231,82 @@ public class UnityEngine_SpriteRendererWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index sprite on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_drawMode(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.SpriteRenderer obj = (UnityEngine.SpriteRenderer)o;
+			UnityEngine.SpriteDrawMode arg0 = (UnityEngine.SpriteDrawMode)ToLua.CheckObject(L, 2, typeof(UnityEngine.SpriteDrawMode));
+			obj.drawMode = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index drawMode on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_size(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.SpriteRenderer obj = (UnityEngine.SpriteRenderer)o;
+			UnityEngine.Vector2 arg0 = ToLua.ToVector2(L, 2);
+			obj.size = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index size on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_adaptiveModeThreshold(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.SpriteRenderer obj = (UnityEngine.SpriteRenderer)o;
+			float arg0 = (float)LuaDLL.luaL_checknumber(L, 2);
+			obj.adaptiveModeThreshold = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index adaptiveModeThreshold on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_tileMode(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.SpriteRenderer obj = (UnityEngine.SpriteRenderer)o;
+			UnityEngine.SpriteTileMode arg0 = (UnityEngine.SpriteTileMode)ToLua.CheckObject(L, 2, typeof(UnityEngine.SpriteTileMode));
+			obj.tileMode = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index tileMode on a nil value" : e.Message);
 		}
 	}
 

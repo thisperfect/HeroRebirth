@@ -37,7 +37,7 @@ public class WorldMap : MonoBehaviour
         // 菱形顶点
         _Limit = new Vector4( -m_nMaxWidth * MAP_TILEWIDTH / 200f + 0.5f, m_nMaxWidth * MAP_TILEWIDTH / 200f - 0.5f,
             -m_nMaxHeight * MAP_TILEHEIGHT / 200f + 0.5f, m_nMaxHeight * MAP_TILEHEIGHT / 200f - 0.5f );
-        m_MapUnitRoot = this.transform.FindChild("MapUnitRoot");
+        m_MapUnitRoot = this.transform.Find("MapUnitRoot");
 	}
 	
 	// Update is called once per frame

@@ -11,32 +11,11 @@ function GameManager.OnStart()
 	
 	
 	
-	--[[coroutine.start( function()
-		local request = WWW( "http://www.baidu.com" );
-		coroutine.www( request )
-		local s = tolua.tolstring( request.bytes )
-		print(s:sub(1, 128));
-	end)--]]
-	print("www end");
-	local recvValue = {
-		m_map_width = 960,
-		m_map_height = 960,
-		m_area_width = 8,
-		m_area_height = 8,
-		m_map_area_xnum = 0,
-		m_map_area_ynum = 0,
-		m_my_city_posx = 480,
-		m_my_city_posy = 480,
-		m_my_city_unit_index = -1,
-		m_citystate = 0,
-		m_target_posx = -1,
-		m_target_posy = -1
-	}
-	WorldMap.Init( recvValue );
 	
-	LoadPrefabAsyn( "WorldMap", function( obj )
+	
+	--[[LoadPrefabAsyn( "WorldMap", function( obj )
 		local _worldMapScence = GameObject.Instantiate( obj );
-	end );
+	end );--]]
 	
 	LogUtil.GetInstance():WriteGame("GameManager.OnStart();end");
 end
