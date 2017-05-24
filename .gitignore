@@ -25,3 +25,9 @@
 /HRClient/Log
 /HRClient/Temp
 /HRClient/Library
+/HRClient/StreamingAssetsUpload
+/HRClient/Assets/StreamingAssets
+/HRServer/exec/GameServerD.pdb
+/HRServer/exec/GameServerD.exe
+/HRServer/GameAllServer.opensdf
+/Public/IntDir

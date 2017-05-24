@@ -17,20 +17,22 @@ class serverinfo {
 		$list = array();
 		$db = new dbstuff;
 		$db->connect( DB_WEB_HOST, DB_WEB_USER, DB_WEB_PWD, DB_WEB_DBNAME, 0 );
-		$sql="select id, ip, port, new, close, king_sevname, king_name, king_country from `gate_list` order by id asc;";
+		$sql="select id, name, ip, port, new, close, king_sevname, king_name, king_country from `gate_list` order by id asc;";
 		$query = $db->query($sql);
 		while ( $sth = $db->fetch_row($query) )
 		{
 			$sid = $sth[0];
-			$host = $sth[1];
-			$port = $sth[2];
-			$new = $sth[3];
-			$close = $sth[4];
-			$king_sevname = $sth[5];
-			$king_name = $sth[6];
-			$king_country = $sth[7];
+			$name = $sth[1];
+			$host = $sth[2];
+			$port = $sth[3];
+			$new = $sth[4];
+			$close = $sth[5];
+			$king_sevname = $sth[6];
+			$king_name = $sth[7];
+			$king_country = $sth[8];
 			
 			$list[$sid]["sid"] = $sid;
+			$list[$sid]["n"] = $name;
 			$list[$sid]["h"] = $host;
 			$list[$sid]["p"] = $port;
 			$list[$sid]["new"] = $new;

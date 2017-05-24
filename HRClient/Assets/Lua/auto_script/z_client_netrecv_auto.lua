@@ -75,46 +75,6 @@ function netrecv_iteminfo_C( buffer )
 	proc_iteminfo_C( recvValue );
 end
 
-function netrecv_addmapunit_C( buffer )
-	local recvValue = struct_NetS_AddMapUnit_recv( buffer );
-	proc_addmapunit_C( recvValue );
-end
-
-function netrecv_delmapunit_C( buffer )
-	local recvValue = struct_NetS_DelMapUnit_recv( buffer );
-	proc_delmapunit_C( recvValue );
-end
-
-function netrecv_updatemapunit_C( buffer )
-	local recvValue = struct_NetS_UpdateMapUnit_recv( buffer );
-	proc_updatemapunit_C( recvValue );
-end
-
-function netrecv_mapunitsingle_C( buffer )
-	local recvValue = struct_NetS_AddMapUnit_recv( buffer );
-	proc_mapunitsingle_C( recvValue );
-end
-
-function netrecv_worldmapinfo_C( buffer )
-	local recvValue = struct_NetS_WorldMapInfo_recv( buffer );
-	proc_worldmapinfo_C( recvValue );
-end
-
-function netrecv_mapunitcorrdinate_C( buffer )
-	local recvValue = struct_NetS_MapUnitCorrdinate_recv( buffer );
-	proc_mapunitcorrdinate_C( recvValue );
-end
-
-function netrecv_addmarchroute_C( buffer )
-	local recvValue = struct_NetS_AddMarchRoute_recv( buffer );
-	proc_addmarchroute_C( recvValue );
-end
-
-function netrecv_delmarchroute_C( buffer )
-	local recvValue = struct_NetS_DelMarchRoute_recv( buffer );
-	proc_delmarchroute_C( recvValue );
-end
-
 function netrecv_awardinfolist_C( buffer )
 	local recvValue = struct_NetS_AwardInfoList_recv( buffer );
 	proc_awardinfolist_C( recvValue );
@@ -146,14 +106,6 @@ Proc_Command = {
 	[CMDS_GETITEM]=netrecv_getitem_C;
 	[CMDS_ITEMLIST]=netrecv_itemlist_C;
 	[CMDS_ITEMINFO]=netrecv_iteminfo_C;
-	[CMDS_ADDMAPUNIT]=netrecv_addmapunit_C;
-	[CMDS_DELMAPUNIT]=netrecv_delmapunit_C;
-	[CMDS_UPDATEMAPUNIT]=netrecv_updatemapunit_C;
-	[CMDS_MAPUNITSINGLE]=netrecv_mapunitsingle_C;
-	[CMDS_WORLDMAPINFO]=netrecv_worldmapinfo_C;
-	[CMDS_MAPUNITCORRDINATE]=netrecv_mapunitcorrdinate_C;
-	[CMDS_ADDMARCHROUTE]=netrecv_addmarchroute_C;
-	[CMDS_DELMARCHROUTE]=netrecv_delmarchroute_C;
 	[CMDS_AWARDINFOLIST]=netrecv_awardinfolist_C;
 	[CMDS_EXPERIENCE]=netrecv_experience_C;
 	[CMDS_BODY]=netrecv_body_C;
