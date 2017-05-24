@@ -8,7 +8,6 @@
 #include "gmcmd.h"
 #include "system.h"
 #include "script.h"
-#include "map.h"
 #include "item.h"
 #include "award.h"
 #include "global_netprocess.h"

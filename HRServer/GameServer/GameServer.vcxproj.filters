@@ -93,12 +93,6 @@
     <ClCompile Include="src\item_send.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="src\area.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="src\mapunit.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="src\timecalc.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
@@ -109,9 +103,6 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="src\global_netprocess.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="src\map.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="src\activity.cpp">
@@ -127,12 +118,6 @@
       <Filter>源文件\Auto</Filter>
     </ClCompile>
     <ClCompile Include="AutoS\src\auto_actor_item.cpp">
-      <Filter>源文件\Auto</Filter>
-    </ClCompile>
-    <ClCompile Include="AutoS\src\auto_army.cpp">
-      <Filter>源文件\Auto</Filter>
-    </ClCompile>
-    <ClCompile Include="AutoS\src\auto_city.cpp">
       <Filter>源文件\Auto</Filter>
     </ClCompile>
     <ClCompile Include="AutoS\src\global_netrecv_auto.cpp">
@@ -183,16 +168,7 @@
     <ClCompile Include="src\dbredis.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="AutoS\src\auto_hero.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="src\city.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="src\army.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="AutoS\src\auto_tower.cpp">
+    <ClCompile Include="AutoS\src\auto_actor_hero.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
@@ -251,12 +227,6 @@
     <ClInclude Include="include\item.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="include\area.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="include\mapunit.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="include\timecalc.h">
       <Filter>头文件</Filter>
     </ClInclude>
@@ -267,9 +237,6 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="include\global_netprocess.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="include\map.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="include\activity.h">
@@ -285,12 +252,6 @@
       <Filter>头文件\Auto</Filter>
     </ClInclude>
     <ClInclude Include="AutoS\include\auto_actor_item.h">
-      <Filter>头文件\Auto</Filter>
-    </ClInclude>
-    <ClInclude Include="AutoS\include\auto_army.h">
-      <Filter>头文件\Auto</Filter>
-    </ClInclude>
-    <ClInclude Include="AutoS\include\auto_city.h">
       <Filter>头文件\Auto</Filter>
     </ClInclude>
     <ClInclude Include="AutoS\include\global_netrecv_auto.h">
@@ -344,16 +305,7 @@
     <ClInclude Include="include\dbredis.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="AutoS\include\auto_hero.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="include\city.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="include\army.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="AutoS\include\auto_tower.h">
+    <ClInclude Include="AutoS\include\auto_actor_hero.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

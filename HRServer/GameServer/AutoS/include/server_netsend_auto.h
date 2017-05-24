@@ -17,14 +17,6 @@ int netsend_lostitem_S( int actor_index, char send_type, SLK_NetS_LostItem *pVal
 int netsend_getitem_S( int actor_index, char send_type, SLK_NetS_GetItem *pValue );
 int netsend_itemlist_S( int actor_index, char send_type, SLK_NetS_ItemList *pValue );
 int netsend_iteminfo_S( int actor_index, char send_type, SLK_NetS_ItemInfo *pValue );
-int netsend_addmapunit_S( char *databuf, int size, SLK_NetS_AddMapUnit *pValue );
-int netsend_delmapunit_S( char *databuf, int size, SLK_NetS_DelMapUnit *pValue );
-int netsend_updatemapunit_S( char *databuf, int size, SLK_NetS_UpdateMapUnit *pValue );
-int netsend_mapunitsingle_S( int actor_index, char send_type, SLK_NetS_AddMapUnit *pValue );
-int netsend_worldmapinfo_S( int actor_index, char send_type, SLK_NetS_WorldMapInfo *pValue );
-int netsend_mapunitcorrdinate_S( char *databuf, int size, SLK_NetS_MapUnitCorrdinate *pValue );
-int netsend_addmarchroute_S( char *databuf, int size, SLK_NetS_AddMarchRoute *pValue );
-int netsend_delmarchroute_S( char *databuf, int size, SLK_NetS_DelMarchRoute *pValue );
 int netsend_awardinfolist_S( int actor_index, char send_type, SLK_NetS_AwardInfoList *pValue );
 int netsend_experience_S( int actor_index, char send_type, SLK_NetS_Experience *pValue );
 int netsend_body_S( int actor_index, char send_type, SLK_NetS_Body *pValue );

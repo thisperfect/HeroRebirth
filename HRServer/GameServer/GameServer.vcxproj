@@ -93,16 +93,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AutoS\src\auto_actor.cpp" />
+    <ClCompile Include="AutoS\src\auto_actor_hero.cpp" />
     <ClCompile Include="AutoS\src\auto_actor_item.cpp" />
-    <ClCompile Include="AutoS\src\auto_army.cpp" />
-    <ClCompile Include="AutoS\src\auto_city.cpp" />
     <ClCompile Include="AutoS\src\auto_data_item.cpp" />
     <ClCompile Include="AutoS\src\auto_data_paycountry.cpp" />
     <ClCompile Include="AutoS\src\auto_data_paygoods.cpp" />
     <ClCompile Include="AutoS\src\auto_data_platinfo.cpp" />
     <ClCompile Include="AutoS\src\auto_data_upgrade.cpp" />
-    <ClCompile Include="AutoS\src\auto_hero.cpp" />
-    <ClCompile Include="AutoS\src\auto_tower.cpp" />
     <ClCompile Include="AutoS\src\global_netrecv_auto.cpp" />
     <ClCompile Include="AutoS\src\global_netsend_auto.cpp" />
     <ClCompile Include="AutoS\src\global_process_auto.cpp" />
@@ -118,14 +115,11 @@
     <ClCompile Include="src\actor.cpp" />
     <ClCompile Include="src\actor_func.cpp" />
     <ClCompile Include="src\actor_gmcmd.cpp" />
-    <ClCompile Include="src\army.cpp" />
-    <ClCompile Include="src\city.cpp" />
     <ClCompile Include="src\dbredis.cpp" />
     <ClCompile Include="src\global_cmdqueue.cpp" />
     <ClCompile Include="src\mem_dump.cpp" />
     <ClCompile Include="src\actor_send.cpp" />
     <ClCompile Include="src\actor_notify.cpp" />
-    <ClCompile Include="src\area.cpp" />
     <ClCompile Include="src\award.cpp" />
     <ClCompile Include="src\client.cpp" />
     <ClCompile Include="src\db.cpp" />
@@ -140,7 +134,6 @@
     <ClCompile Include="src\login_user.cpp" />
     <ClCompile Include="src\login_net.cpp" />
     <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\mapunit.cpp" />
     <ClCompile Include="src\system.cpp" />
     <ClCompile Include="src\system_askinfo.cpp" />
     <ClCompile Include="src\script.cpp" />
@@ -148,21 +141,17 @@
     <ClCompile Include="src\script_reg_auto.cpp" />
     <ClCompile Include="src\timecalc.cpp" />
     <ClCompile Include="src\timegmcmd.cpp" />
-    <ClCompile Include="src\map.cpp" />
     <ClCompile Include="src\wqueue.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AutoS\include\auto_actor.h" />
+    <ClInclude Include="AutoS\include\auto_actor_hero.h" />
     <ClInclude Include="AutoS\include\auto_actor_item.h" />
-    <ClInclude Include="AutoS\include\auto_army.h" />
-    <ClInclude Include="AutoS\include\auto_city.h" />
     <ClInclude Include="AutoS\include\auto_data_item.h" />
     <ClInclude Include="AutoS\include\auto_data_paycountry.h" />
     <ClInclude Include="AutoS\include\auto_data_paygoods.h" />
     <ClInclude Include="AutoS\include\auto_data_platinfo.h" />
     <ClInclude Include="AutoS\include\auto_data_upgrade.h" />
-    <ClInclude Include="AutoS\include\auto_hero.h" />
-    <ClInclude Include="AutoS\include\auto_tower.h" />
     <ClInclude Include="AutoS\include\global_netrecv_auto.h" />
     <ClInclude Include="AutoS\include\global_netsend_auto.h" />
     <ClInclude Include="AutoS\include\global_process_auto.h" />
@@ -177,14 +166,11 @@
     <ClInclude Include="include\account.h" />
     <ClInclude Include="include\activity.h" />
     <ClInclude Include="include\actor.h" />
-    <ClInclude Include="include\army.h" />
-    <ClInclude Include="include\city.h" />
     <ClInclude Include="include\dbredis.h" />
     <ClInclude Include="include\global_cmdqueue.h" />
     <ClInclude Include="include\mem_dump.h" />
     <ClInclude Include="include\actor_send.h" />
     <ClInclude Include="include\actor_notify.h" />
-    <ClInclude Include="include\area.h" />
     <ClInclude Include="include\award.h" />
     <ClInclude Include="include\client.h" />
     <ClInclude Include="include\db.h" />
@@ -195,7 +181,6 @@
     <ClInclude Include="include\global.h" />
     <ClInclude Include="include\gmcmd.h" />
     <ClInclude Include="include\item.h" />
-    <ClInclude Include="include\mapunit.h" />
     <ClInclude Include="include\system.h" />
     <ClInclude Include="include\system_askinfo.h" />
     <ClInclude Include="include\login.h" />
@@ -203,7 +188,6 @@
     <ClInclude Include="include\script_auto.h" />
     <ClInclude Include="include\timecalc.h" />
     <ClInclude Include="include\timegmcmd.h" />
-    <ClInclude Include="include\map.h" />
     <ClInclude Include="include\wqueue.h" />
   </ItemGroup>
   <ItemGroup>

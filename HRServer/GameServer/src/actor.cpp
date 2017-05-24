@@ -20,15 +20,12 @@
 #include "client.h"
 #include "account.h"
 #include "item.h"
-#include "mapunit.h"
 #include "system.h"
 #include "global.h"
 #include "actor_notify.h"
-#include "map.h"
 #include "award.h"
 #include "script_auto.h"
 #include "activity.h"
-#include "city.h"
 
 extern Global global;
 extern SConfig g_Config;
@@ -36,9 +33,6 @@ extern int g_maxactornum;
 extern int g_save_wait;
 extern MYSQL *myGame;
 extern MYSQL *myData;
-
-extern City *g_city;
-extern int g_city_maxcount;
 
 Actor *g_actors = NULL;
 int g_actornum = 0;
@@ -140,7 +134,7 @@ void actors_on_core()
 		}
 	}
 	// 所有城池保存
-	city_save( fp );
+	//city_save( fp );
 
 	if ( fp )
 	{
@@ -250,14 +244,8 @@ int actor_remove( int actor_index )
 	// 保存角色属性(慢)
 	actor_save( actor_index, 1, NULL );
 
-	// 城池关联索引清除
-	if ( g_actors[actor_index].city_index >= 0 && g_actors[actor_index].city_index < g_city_maxcount )
-		g_city[g_actors[actor_index].city_index].actor_index = -1;
-
 	// 清理actor_index位置的数据
 	memset( &(g_actors[actor_index]), 0, sizeof(Actor) );
-	g_actors[actor_index].city_index = -1;
-	g_actors[actor_index].view_areaindex = -1;
 
 	// 总角色数自减
 	g_actornum--;
@@ -531,12 +519,8 @@ int actor_change_index( int old_index, int new_index )
 	memcpy( &g_actors[new_index], &g_actors[old_index], sizeof(Actor) );
 	g_actors[new_index].isexit = 0;
 
-	// 城池索引关联
-	//g_city[g_actors[old_index].city_index].actor_index = new_index;
-
 	// 清空旧角色
 	memset( &(g_actors[old_index]), 0, sizeof(Actor) );
-	g_actors[old_index].city_index = -1;
 	g_actors[old_index].view_areaindex = -1;
 	return 0;
 }
@@ -666,50 +650,6 @@ int actor_load( int actor_index, int actorid )
 	g_actors[actor_index].admin = client_getusertype( actor_index );
 	memcpy( g_actors[actor_index].lastip, client_getip( actor_index ), 15 );
 
-	/* 找到自己的城池 */
-	g_actors[actor_index].city_index = city_getindex_withactorid( actorid );
-	/* 如果没找到,并且等级为0级，是第一次进入游戏 */
-	char newfail = 0;
-	if ( g_actors[actor_index].city_index < 0 )
-	{
-		if ( g_actors[actor_index].level == 0 )
-		{
-			newfail = actor_new( actor_index );
-		}
-		else
-		{
-			// 他的城没了，什么情况
-			newfail = actor_new( actor_index );
-			write_gamelog( "city_index < 0 actorid=%d", actorid );
-		}
-	}
-
-	// 城已经满了，或者地图没有地方了
-	if ( newfail == 1 )
-	{
-		int value[1] = { 0 };
-		value[0] = 8;
-		//actor_notify_value( actor_index, NOTIFY_CITY, 1, value, NULL );
-		return -1;
-	}
-
-	/* 关联索引 */
-	g_city[g_actors[actor_index].city_index].actor_index = actor_index;
-	g_city[g_actors[actor_index].city_index].lastlogin = (int)time( NULL );
-	g_city[g_actors[actor_index].city_index].language = client_getlanguage( actor_index );
-	g_city[g_actors[actor_index].city_index].platid = client_getplatid( actor_index );
-	g_city[g_actors[actor_index].city_index].os = (char)client_getos( actor_index );
-	g_city[g_actors[actor_index].city_index].type = CityLairdType_Player;
-
-	strncpy( g_city[g_actors[actor_index].city_index].name, g_actors[actor_index].name, NAME_SIZE );
-	g_city[g_actors[actor_index].city_index].name[NAME_SIZE - 1] = 0;
-
-	strncpy( g_city[g_actors[actor_index].city_index].country, client_getcountry( actor_index ), 2 );
-	g_city[g_actors[actor_index].city_index].country[2] = 0;
-
-	strncpy( g_city[g_actors[actor_index].city_index].ipcountry, client_getipcountry( actor_index ), 2 );
-	g_city[g_actors[actor_index].city_index].ipcountry[2] = 0;
-
 	/* 初始化一些不需要存档的数据 */
 	g_actors[actor_index].view_areaindex = -1;
 
@@ -734,43 +674,6 @@ int actor_new( int actor_index )
 	// 初始信息
 	g_actors[actor_index].level = 1;
 	g_actors[actor_index].token = 0;
-
-	// 给这个玩家创建一个城池
-	City city = { 0 };
-	city.type = CityLairdType_Player;
-	city.actorid = g_actors[actor_index].actorid;
-	city.createtime = (int)time( NULL );
-	city.lastlogin = (int)time( NULL );
-	city.language = client_getlanguage( actor_index );
-	city.platid = client_getplatid( actor_index );
-	city.os = (char)client_getos( actor_index );
-
-	strncpy( city.name, g_actors[actor_index].name, sizeof(char)*NAME_SIZE );
-	city.name[NAME_SIZE - 1] = 0;
-
-	strncpy( city.country, client_getcountry( actor_index ), 2 );
-	city.country[2] = 0;
-
-	strncpy( city.ipcountry, client_getipcountry( actor_index ), 2 );
-	city.ipcountry[2] = 0;
-
-	if ( map_getrandcitypos( &city.posx, &city.posy ) < 0 )
-	{ // 没有可用位置了
-		return -1;
-	}
-	g_actors[actor_index].city_index = city_new( &city );
-	if ( g_actors[actor_index].city_index < 0 )
-	{
-		// 没有可用索引了，那么清除一个机器人
-		//city_delrobot();
-		g_actors[actor_index].city_index = city_new( &city );
-		if ( g_actors[actor_index].city_index < 0 )
-			return -1;
-	}
-
-	g_city[g_actors[actor_index].city_index].unit_index = mapunit_add( MAPUNIT_TYPE_CITY, g_actors[actor_index].city_index );
-	map_addobject( MAPUNIT_TYPE_CITY, city.posx, city.posy, MAPUNIT_TYPE_CITY );
-
 	//item_getitem( actor_index, 2041, 1, -1, PATH_SYSTEM );
 	//item_getitem( actor_index, 2071, 1, -1, PATH_SYSTEM );
 	//item_getitem( actor_index, 745, 1, -1, PATH_SYSTEM );

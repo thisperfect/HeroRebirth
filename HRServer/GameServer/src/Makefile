@@ -1,24 +1,5 @@
 CC=g++
 SRC = \
-../AutoS/src/auto_actor.cpp \
-../AutoS/src/auto_actor_item.cpp \
-../AutoS/src/auto_army.cpp \
-../AutoS/src/auto_city.cpp \
-../AutoS/src/auto_data_item.cpp \
-../AutoS/src/auto_data_paycountry.cpp \
-../AutoS/src/auto_data_paygoods.cpp \
-../AutoS/src/auto_data_platinfo.cpp \
-../AutoS/src/auto_data_upgrade.cpp \
-../AutoS/src/global_netrecv_auto.cpp \
-../AutoS/src/global_netsend_auto.cpp \
-../AutoS/src/global_process_auto.cpp \
-../AutoS/src/global_structrecv_auto.cpp \
-../AutoS/src/global_structsend_auto.cpp \
-../AutoS/src/server_netrecv_auto.cpp \
-../AutoS/src/server_netsend_auto.cpp \
-../AutoS/src/server_process_auto.cpp \
-../AutoS/src/server_structrecv_auto.cpp \
-../AutoS/src/server_structsend_auto.cpp \
 account.cpp \
 activity.cpp \
 actor.cpp \
@@ -27,7 +8,9 @@ actor_gmcmd.cpp \
 actor_notify.cpp \
 actor_send.cpp \
 area.cpp \
+army.cpp \
 award.cpp \
+city.cpp \
 client.cpp \
 db.cpp \
 dbredis.cpp \
@@ -60,50 +43,12 @@ INCLUDE = -I ../include  -I ../AutoS/include -I  ../../LKUtils/include  -I ../..
 LIBRARY = -L ../../../public/lib -L /usr/local/mysql/lib/mysql
 OBJ = $(SRC:.cpp=.o)
 LIB = -llua -llknet -llkutils -lmysqlclient -lhiredis -lpthread -ldl -lm
-EXE = ../../../exec/undeadServer
+EXE = ../../../exec/hrserver
 CFLAGS = -g
 $(EXE) : $(OBJ)
 	$(CC)  $(CFLAGS) $(INCLUDE) $(LIBRARY) -o $(EXE) $(CF) $(OBJ) $(LIB)
 
 
-../AutoS/src/auto_actor.o: ../AutoS/src/auto_actor.cpp 
-	$(CC) $(CFLAGS) -c $(INCLUDE) $< -o $@
-../AutoS/src/auto_actor_item.o: ../AutoS/src/auto_actor_item.cpp 
-	$(CC) $(CFLAGS) -c $(INCLUDE) $< -o $@
-../AutoS/src/auto_army.o: ../AutoS/src/auto_army.cpp 
-	$(CC) $(CFLAGS) -c $(INCLUDE) $< -o $@
-../AutoS/src/auto_city.o: ../AutoS/src/auto_city.cpp 
-	$(CC) $(CFLAGS) -c $(INCLUDE) $< -o $@
-../AutoS/src/auto_data_item.o: ../AutoS/src/auto_data_item.cpp 
-	$(CC) $(CFLAGS) -c $(INCLUDE) $< -o $@
-../AutoS/src/auto_data_paycountry.o: ../AutoS/src/auto_data_paycountry.cpp 
-	$(CC) $(CFLAGS) -c $(INCLUDE) $< -o $@
-../AutoS/src/auto_data_paygoods.o: ../AutoS/src/auto_data_paygoods.cpp 
-	$(CC) $(CFLAGS) -c $(INCLUDE) $< -o $@
-../AutoS/src/auto_data_platinfo.o: ../AutoS/src/auto_data_platinfo.cpp 
-	$(CC) $(CFLAGS) -c $(INCLUDE) $< -o $@
-../AutoS/src/auto_data_upgrade.o: ../AutoS/src/auto_data_upgrade.cpp 
-	$(CC) $(CFLAGS) -c $(INCLUDE) $< -o $@
-../AutoS/src/global_netrecv_auto.o: ../AutoS/src/global_netrecv_auto.cpp 
-	$(CC) $(CFLAGS) -c $(INCLUDE) $< -o $@
-../AutoS/src/global_netsend_auto.o: ../AutoS/src/global_netsend_auto.cpp 
-	$(CC) $(CFLAGS) -c $(INCLUDE) $< -o $@
-../AutoS/src/global_process_auto.o: ../AutoS/src/global_process_auto.cpp 
-	$(CC) $(CFLAGS) -c $(INCLUDE) $< -o $@
-../AutoS/src/global_structrecv_auto.o: ../AutoS/src/global_structrecv_auto.cpp 
-	$(CC) $(CFLAGS) -c $(INCLUDE) $< -o $@
-../AutoS/src/global_structsend_auto.o: ../AutoS/src/global_structsend_auto.cpp 
-	$(CC) $(CFLAGS) -c $(INCLUDE) $< -o $@
-../AutoS/src/server_netrecv_auto.o: ../AutoS/src/server_netrecv_auto.cpp 
-	$(CC) $(CFLAGS) -c $(INCLUDE) $< -o $@
-../AutoS/src/server_netsend_auto.o: ../AutoS/src/server_netsend_auto.cpp 
-	$(CC) $(CFLAGS) -c $(INCLUDE) $< -o $@
-../AutoS/src/server_process_auto.o: ../AutoS/src/server_process_auto.cpp 
-	$(CC) $(CFLAGS) -c $(INCLUDE) $< -o $@
-../AutoS/src/server_structrecv_auto.o: ../AutoS/src/server_structrecv_auto.cpp 
-	$(CC) $(CFLAGS) -c $(INCLUDE) $< -o $@
-../AutoS/src/server_structsend_auto.o: ../AutoS/src/server_structsend_auto.cpp 
-	$(CC) $(CFLAGS) -c $(INCLUDE) $< -o $@
 account.o: account.cpp 
 	$(CC) $(CFLAGS) -c $(INCLUDE) $<
 activity.o: activity.cpp 
@@ -120,7 +65,11 @@ actor_send.o: actor_send.cpp
 	$(CC) $(CFLAGS) -c $(INCLUDE) $<
 area.o: area.cpp 
 	$(CC) $(CFLAGS) -c $(INCLUDE) $<
+army.o: army.cpp 
+	$(CC) $(CFLAGS) -c $(INCLUDE) $<
 award.o: award.cpp 
+	$(CC) $(CFLAGS) -c $(INCLUDE) $<
+city.o: city.cpp 
 	$(CC) $(CFLAGS) -c $(INCLUDE) $<
 client.o: client.cpp 
 	$(CC) $(CFLAGS) -c $(INCLUDE) $<

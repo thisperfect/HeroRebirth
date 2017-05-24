@@ -26,8 +26,6 @@
 #include "system.h"
 #include "item.h"
 #include "global.h"
-#include "map.h"
-#include "mapunit.h"
 #include "gmcmd.h"
 #include "award.h"
 #include "global_netprocess.h"
@@ -35,7 +33,6 @@
 #include "activity.h"
 #include "script_auto.h"
 #include "global_cmdqueue.h"
-#include "city.h"
 
 #ifndef WIN32 // 这些头文件用来看ulimit设置的
 #include <stdlib.h>
@@ -310,40 +307,10 @@ int process_init( int max_connection )
 	time_gmcmd_init();
 	db_closedata();
 	sc_Script_Init();
-	//pushwork_init();
 	LOGI( "%s-%d", __FUNCTION__, __LINE__ );
 	serv_setstat( 48 );
 
-	// 世界地图初始化（严格顺序要求，不允许改变）
-	if ( map_init() < 0 )
-	{
-		printf_msg( "WorldMap Module Error!" );
-		return -1;
-	}
-	LOGI( "%s-%d", __FUNCTION__, __LINE__ );
-	serv_setstat( 101 );
-
-	// 加载所有地图显示单元结构，在城池和出征军队之前初始化（严格顺序要求，不允许改变）
-	if ( mapunit_init() < 0 )
-	{
-		printf_msg( "MapUnit Module Error!" );
-		return -1;
-	}
-	LOGI( "%s-%d", __FUNCTION__, __LINE__ );
-	serv_setstat( 102 );
-
-	// 加载所有城市（严格顺序要求，不允许改变）
-	if ( city_load() < 0 )
-	{
-		printf_msg( "CityLoad Module Error!" );
-		return -1;
-	}
-	LOGI( "%s-%d", __FUNCTION__, __LINE__ );
-	serv_setstat( 107 );
-
-	// 刷地图
-	sc_OnWorldMapBrush();
-	serv_setstat( 117 );
+	// 读取存档
 	
 	// 数据库多线程启动
 	if ( dbwork_start() >= 0 )
@@ -384,9 +351,6 @@ void process_close()
 	// 开启一个新事务
 	mysql_query( myGame, "START TRANSACTION" );
 
-	// 所有城池保存
-	city_save( NULL );
-	printf_msg( "\n" );
 
 	//// 所有联盟保存
 	//club_save( NULL );
@@ -400,7 +364,6 @@ void process_close()
 	db_closegame();
 	dbredis_close();
 	lua_exit();
-	/*pushwork_destory();*/
 }
 
 // 返回-1,表示可以直接清除这个client
@@ -602,7 +565,6 @@ int process_logic()
 	if ( g_speed % 5 == 0 )
 	{
 		actors_logic(); // 执行所有的角色logic
-		map_logic(); // 世界地图的逻辑,主要处理区域
 	}
 
 	//	1秒钟一次逻辑

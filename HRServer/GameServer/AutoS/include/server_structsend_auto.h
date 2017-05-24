@@ -164,87 +164,6 @@ struct _slk_NetS_ItemInfo {
 };
 typedef struct _slk_NetS_ItemInfo SLK_NetS_ItemInfo;	//道具信息
 
-struct _slk_WalkPath {
-	short m_pathx[100];	//路径点结构
-	short m_pathy[100];	//路径点结构
-	short m_len;	//路径点结构
-};
-typedef struct _slk_WalkPath SLK_WalkPath;	//移动路径
-
-struct _slk_NetS_AddMapUnit {
-	char m_type;	//地图单元-类型
-	char m_state;	//地图单元-状态
-	short m_posx;	//地图单元-当前坐标
-	int m_unit_index;	//地图单元-序号
-	short m_posy;	//地图单元-当前坐标
-	char m_namelen;	//地图单元-名称长度
-	char m_name[32];	//地图单元-名称
-	char m_char_value_count;	//地图单元-通用字段长度
-	char m_char_value[16];	//地图单元-通用字段
-	char m_short_value_count;	//地图单元-通用字段长度
-	short m_short_value[8];	//地图单元-通用字段
-	char m_int_value_count;	//地图单元-通用字段长度
-	int m_int_value[8];	//地图单元-通用字段
-	char m_prefixlen;	//地图单元-称号长度
-	char m_prefix[22];	//地图单元-称号
-};
-typedef struct _slk_NetS_AddMapUnit SLK_NetS_AddMapUnit;	//显示单元进入地图
-
-struct _slk_NetS_DelMapUnit {
-	int m_unit_index;	//地图单元-序号
-};
-typedef struct _slk_NetS_DelMapUnit SLK_NetS_DelMapUnit;	//显示单元离开地图
-
-struct _slk_NetS_WorldMapInfo {
-	short m_map_width;	//世界地图大小（格子数）
-	short m_map_height;	//世界地图大小（格子数）
-	char m_area_width;	//区域大小（一个区域几个地图格子）
-	char m_area_height;	//区域大小（一个区域几个地图格子）
-	short m_map_area_xnum;	//一个地图有多少区域
-	short m_map_area_ynum;	//一个地图有多少区域
-	short m_my_city_posx;	//我的城池位置
-	short m_my_city_posy;	//我的城池位置
-	int m_my_city_unit_index;	//我的城池地图单元-序号
-	char m_citystate;	//我的城池状态
-	short m_target_posx;	//目的点
-	short m_target_posy;	//目的点
-};
-typedef struct _slk_NetS_WorldMapInfo SLK_NetS_WorldMapInfo;	//世界地图信息
-
-struct _slk_NetS_MapUnitCorrdinate {
-	int m_unit_index;	//地图单元-序号
-	short m_posx;	//地图单元-当前坐标
-	short m_posy;	//地图单元-当前坐标
-};
-typedef struct _slk_NetS_MapUnitCorrdinate SLK_NetS_MapUnitCorrdinate;	//地图显示单元位置
-
-struct _slk_NetS_AddMarchRoute {
-	char m_from_type;	//行军路线-出发单元类型
-	short m_from_posx;	//行军路线-出发位置
-	short m_from_posy;	//行军路线-出发位置
-	char m_to_type;	//行军路线-到达单元类型
-	short m_to_posx;	//行军路线-到达位置
-	short m_to_posy;	//行军路线-到达位置
-	char m_state;	//行军路线-状态
-	int m_from_cityid;	//行军路线-城市
-	int m_from_clubid;	//行军路线-联盟
-	int m_to_cityid;	//行军路线-目标城市
-	int m_to_clubid;	//行军路线-目标联盟
-	int m_army_index;	//行军路线-所属部队
-	char m_action;	//行军路线-行为
-};
-typedef struct _slk_NetS_AddMarchRoute SLK_NetS_AddMarchRoute;	//行军路线
-
-struct _slk_NetS_DelMarchRoute {
-	int m_army_index;	//删除线-部队索引
-};
-typedef struct _slk_NetS_DelMarchRoute SLK_NetS_DelMarchRoute;	//删除行军路线
-
-struct _slk_NetS_UpdateMapUnit {
-	SLK_NetS_AddMapUnit m_info;	//更新地图显示单元信息
-};
-typedef struct _slk_NetS_UpdateMapUnit SLK_NetS_UpdateMapUnit;	//更新地图显示单元信息
-
 struct _slk_NetS_AwardInfo {
 	int m_kind;	//种类
 	int m_num;	//数量
@@ -259,10 +178,10 @@ struct _slk_NetS_AwardInfoList {
 typedef struct _slk_NetS_AwardInfoList SLK_NetS_AwardInfoList;	//奖励信息列表
 
 struct _slk_NetS_Experience {
-	int m_addexp;	//
-	i64 m_curexp;	//
-	char m_isup;	//
-	short m_path;	//
+	int m_addexp;	//经验获取
+	i64 m_curexp;	//当前经验
+	char m_isup;	//是否升级
+	short m_path;	//途径
 };
 typedef struct _slk_NetS_Experience SLK_NetS_Experience;	//经验获取
 
@@ -292,14 +211,6 @@ int struct_ItemSmpInfo_send( char **pptr, int *psize, SLK_ItemSmpInfo *pValue );
 int struct_NetS_ItemList_send( char **pptr, int *psize, SLK_NetS_ItemList *pValue );
 int struct_ItemAttr_send( char **pptr, int *psize, SLK_ItemAttr *pValue );
 int struct_NetS_ItemInfo_send( char **pptr, int *psize, SLK_NetS_ItemInfo *pValue );
-int struct_WalkPath_send( char **pptr, int *psize, SLK_WalkPath *pValue );
-int struct_NetS_AddMapUnit_send( char **pptr, int *psize, SLK_NetS_AddMapUnit *pValue );
-int struct_NetS_DelMapUnit_send( char **pptr, int *psize, SLK_NetS_DelMapUnit *pValue );
-int struct_NetS_WorldMapInfo_send( char **pptr, int *psize, SLK_NetS_WorldMapInfo *pValue );
-int struct_NetS_MapUnitCorrdinate_send( char **pptr, int *psize, SLK_NetS_MapUnitCorrdinate *pValue );
-int struct_NetS_AddMarchRoute_send( char **pptr, int *psize, SLK_NetS_AddMarchRoute *pValue );
-int struct_NetS_DelMarchRoute_send( char **pptr, int *psize, SLK_NetS_DelMarchRoute *pValue );
-int struct_NetS_UpdateMapUnit_send( char **pptr, int *psize, SLK_NetS_UpdateMapUnit *pValue );
 int struct_NetS_AwardInfo_send( char **pptr, int *psize, SLK_NetS_AwardInfo *pValue );
 int struct_NetS_AwardInfoList_send( char **pptr, int *psize, SLK_NetS_AwardInfoList *pValue );
 int struct_NetS_Experience_send( char **pptr, int *psize, SLK_NetS_Experience *pValue );

@@ -10,7 +10,6 @@
 #include "db.h"
 #include "define.h"
 #include "dserver.h"
-#include "area.h"
 #include "actor.h"
 extern SConfig g_Config;
 extern MYSQL *myGame;

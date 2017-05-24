@@ -16,7 +16,6 @@
 #include "actor_send.h"
 #include "server_netsend_auto.h"
 #include "script_auto.h"
-#include "mapunit.h"
 #include "global.h"
 
 extern MYSQL *myData;
@@ -235,56 +234,56 @@ int item_use_withtoken( int actor_index, short itemkind, short itemnum, int hero
 //-----------------------------------------------------------------------------
 int item_equipup( int actor_index, short item_offset )
 {
-	Item *pEquip = NULL;
-	Item *pItem = NULL;
-	Item tmpItem;
-	short equip_target = -1;
-	int eff_result = 0;
-	char is_send = FALSE;
+	//Item *pEquip = NULL;
+	//Item *pItem = NULL;
+	//Item tmpItem;
+	//short equip_target = -1;
+	//int eff_result = 0;
+	//char is_send = FALSE;
 
-	// 合法性检查
-	if ( actor_index < 0 || actor_index >= g_maxactornum )
-		return -1;
+	//// 合法性检查
+	//if ( actor_index < 0 || actor_index >= g_maxactornum )
+	//	return -1;
 
-	// 角色装备
-	if ( item_offset >= ITEM_OFFSETBASE && item_offset < ITEM_OFFSETBASE + MAX_ACTOR_ITEMNUM )
-	{
-		pItem = &g_actors[actor_index].item[item_offset - ITEM_OFFSETBASE];
-	}
-	else
-	{
-		return -1;
-	}
+	//// 角色装备
+	//if ( item_offset >= ITEM_OFFSETBASE && item_offset < ITEM_OFFSETBASE + MAX_ACTOR_ITEMNUM )
+	//{
+	//	pItem = &g_actors[actor_index].item[item_offset - ITEM_OFFSETBASE];
+	//}
+	//else
+	//{
+	//	return -1;
+	//}
 
-	// 装备类型决定装备索引位置
-	equip_target = item_gettype( pItem->m_kind ) - 1;
-	if ( equip_target < 0 || equip_target >= MAX_ACTOR_EQUIPNUM )
-		return -1;
+	//// 装备类型决定装备索引位置
+	//equip_target = item_gettype( pItem->m_kind ) - 1;
+	//if ( equip_target < 0 || equip_target >= MAX_ACTOR_EQUIPNUM )
+	//	return -1;
 
-	// 等级检查
-	short item_level = item_getlevel( pItem->m_kind );
-	if ( g_actors[actor_index].level < item_level )
-	{
-		// 等级不够装备
-		return -1;
-	}
+	//// 等级检查
+	//short item_level = item_getlevel( pItem->m_kind );
+	//if ( g_actors[actor_index].level < item_level )
+	//{
+	//	// 等级不够装备
+	//	return -1;
+	//}
 
-	// 装备栏
-	pEquip = &g_actors[actor_index].equip[equip_target];
+	//// 装备栏
+	//pEquip = &g_actors[actor_index].equip[equip_target];
 
 
-	// 交换道具栏和装备栏的道具
-	memcpy( &tmpItem, pItem, sizeof(Item) );
-	memcpy( pItem, pEquip, sizeof(Item) );
-	memcpy( pEquip, &tmpItem, sizeof(Item) );
-	pItem->offset = item_offset;
-	pEquip->offset = equip_target;
-	
-	SLK_NetS_ItemUse Value = {};
-	Value.m_itemoffset = item_offset;
-	Value.m_usenum = equip_target;
-	Value.m_effres = 100; // 代表为装备装备,而不是道具消耗
-	netsend_itemuse_S( actor_index, SENDTYPE_ACTOR, &Value );
+	//// 交换道具栏和装备栏的道具
+	//memcpy( &tmpItem, pItem, sizeof(Item) );
+	//memcpy( pItem, pEquip, sizeof(Item) );
+	//memcpy( pEquip, &tmpItem, sizeof(Item) );
+	//pItem->offset = item_offset;
+	//pEquip->offset = equip_target;
+	//
+	//SLK_NetS_ItemUse Value = {};
+	//Value.m_itemoffset = item_offset;
+	//Value.m_usenum = equip_target;
+	//Value.m_effres = 100; // 代表为装备装备,而不是道具消耗
+	//netsend_itemuse_S( actor_index, SENDTYPE_ACTOR, &Value );
 	return 0;
 }
 

@@ -17,12 +17,10 @@ extern "C"
 #include "item.h"
 #include "actor_notify.h"
 #include "auto_actor.h"
-#include "map.h"
 #include "system.h"
 #include "global.h"
 #include "wqueue.h"
 extern lua_State* servL;
-
 static int lua_c_item_name( lua_State *servL );
 static int lua_c_item_hasone( lua_State *servL );
 static int lua_c_item_emptycount( lua_State *servL );

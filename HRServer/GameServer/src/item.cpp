@@ -13,7 +13,6 @@
 #include "gameproc.h"
 #include "item.h"
 #include "system.h"
-#include "map.h"
 #include "server_netsend_auto.h"
 #include "actor_send.h"
 #include "actor_notify.h"

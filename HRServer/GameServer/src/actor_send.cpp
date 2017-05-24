@@ -2,7 +2,6 @@
 #include "actor_send.h"
 #include "gameproc.h"
 #include "server_netsend_auto.h"
-#include "area.h"
 
 extern Actor *g_actors;
 extern int g_actornum;
@@ -39,7 +38,7 @@ int actor_senddata( int actor_index, char send_type, char *data, int datasize )
 		break;
 	case SENDTYPE_AREA:
 		{
-			area_sendmsg( actor_index, datasize, data + sizeof(short) );
+			//area_sendmsg( actor_index, datasize, data + sizeof(short) );
 			//area_clearmsg( actor_index );
 		}
 		break;

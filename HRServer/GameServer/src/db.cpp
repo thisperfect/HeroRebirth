@@ -20,18 +20,13 @@
 #include "actor.h"
 #include "gameproc.h"
 #include "define.h"
-
+extern SConfig g_Config;
 extern int g_tick;
 
 MYSQL *myData = NULL;
 MYSQL *myGame = NULL;
 MYSQL *myLog = NULL;
-
 MYSQL **g_pmyGame = NULL;
-
-extern SConfig g_Config;
-extern int g_city_maxcount;
-
 char g_batchsql[BATCHSQL_MAXSIZE] = { 0 };
 
 int db_init()
@@ -271,7 +266,7 @@ RE_MYSQLQUERY:
 
 void dbwork_initqueue()
 {
-	g_nDBQueueMaxNum = g_city_maxcount / 3;
+	g_nDBQueueMaxNum = 4096;
 	g_db_mmux = mmux_open();
 	g_nDBQueueHead = 0;
 	g_nDBQueueTail = 0;
@@ -279,7 +274,7 @@ void dbwork_initqueue()
 	memset( g_dbqueue, 0, sizeof(SDBQueue)*g_nDBQueueMaxNum );
 	printf_msg( "DBWork  maxcount=%d  memory=%0.2fMB\n", g_nDBQueueMaxNum, (sizeof(SDBQueue)* g_nDBQueueMaxNum) / 1024.0 / 1024.0 );
 
-	g_nDBQueueCompleteMaxNum = g_city_maxcount / 3;
+	g_nDBQueueCompleteMaxNum = 4096;
 	g_dbcomplete_mmux = mmux_open();
 	g_nDBQueueCompleteHead = 0;
 	g_nDBQueueCompleteTail = 0;

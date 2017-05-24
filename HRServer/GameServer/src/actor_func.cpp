@@ -15,18 +15,14 @@
 #include "award.h"
 #include "item.h"
 #include "global.h"
-#include "mapunit.h"
-#include "map.h"
 #include "script.h"
 
 extern SConfig g_Config;
+extern Global global;
 extern MYSQL *myGame;
 extern MYSQL *myData;
 extern Actor *g_actors;
 extern int g_maxactornum;
-
-extern Global global;
-extern Map g_map;
 extern int g_world_data[WORLD_DATA_MAX];
 
 //-----------------------------------------------------------------------------

@@ -10,8 +10,6 @@
 #include "auto_data_item.h"
 #include "auto_data_platinfo.h"
 #include "auto_data_upgrade.h"
-#include "auto_city.h"
-
 
 #define LOG_PATH	"./log/"
 
