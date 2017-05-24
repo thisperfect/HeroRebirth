@@ -187,6 +187,7 @@ function Network.OnConnectFail( buffer )
 		else
 			LoginModOpenTestLogin();
 		end--]]
+		LoginModOpenTestLogin()
 	end
 
 	Const.NetStatus = 0;	
@@ -413,29 +414,11 @@ function Network.OnHttpResponse( err, response )
     end
 end
 
--- SDK模式下连接服务器
+-- 连接服务器
 function Network.SDKConnectServer( host, port )
 	Const.SocketAddress = host;
 	Const.SocketPort = port;
-	fruit.networkManager:SendConnect();
-end
-
--- 测试模式下连接服务器
-function Network.TestConnectServer( id )
-	local serinfo = Cache.GetServerInfoByID( id );
-	if serinfo == nil then
-		print( "Can't Find ServerID: " .. id );
-        LoginModOpenTestLogin();
-		return;
-	end
-	Const.SocketAddress = serinfo["h"];
-	Const.SocketPort = serinfo["p"];
-	if tonumber(serinfo["close"]) == 1 then
-		Network.GetNotice();
-	else
-	print( Const.SocketAddress..":"..Const.SocketPort )
-		fruit.networkManager:SendConnect();
-	end
+	eye.networkManager:SendConnect();
 end
 
 -- 检测收发包时间

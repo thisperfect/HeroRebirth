@@ -1,8 +1,5 @@
-WEBCLI_URL=http://192.168.197.129/u_cli/
-UPDATE_URL=http://undead.gohogame.com
-SERVERLIST_URL=http://undead.gohogame.com
-USERINFO_URL=http://undead.gohogame.com/user_s/
-IMAGE_URL=http://undead.gohogame.com/image/
-HEAD_URL=http://192.168.1.119/head/
+CLIENTACCESS_URL=http://client.eyegame.online/
+UPDATE_URL=http://client.eyegame.online/
+HEAD_URL=http://client.eyegame.online/
 GOOGLE_MARKET=market://details?id=com.rsg.kor
 APPLE_STORE=itms-apps://itunes.apple.com/app/id1131456470

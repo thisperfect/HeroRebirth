@@ -2,14 +2,46 @@ g_ipCountryStr = "us";
 
 --游戏管理器--
 GameManager = {};
-
 GameManager.restart = false; -- 强制重启
+GameManager.userini = nil;
 
 -- 游戏脚本主逻辑入口
 function GameManager.OnStart()
 	LogUtil.GetInstance():WriteGame("GameManager.OnStart();begin");
 	
+	-- 读取ini配置文件
+	GameManager.userini = IniUtil.New();
+	GameManager.userini:OpenFromTXT( PathUtil.ConfigPath() .. "user.txt" );
+	if GameManager.userini:ReadValue("USERNAME", "") == "" then
+		GameManager.userini:WriteValue("USERNAME","");
+	end
+	if GameManager.userini:ReadValue("PASSTOKEN", "") == "" then
+		GameManager.userini:WriteValue("PASSTOKEN","");
+	end
+	if GameManager.userini:ReadValue("LASTSERVERID", "") == "" then
+		GameManager.userini:WriteValue("LASTSERVERID", 0);
+	end
 	
+	-- 读取平台渠道信息
+	local platini = IniUtil.New();
+	if platini:OpenFromData( "plat.txt" ) == true then
+		Const.platid = tonumber(platini:ReadValue("PLATID", "1")); 
+	end
+		
+	-- 与服务器通用的全局变量
+	local _tableUtil = TableUtil.New();
+	if _tableUtil:OpenFromData( "global.txt" ) == true then
+		local _tableRecordsNum = _tableUtil:GetRecordsNum()-1;
+		for records = 0, _tableRecordsNum, 1 do
+			local id		 = _tableUtil:GetValue( records, 0 );
+			local value 	 = _tableUtil:GetValue( records, 1 );
+			local variable	 = _tableUtil:GetValue( records, 2 );
+			Global.AddValue( variable, value );
+		end
+	end
+	
+	-- 打开登陆界面
+	LoginModOpen();
 	
 	
 	
@@ -120,4 +152,12 @@ function GameManager.PushKey( key )
 	sendValue.m_pushkey = key;
 	sendValue.m_pushkey_len = string.len( sendValue.m_pushkey );
 	netsend_pushkey_C( sendValue )
+end
+
+-- 获取用户本地配置
+function GameManager.ini( key, default )
+	return GameManager.userini:ReadValue( key, default );
+end
+function GameManager.writeini( key, value )
+	GameManager.userini:WriteValue( key, value );
 end

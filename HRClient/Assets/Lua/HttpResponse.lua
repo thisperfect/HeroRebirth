@@ -32,14 +32,3 @@ function HttpResponse.GetSDKUserInfo( response )
 		g_ipCountryStr = string.lower( info["ipcountry"] );
 	end
 end
-
--- 获取服务器信息列表
-function HttpResponse.GetServerList( response )
-	local info = json.decode( response );
-	if info == nil then
-		LogUtil.GetInstance():WriteNet( response );
-		return;
-	end
-	
-	
-end

@@ -1,1 +1,0 @@
-资源键名	Resources模式资源名	所在assetBundle名称	所在assetBundle资源名

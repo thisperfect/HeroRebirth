@@ -146,8 +146,8 @@ public class GameManager : MonoBehaviour {
         {
             int width = Screen.currentResolution.width;
             int height = Screen.currentResolution.height;
-            int designWidth = 640;
-            int designHeight = 960;
+            int designWidth = 1334;
+            int designHeight = 750;
             float s1 = (float)designWidth / (float)designHeight;
             float s2 = (float)width / (float)height;
             if ( s1 < s2 )

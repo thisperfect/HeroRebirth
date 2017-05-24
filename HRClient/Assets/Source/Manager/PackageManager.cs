@@ -69,7 +69,7 @@ public class PackageManager : MonoBehaviour
         UnityEngine.iOS.Device.SetNoBackupFlag( PathUtil.ConfigPath() );
 #endif
         // 调整安卓分辨率
-        GameManager.setDesignContentScale();
+        //GameManager.setDesignContentScale();
         StartCoroutine( ShowUIOnNextFrame() );
 
         // 禁止黑屏

@@ -22,7 +22,11 @@ public abstract class Camera2D : MonoBehaviour
 
 	// 速度衰减（乘）
 	public float moveDecay = 0.075f;
+    // 锁定横竖移动
+    public bool horizontalLock = false;
+    public bool verticalLock = false;
 	// 缩放限制
+    public bool zoomLock = false;
 	public float zoomInLimit = 4f;
 	public float zoomOutLimit = 10f;
 	// 缩放速度
@@ -469,6 +473,8 @@ public abstract class Camera2D : MonoBehaviour
 	// 焦点缩放
 	protected virtual void Zoom( float length, Vector3 focus )
 	{
+        if ( zoomLock )
+            return;
 		if( length == 0 )
 			return;
 
@@ -494,6 +500,8 @@ public abstract class Camera2D : MonoBehaviour
 	// 移动缩放
 	protected virtual void ZoomMove( float length, Vector3 focus, Vector3 direction )
 	{
+        if ( zoomLock )
+            return;
 		if( length == 0 )
 			return;
 		
@@ -520,8 +528,12 @@ public abstract class Camera2D : MonoBehaviour
 	// 移动
 	protected virtual void Move( float offsetX, float offsetY )
 	{
-		// 反转
-		offsetX = -offsetX;
+        if ( horizontalLock )
+            offsetX = 0;
+        if ( verticalLock )
+            offsetY = 0;
+        // 反转
+        offsetX = -offsetX;
 		offsetY = -offsetY;
 
 		//移动
@@ -535,15 +547,21 @@ public abstract class Camera2D : MonoBehaviour
 		float limitX = ( mapSize.x / 2f - ( (float)Screen.width / (float)Screen.height ) * _Camera.orthographicSize * 100f ) / 100f;
 
 		// 限制移动
-		if( pos.x < -limitX - mapExpand.w )
-			pos.x = -limitX - mapExpand.w;
-		else if( pos.x > limitX + mapExpand.y )
-			pos.x = limitX + mapExpand.y;
-		
-		if( pos.y < -limitY - mapExpand.z )
-			pos.y = -limitY - mapExpand.z;
-		else if( pos.y > limitY + mapExpand.x )
-			pos.y = limitY + mapExpand.x;
+        if ( !horizontalLock )
+        {
+            if ( pos.x < -limitX - mapExpand.w )
+                pos.x = -limitX - mapExpand.w;
+            else if ( pos.x > limitX + mapExpand.y )
+                pos.x = limitX + mapExpand.y;
+        }
+
+        if ( !verticalLock )
+        {
+            if ( pos.y < -limitY - mapExpand.z )
+                pos.y = -limitY - mapExpand.z;
+            else if ( pos.y > limitY + mapExpand.x )
+                pos.y = limitY + mapExpand.x;
+        }
 
 		_Camera.transform.position = pos;
 	}

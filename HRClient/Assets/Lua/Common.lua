@@ -4,9 +4,9 @@ function log(str)
 end
 
 --打印字符串--
-function print(str) 
+--[[function print(str) 
 	Utils.Log(str);
-end
+end--]]
 
 --错误日志--
 function error(str) 
@@ -119,6 +119,20 @@ function table.values(hashtable)
         values[#values + 1] = v
     end
     return values
+end
+
+-- table迭代器 按key顺序
+function pairsByKeys(t)      
+    local a = {}      
+    for n in pairs(t) do          
+        a[#a+1] = n      
+    end      
+    table.sort(a)      
+    local i = 0      
+    return function()          
+		i = i + 1          
+		return a[i], t[a[i]]      
+    end  
 end
 
 --查找对象--

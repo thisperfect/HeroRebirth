@@ -35,7 +35,7 @@ public class UIButton : Button
             _ClickInterval = StartCoroutine( ClickInterval() );
             interactable = false;
         }
-        LogUtil.GetInstance().WriteGame( "UIEVENT.CLICK:" + controlID );
+        LogUtil.GetInstance().WriteGame( "UIEVENT.CLICK["+uiMod.uiName+"]" + controlID );
 		object[] param = { UIEVENT.CLICK, controlID, 0 };
 		uiMod.OnEvent( param );
         if (audioID == 0)
