@@ -102,7 +102,7 @@ typedef struct _socket_set {
 	char			m_devdata[MAX_DEVDATA_SIZE];		// --数据:设备信息
 	char			*m_dev[DEVDATA_COUNT];		// 设备信息分割
 	char			m_isnew;		// 新帐号标记
-	char			m_country[4];	// 客户端选择的国家
+	short			m_country;		// 客户端选择的国家
 	char			m_ipcountry[4];	// IP地址所在国家
 	int				m_authid;		// 认证客户与连接的正确性
 	SOCKET_BUF		m_recv_buf;		// 接收缓冲区

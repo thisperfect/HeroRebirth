@@ -168,7 +168,7 @@ public class LuaFun
 		get
 		{
 			if ( _loadAssetBundleProc == null )
-				_loadAssetBundleProc = eye.luaManager.GetFunction( "GameManager.OnLoadAssetBundleProc" );
+				_loadAssetBundleProc = eye.luaManager.GetFunction( "LoginModOnLoadAssetBundleProc" );
 			
 			return _loadAssetBundleProc;
 		}

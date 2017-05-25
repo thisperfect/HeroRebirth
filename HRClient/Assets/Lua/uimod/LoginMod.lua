@@ -151,7 +151,7 @@ function LoginModOpenTestLogin()
 		local json = require "cjson"
 		local info = json.decode( response );
 		if info == nil then
-			LogUtil.GetInstance():WriteNet( response );
+			netlog( response );
 			return;
 		end
 		-- 设置缓存，ID传字符串
@@ -208,6 +208,20 @@ function LoginModOpenLoading()
 	
 	-- 需要显示的
 	m_uiLoading.gameObject:SetActive( true );
+	
+    -- 读取所有AssetBundle
+    eye.resourceManager:LoadAllAssetBundle();	
+end
+
+-- 读取AssetBundle的回调
+function LoginModOnLoadAssetBundleProc( assetBundleName, progress, totalProgress )
+	if progress == totalProgress then
+		-- 加载主城
+		LoadPrefabAsyn( "MainCityScence", function( obj )
+			local _mainCityScence = GameObject.Instantiate( obj[0] );
+			LoginModClose();
+		end );
+	end
 end
 
 -- 添加服务器列表
@@ -251,16 +265,6 @@ function LoginModSelectServer( id )
 	m_uiServerList:SetActive( false );
 	m_uiFastEnter.gameObject:SetActive( true );
 	m_uiRegEnter.gameObject:SetActive( true );
-end
-
--- 获取用户名
-function LoginModGetUserName()
-	return m_UserName;
-end
-
--- 获取密码
-function LoginModGetPassWord()
-	return m_PassWord;
 end
 
 -- 自动登录
@@ -316,6 +320,48 @@ function LoginModLogin()
 	GameManager.writeini( "LASTSERVERID", m_selectServerID );
 	GameManager.writeini( "LASTLOGINTYPE", 1 );
 	Network.SDKConnectServer( m_ServerList[m_selectServerID]["h"], m_ServerList[m_selectServerID]["p"] );
+end
+
+-- SDK模式登陆游戏
+function LoginModSDKLoginProc()
+	gamelog("LoginModSDKLoginProc");
+		
+	-- 登陆
+	local sendValue = {};
+	sendValue.m_username = Const.sdk_uid
+	sendValue.m_username_length = string.len( sendValue.m_username );
+	
+	sendValue.m_password = Const.sdk_sign.."_"..Const.sdk_timestamp
+	sendValue.m_password_length = string.len( sendValue.m_password );
+	
+	sendValue.m_deviceid = Utils.deviceUniqueIdentifier;
+	sendValue.m_deviceid_length = string.len( sendValue.m_deviceid );
+	
+	sendValue.m_isnew = tonumber(Const.sdk_isnewuser);
+	sendValue.m_ipcountry = g_ipCountryStr;
+	sendValue.m_ipcountry_length = string.len( sendValue.m_ipcountry );
+	netsend_login_C( sendValue );
+end
+
+-- 测试模式登陆游戏
+function LoginModTestLoginProc()
+	gamelog("LoginModTestLoginProc");
+		
+	-- 登陆
+	local sendValue = {};
+	sendValue.m_username = m_UserName;
+	sendValue.m_username_length = string.len( sendValue.m_username );
+	
+	sendValue.m_password = m_PassWord;
+	sendValue.m_password_length = string.len( sendValue.m_password );
+	
+	sendValue.m_deviceid = Utils.deviceUniqueIdentifier;
+	sendValue.m_deviceid_length = string.len( sendValue.m_deviceid );
+	sendValue.m_isnew = 0;
+	
+	sendValue.m_ipcountry = g_ipCountryStr;
+	sendValue.m_ipcountry_length = string.len( sendValue.m_ipcountry );
+	netsend_login_C( sendValue )
 end
 
 -- 警告字符串

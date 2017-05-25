@@ -14,6 +14,7 @@
 # Source for table activity
 #
 
+DROP TABLE IF EXISTS `activity`;
 CREATE TABLE `activity` (
   `activityid` int(11) NOT NULL AUTO_INCREMENT,
   `starttime` int(11) NOT NULL DEFAULT '0',
@@ -30,9 +31,15 @@ CREATE TABLE `activity` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='已经通过计时器设定完毕的活动';
 
 #
+# Dumping data for table activity
+#
+
+
+#
 # Source for table actor
 #
 
+DROP TABLE IF EXISTS `actor`;
 CREATE TABLE `actor` (
   `actorid` int(11) NOT NULL DEFAULT '0' COMMENT '角色编号',
   `userid` bigint(20) NOT NULL DEFAULT '0' COMMENT '账号编号',
@@ -78,9 +85,15 @@ CREATE TABLE `actor` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 #
+# Dumping data for table actor
+#
+
+
+#
 # Source for table actor_item
 #
 
+DROP TABLE IF EXISTS `actor_item`;
 CREATE TABLE `actor_item` (
   `itemid` bigint(20) NOT NULL DEFAULT '0' COMMENT '物品id',
   `actorid` int(11) NOT NULL DEFAULT '0' COMMENT '角色ID',
@@ -101,9 +114,15 @@ CREATE TABLE `actor_item` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 #
+# Dumping data for table actor_item
+#
+
+
+#
 # Source for table actor_list
 #
 
+DROP TABLE IF EXISTS `actor_list`;
 CREATE TABLE `actor_list` (
   `actorid` int(11) NOT NULL DEFAULT '0' COMMENT '角色编号',
   `platid` int(11) NOT NULL DEFAULT '0' COMMENT '所属平台',
@@ -127,9 +146,15 @@ CREATE TABLE `actor_list` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 #
+# Dumping data for table actor_list
+#
+
+
+#
 # Source for table command_data
 #
 
+DROP TABLE IF EXISTS `command_data`;
 CREATE TABLE `command_data` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `cond` int(11) NOT NULL DEFAULT '0',
@@ -145,9 +170,15 @@ CREATE TABLE `command_data` (
 ) ENGINE=InnoDB DEFAULT CHARSET=gbk ROW_FORMAT=DYNAMIC;
 
 #
+# Dumping data for table command_data
+#
+
+
+#
 # Source for table gift
 #
 
+DROP TABLE IF EXISTS `gift`;
 CREATE TABLE `gift` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `actorid` int(11) NOT NULL DEFAULT '0' COMMENT '角色id',
@@ -169,9 +200,15 @@ CREATE TABLE `gift` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 #
+# Dumping data for table gift
+#
+
+
+#
 # Source for table gift_uid
 #
 
+DROP TABLE IF EXISTS `gift_uid`;
 CREATE TABLE `gift_uid` (
   `uid` varchar(64) NOT NULL DEFAULT '',
   `kind1` int(11) NOT NULL DEFAULT '0',
@@ -190,9 +227,15 @@ CREATE TABLE `gift_uid` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='根据UID进行奖励';
 
 #
+# Dumping data for table gift_uid
+#
+
+
+#
 # Source for table mail
 #
 
+DROP TABLE IF EXISTS `mail`;
 CREATE TABLE `mail` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `from_actorid` int(11) NOT NULL DEFAULT '0' COMMENT '发送人id',
@@ -212,9 +255,15 @@ CREATE TABLE `mail` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='邮件';
 
 #
+# Dumping data for table mail
+#
+
+
+#
 # Source for table pay_offline
 #
 
+DROP TABLE IF EXISTS `pay_offline`;
 CREATE TABLE `pay_offline` (
   `actorid` int(11) NOT NULL DEFAULT '0',
   `orderid` char(32) NOT NULL DEFAULT '',
@@ -224,9 +273,15 @@ CREATE TABLE `pay_offline` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='离线的充值数据';
 
 #
+# Dumping data for table pay_offline
+#
+
+
+#
 # Source for table pay_order
 #
 
+DROP TABLE IF EXISTS `pay_order`;
 CREATE TABLE `pay_order` (
   `orderid` char(32) NOT NULL DEFAULT '',
   `userid` bigint(20) NOT NULL DEFAULT '0' COMMENT '游戏用户ID',
@@ -243,15 +298,26 @@ CREATE TABLE `pay_order` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 #
+# Dumping data for table pay_order
+#
+
+
+#
 # Source for table world_data
 #
 
+DROP TABLE IF EXISTS `world_data`;
 CREATE TABLE `world_data` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `value` int(11) NOT NULL DEFAULT '0',
   `strvalue` varbinary(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='世界数据';
+
+#
+# Dumping data for table world_data
+#
+
 
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;

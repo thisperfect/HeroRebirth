@@ -17,6 +17,7 @@ redisContext *pRedisContext = NULL;
 
 int dbredis_init()
 {
+	return 0;
 	redisReply *reply;
 
 	struct timeval timeout = { 1, 500000 }; // 1.5 seconds

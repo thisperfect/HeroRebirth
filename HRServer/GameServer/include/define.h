@@ -70,9 +70,7 @@ typedef struct _sconfig {
 	int server_start_hour;
 	int server_start_min;
 	int max_connection;
-	int max_citycount;
 	int max_clubcount;
-	int max_mapunitcount;
 	int server_exit_week;
 	int server_exit_hour;
 	int server_exit_min;
@@ -81,7 +79,6 @@ typedef struct _sconfig {
 	char showcdkey;
 	char showvip;
 	char showmcard;
-	char use_zh;
 	char usegate;
 	char usenetlog;
 

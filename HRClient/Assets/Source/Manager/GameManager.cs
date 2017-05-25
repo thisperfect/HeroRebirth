@@ -71,8 +71,8 @@ public class GameManager : MonoBehaviour {
         // 初始化资源管理
         eye.resourceManager.Initialize( delegate ()
         {
-            // 读取所有AssetBundle
-            eye.resourceManager.LoadAllAssetBundle();
+            // 先读取部分AssetBundle
+            ResourceManager.LoadAssetBundle( "ui_dialog_login" );
 
             // 游戏开始
             LuaFun.gameStart.Call();

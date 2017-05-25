@@ -313,14 +313,6 @@ int configprocess( const char *pSign, const char *pValue )
 		g_Config.max_connection = atoi(pValue);
 #endif
 	}
-	else if ( strcmp( pSign, "MAX_CITYCOUNT" ) == 0 )
-	{
-		g_Config.max_citycount = atoi( pValue );
-	}
-	else if ( strcmp( pSign, "MAX_MAPUNITCOUNT" ) == 0 )
-	{
-		g_Config.max_mapunitcount = atoi( pValue );
-	}
 	else if ( strcmp( pSign, "MAX_CLUBCOUNT" ) == 0 )
 	{
 		g_Config.max_clubcount = atoi( pValue );
@@ -393,10 +385,6 @@ int configprocess( const char *pSign, const char *pValue )
 	{
 		g_Config.noprint = atoi( pValue );
 		g_NotPrintMsg = atoi( pValue );;
-	}
-	else if ( strcmp( pSign, "USE_ZH" ) == 0 )
-	{
-		g_Config.use_zh = atoi( pValue );
 	}
 	else if( strcmp( pSign, "USEGATE" ) == 0 )
 	{
@@ -591,7 +579,6 @@ int main( int argc, char *argv[] )
 	g_Config.showcdkey = 1;
 	g_Config.showvip = 1;
 	g_Config.showmcard = 1;
-	g_Config.max_citycount = 20000;
 	g_Config.max_clubcount = 256;
 	g_Config.global_ipaddress = 0;
 	g_Config.global_port = 0;

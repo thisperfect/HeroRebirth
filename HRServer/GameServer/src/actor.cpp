@@ -737,16 +737,8 @@ int actor_db_create( int client_index, int platid, i64 userid, char *username, S
 	actorid = g_maxactorid++;
 
 	// 创建角色初始名字
-	if ( g_Config.use_zh == 1 )
-	{
-		snprintf( pListInfo->m_name, NAME_SIZE, "%d", actorid );
-		pListInfo->m_name[NAME_SIZE - 1] = 0;
-	}
-	else
-	{
-		snprintf( pListInfo->m_name, NAME_SIZE, "Laird%d", actorid );
-		pListInfo->m_name[NAME_SIZE - 1] = 0;
-	}
+	snprintf( pListInfo->m_name, NAME_SIZE, "Laird%d", actorid );
+	pListInfo->m_name[NAME_SIZE - 1] = 0;
 
 	// 插入记录到 actor_list
 	db_escape( (const char *)pListInfo->m_name, ActorName, 0 );

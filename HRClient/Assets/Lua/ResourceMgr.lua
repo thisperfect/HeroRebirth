@@ -6,7 +6,6 @@ end
 
 -- 载入Prefab
 function LoadPrefab( name )
-    --LogUtil.GetInstance():WriteGame("Prefab:" .. name);
     return ResourceManager.LoadPrefab( name );
 end
 

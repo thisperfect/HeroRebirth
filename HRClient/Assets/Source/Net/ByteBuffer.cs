@@ -309,7 +309,7 @@ public class ByteBuffer {
         writer.Flush();
     }
 
-	public long Len() {
-		return stream.Length;
+	public UInt32 Len() {
+		return (UInt32)stream.Length;
 	}
 }

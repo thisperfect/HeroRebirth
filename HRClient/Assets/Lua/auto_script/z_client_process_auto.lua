@@ -1,10 +1,48 @@
---client_process_auto.lua
-
 -- m_result=0,m_username_length=0,m_username="[m_username_length]",m_token_length=0,m_token="[m_token_length]",m_usertype=0,
 function proc_login_C( recvValue )
 	-- process.
 	-- EventProtocol.addEventListener( "proc_login_C", function( recvValue ) end )
-	EventProtocol.dispatchEvent( "proc_login_C", recvValue );
+	--EventProtocol.dispatchEvent( "proc_login_C", recvValue );
+	gamelog( "[proc_login_C]result:"..recvValue.m_result );
+	Global.AddValue("ISLOGOUT" , 0 );
+	if recvValue.m_result < 0 then
+		LoginModLoginQueue( false );
+		-- 登陆失败
+		print( "Login Result:"..recvValue.m_result );
+		eye.networkManager:Logout();
+--[[		if Const.platid > 10 then
+			LoginModOpenSDKLoginActive( true );
+		else
+			LoginModOpenTestLogin();
+		end--]]	
+		LoginModOpenTestLogin();
+		if recvValue.m_result == -10000 then
+			-- 队列满了的情况
+			LoginModOpenTestLogin();
+			LoginModWarning( T(500) );
+		else
+			if recvValue.m_result == -1 or recvValue.m_result == -2 then
+				LoginModWarning( T(505) );
+			elseif recvValue.m_result == -4 then
+				LoginModWarning( T(506) );
+			end
+		end
+		
+	else
+		
+		-- 登陆成功
+		GameManager.writeini( "USERNAME", recvValue.m_username );
+		GameManager.writeini( "PASSTOKEN", recvValue.m_token );
+		GetPlayer().m_usertype = recvValue.m_usertype;
+		
+		-- GM号启动FPS
+		if GetPlayer().m_usertype >= 100 then
+			FPSObject():SetActive( true );
+		end
+	
+		-- 启动loading
+		LoginModOpenLoading();	
+	end
 end
 
 -- m_actor_num=0,m_listinfo={m_actorid=0,m_name="[22]",m_aclass=0,m_level=0,m_offset=0,m_lockstat=0,m_delete_stoptime=0,m_lock_endtime=0,[m_actor_num]},
@@ -103,62 +141,6 @@ function proc_iteminfo_C( recvValue )
 	-- process.
 	-- EventProtocol.addEventListener( "proc_iteminfo_C", function( recvValue ) end )
 	EventProtocol.dispatchEvent( "proc_iteminfo_C", recvValue );
-end
-
--- m_unit_index=0,m_type=0,m_state=0,m_posx=0,m_posy=0,m_namelen=0,m_name="[m_namelen]",m_char_value_count=0,m_char_value={}[m_char_value_count],m_short_value_count=0,m_short_value={}[m_short_value_count],m_int_value_count=0,m_int_value={}[m_int_value_count],m_prefixlen=0,m_prefix="[m_prefixlen]",
-function proc_addmapunit_C( recvValue )
-	-- process.
-	-- EventProtocol.addEventListener( "proc_addmapunit_C", function( recvValue ) end )
-	EventProtocol.dispatchEvent( "proc_addmapunit_C", recvValue );
-end
-
--- m_unit_index=0,
-function proc_delmapunit_C( recvValue )
-	-- process.
-	-- EventProtocol.addEventListener( "proc_delmapunit_C", function( recvValue ) end )
-	EventProtocol.dispatchEvent( "proc_delmapunit_C", recvValue );
-end
-
--- m_info={m_unit_index=0,m_type=0,m_state=0,m_posx=0,m_posy=0,m_namelen=0,m_name="[m_namelen]",m_char_value_count=0,m_char_value={}[m_char_value_count],m_short_value_count=0,m_short_value={}[m_short_value_count],m_int_value_count=0,m_int_value={}[m_int_value_count],m_prefixlen=0,m_prefix="[m_prefixlen]",},
-function proc_updatemapunit_C( recvValue )
-	-- process.
-	-- EventProtocol.addEventListener( "proc_updatemapunit_C", function( recvValue ) end )
-	EventProtocol.dispatchEvent( "proc_updatemapunit_C", recvValue );
-end
-
--- m_unit_index=0,m_type=0,m_state=0,m_posx=0,m_posy=0,m_namelen=0,m_name="[m_namelen]",m_char_value_count=0,m_char_value={}[m_char_value_count],m_short_value_count=0,m_short_value={}[m_short_value_count],m_int_value_count=0,m_int_value={}[m_int_value_count],m_prefixlen=0,m_prefix="[m_prefixlen]",
-function proc_mapunitsingle_C( recvValue )
-	-- process.
-	-- EventProtocol.addEventListener( "proc_mapunitsingle_C", function( recvValue ) end )
-	EventProtocol.dispatchEvent( "proc_mapunitsingle_C", recvValue );
-end
-
--- m_map_width=0,m_map_height=0,m_area_width=0,m_area_height=0,m_map_area_xnum=0,m_map_area_ynum=0,m_my_city_posx=0,m_my_city_posy=0,m_my_city_unit_index=0,m_citystate=0,m_target_posx=0,m_target_posy=0,
-function proc_worldmapinfo_C( recvValue )
-	-- process.
-	-- EventProtocol.addEventListener( "proc_worldmapinfo_C", function( recvValue ) end )
-	EventProtocol.dispatchEvent( "proc_worldmapinfo_C", recvValue );
-end
-
--- m_unit_index=0,m_posx=0,m_posy=0,
-function proc_mapunitcorrdinate_C( recvValue )
-	-- process.
-	-- EventProtocol.addEventListener( "proc_mapunitcorrdinate_C", function( recvValue ) end )
-	EventProtocol.dispatchEvent( "proc_mapunitcorrdinate_C", recvValue );
-end
-
--- m_from_type=0,m_from_posx=0,m_from_posy=0,m_to_type=0,m_to_posx=0,m_to_posy=0,m_state=0,m_from_cityid=0,m_from_clubid=0,m_to_cityid=0,m_to_clubid=0,m_army_index=0,m_action=0,
-function proc_addmarchroute_C( recvValue )
-	-- process.
-	-- EventProtocol.addEventListener( "proc_addmarchroute_C", function( recvValue ) end )
-	EventProtocol.dispatchEvent( "proc_addmarchroute_C", recvValue );
-end
-
--- m_army_index=0,
-function proc_delmarchroute_C( recvValue )
-	-- process.
-	-- EventProtocol.addEventListener( "proc_delmarchroute_C", function( recvValue ) end )
-	EventProtocol.dispatchEvent( "proc_delmarchroute_C", recvValue );
 end
 
 -- m_count=0,m_list={m_kind=0,m_num=0,[m_count]},m_callback_code=0,

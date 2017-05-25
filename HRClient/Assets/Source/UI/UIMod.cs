@@ -2,7 +2,6 @@
 using UnityEngine.EventSystems;
 using System.Collections;
 using LuaInterface;
-using UnityEditor;
 
 
 // 需要传递事件到lua的Mod挂载。不需lua的Mod无需挂载。有cs的并需要调用lua的Mod继承此类。

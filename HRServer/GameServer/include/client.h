@@ -35,8 +35,8 @@ void client_setisnew( int client_index, char isnew );
 char client_getisnew( int client_index );
 void client_setipcountry( int client_index, char *country );
 char* client_getipcountry( int client_index );
-void client_setcountry( int client_index, char *country );
-char* client_getcountry( int client_index );
+void client_setcountry( int client_index, short country );
+short client_getcountry( int client_index );
 
 void client_setuserinfo( int client_index, SClientInfo *pClientInfo );
 i64 client_getuserinfo( int client_index, SClientInfo *pClientInfo );

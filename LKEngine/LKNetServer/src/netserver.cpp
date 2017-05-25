@@ -1721,7 +1721,7 @@ int net_recv_clientver( int client_index, char *buf, int truesize )
 	g_sockset[client_index].m_ver[1] = ver[1];
 	g_sockset[client_index].m_ver[2] = ver[2];
 	g_sockset[client_index].m_stat = 0;
-	strncpy( g_sockset[client_index].m_country, (char*)country, 2 );
+	g_sockset[client_index].m_country = country;
 	net_send_clientver( client_index, 0 );
 	return 0;
 }

@@ -160,34 +160,38 @@ public class ResourceManager : MonoBehaviour
     /// </summary>
     static public AssetBundleInfo LoadAssetBundle( string assetBundleName )
     {
-        AssetBundleInfo bundle = GetLoadedAssetBundle( assetBundleName );
-        if ( bundle == null )
+        if ( Const.ResourceMode == "assetbundle" )
         {
-            // 先读取它的依赖
-            LoadDependencies( assetBundleName );
+            AssetBundleInfo bundle = GetLoadedAssetBundle( assetBundleName );
+            if ( bundle == null )
+            {
+                // 先读取它的依赖
+                LoadDependencies( assetBundleName );
 
-            // 优先查询本地资源，本地没有就找包里资源
-            string file = PathUtil.LocalPath() + assetBundleName;
-            if ( File.Exists( file ) == false )
-            {
-                file = PathUtil.PackagePath() + assetBundleName;
-            }
-            LogUtil.GetInstance().WriteGame( "LoadAssetBundle Path:" + file );
+                // 优先查询本地资源，本地没有就找包里资源
+                string file = PathUtil.LocalPath() + assetBundleName;
+                if ( File.Exists( file ) == false )
+                {
+                    file = PathUtil.PackagePath() + assetBundleName;
+                }
+                LogUtil.GetInstance().WriteGame( "LoadAssetBundle Path:" + file );
 
-            // 非异步方法最快
-            AssetBundle assetBundle = AssetBundle.LoadFromFile( file );
-            if ( assetBundle == null )
-            {
-                // 没读到暂时什么也不做
-                LogUtil.GetInstance().WriteGame( "LoadAssetBundle is null path:[" + file + "]" );
+                // 非异步方法最快
+                AssetBundle assetBundle = AssetBundle.LoadFromFile( file );
+                if ( assetBundle == null )
+                {
+                    // 没读到暂时什么也不做
+                    LogUtil.GetInstance().WriteGame( "LoadAssetBundle is null path:[" + file + "]" );
+                }
+                else
+                {
+                    // 读到了就添加缓存
+                    m_LoadedAssetBundles.Add( assetBundleName, new AssetBundleInfo( assetBundle ) );
+                }
             }
-            else
-            {
-                // 读到了就添加缓存
-                m_LoadedAssetBundles.Add( assetBundleName, new AssetBundleInfo( assetBundle ) );
-            }
+            return bundle;
         }
-        return bundle;
+        return null;
     }
 
     /// <summary>

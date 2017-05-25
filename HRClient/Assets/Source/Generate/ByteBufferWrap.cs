@@ -573,8 +573,8 @@ public class ByteBufferWrap
 		{
 			ToLua.CheckArgsCount(L, 1);
 			ByteBuffer obj = (ByteBuffer)ToLua.CheckObject(L, 1, typeof(ByteBuffer));
-			long o = obj.Len();
-			LuaDLL.tolua_pushint64(L, o);
+			uint o = obj.Len();
+			LuaDLL.lua_pushnumber(L, o);
 			return 1;
 		}
 		catch(Exception e)

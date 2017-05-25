@@ -6,7 +6,7 @@ HttpResponse = {};
 function HttpResponse.GetSDKUserInfo( response )	
 	local info = json.decode( response );
 	if info == nil then
-		LogUtil.GetInstance():WriteNet( response );
+		netlog( response );
 		return;
 	end
 	local serverid = info["s"];

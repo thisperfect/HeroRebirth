@@ -43,6 +43,12 @@ Image   = UnityEngine.UI.Image
 SpriteRenderer = UnityEngine.SpriteRenderer--]]
 WWW = UnityEngine.WWW
 
+require "auto_script/z_client_struct_auto"
+require "auto_script/z_client_process_auto"
+require "auto_script/z_client_structrecv_auto"
+require "auto_script/z_client_structsend_auto"
+require "auto_script/z_client_netrecv_auto"
+require "auto_script/z_client_netsend_auto"
 require "Game"
 require "Network"
 require "HttpRequest"
@@ -50,9 +56,7 @@ require "HttpResponse"
 require "Define"
 require "Common"
 require "ResourceMgr"
-require "WorldMap"
-require "WorldMapTile"
-require "WorldMapUnit"
+require "CachePlayer"
 require "fight/fight_buff"
 require "fight/fight_skill"
 require "fight/fight_unit"

@@ -134,20 +134,20 @@ char* client_getipcountry( int client_index )
 	return 0;
 }
 
-void client_setcountry( int client_index, char *country )
+void client_setcountry( int client_index, short country )
 {
 	if ( client_index >= 0 && client_index < g_max_connection )
 	{
 #ifdef _USEGATE
 		if ( g_bGateMode )
-			strncpy( g_clientset[client_index].m_country, country, 3 );
+			g_clientset[client_index].m_country = country;
 		else
 #else
-		strncpy( g_sockset[client_index].m_country, country, 3 );
+		g_sockset[client_index].m_country = country;
 #endif
 	}
 }
-char* client_getcountry( int client_index )
+short client_getcountry( int client_index )
 {
 	if ( client_index >= 0 && client_index < g_max_connection )
 	{

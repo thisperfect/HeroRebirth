@@ -58,8 +58,8 @@ void proc_timer_S( int client_index, char *pValue )
 void proc_login_S( int client_index, SLK_NetC_Login *pValue )
 {
 	// process.
-	user_login( client_index, pValue->m_username, pValue->m_password, pValue->m_deviceid );
 	write_gamelog( "[Serv_LOGIN]_idx:%d_user:%s", client_index, pValue->m_username );
+	user_login( client_index, pValue->m_username, pValue->m_password, pValue->m_deviceid );
 	client_setisnew( client_index, (char)pValue->m_isnew );
 	client_setipcountry( client_index, pValue->m_ipcountry );
 }
@@ -67,27 +67,27 @@ void proc_login_S( int client_index, SLK_NetC_Login *pValue )
 void proc_create_S( int client_index, SLK_NetC_Create *pValue )
 {
 	// process.
+	write_gamelog( "[Serv_CREATE]_idx:%d_aclass:%d_name:%s", client_index, pValue->m_aclass, pValue->m_name );
 	client_setwait( client_index, 0 );
 	actor_create( client_index, pValue->m_aclass, pValue->m_name );
-	write_gamelog( "[Serv_CREATE]_idx:%d_aclass:%d_name:%s", client_index, pValue->m_aclass, pValue->m_name );
 }
 
 void proc_list_S( int client_index, char *pValue )
 {
 	// process.
+	write_gamelog( "[Serv_List]_idx:%d", client_index );
 	client_setwait( client_index, 0 );
 	SLK_NetS_List ListValue = { 0 };
 	actor_getlist( client_getplatid( client_index ), client_getuserid( client_index ), &ListValue );
 	netsend_list_S( client_index, SENDTYPE_ACTOR, &ListValue );
-	write_gamelog( "[Serv_List]_idx:%d", client_index );
 }
 
 void proc_entergame_S( int client_index, int *pValue )
 {
 	// process.
+	write_gamelog( "[Serv_ENTERGAME]_idx:%d_id:%d", client_index, *pValue );
 	client_setwait( client_index, 0 );
 	actor_entergame( client_index, *pValue );
-	write_gamelog( "[Serv_ENTERGAME]_idx:%d_id:%d", client_index, *pValue );
 }
 
 void proc_delete_S( int client_index, int *pValue )

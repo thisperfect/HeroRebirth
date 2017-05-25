@@ -1,5 +1,23 @@
 CC=g++
 SRC = \
+../AutoS/src/auto_actor.cpp \
+../AutoS/src/auto_actor_hero.cpp \
+../AutoS/src/auto_actor_item.cpp \
+../AutoS/src/auto_data_item.cpp \
+../AutoS/src/auto_data_paycountry.cpp \
+../AutoS/src/auto_data_paygoods.cpp \
+../AutoS/src/auto_data_platinfo.cpp \
+../AutoS/src/auto_data_upgrade.cpp \
+../AutoS/src/global_netrecv_auto.cpp \
+../AutoS/src/global_netsend_auto.cpp \
+../AutoS/src/global_process_auto.cpp \
+../AutoS/src/global_structrecv_auto.cpp \
+../AutoS/src/global_structsend_auto.cpp \
+../AutoS/src/server_netrecv_auto.cpp \
+../AutoS/src/server_netsend_auto.cpp \
+../AutoS/src/server_process_auto.cpp \
+../AutoS/src/server_structrecv_auto.cpp \
+../AutoS/src/server_structsend_auto.cpp \
 account.cpp \
 activity.cpp \
 actor.cpp \
@@ -7,10 +25,7 @@ actor_func.cpp \
 actor_gmcmd.cpp \
 actor_notify.cpp \
 actor_send.cpp \
-area.cpp \
-army.cpp \
 award.cpp \
-city.cpp \
 client.cpp \
 db.cpp \
 dbredis.cpp \
@@ -26,8 +41,6 @@ item_send.cpp \
 login_net.cpp \
 login_user.cpp \
 main.cpp \
-map.cpp \
-mapunit.cpp \
 mem_dump.cpp \
 script.cpp \
 script_auto.cpp \
@@ -39,8 +52,8 @@ timegmcmd.cpp \
 wqueue.cpp \
 
 
-INCLUDE = -I ../include  -I ../AutoS/include -I  ../../LKUtils/include  -I ../../LKNetServer/include  -I ../../Lua/src  -I /usr/local/mysql/include/mysql  -I ../../hiredis_linux
-LIBRARY = -L ../../../public/lib -L /usr/local/mysql/lib/mysql
+INCLUDE = -I ../include  -I ../AutoS/include -I  ../../LKUtils/include  -I ../../LKNetServer/include  -I ../../Lua/src  -I /usr/include/mysql  -I ../../hiredis_linux
+LIBRARY = -L ../../../public/lib -L /usr/lib
 OBJ = $(SRC:.cpp=.o)
 LIB = -llua -llknet -llkutils -lmysqlclient -lhiredis -lpthread -ldl -lm
 EXE = ../../../exec/hrserver
@@ -49,6 +62,42 @@ $(EXE) : $(OBJ)
 	$(CC)  $(CFLAGS) $(INCLUDE) $(LIBRARY) -o $(EXE) $(CF) $(OBJ) $(LIB)
 
 
+../AutoS/src/auto_actor.o: ../AutoS/src/auto_actor.cpp 
+	$(CC) $(CFLAGS) -c $(INCLUDE) $< -o $@
+../AutoS/src/auto_actor_hero.o: ../AutoS/src/auto_actor_hero.cpp 
+	$(CC) $(CFLAGS) -c $(INCLUDE) $< -o $@
+../AutoS/src/auto_actor_item.o: ../AutoS/src/auto_actor_item.cpp 
+	$(CC) $(CFLAGS) -c $(INCLUDE) $< -o $@
+../AutoS/src/auto_data_item.o: ../AutoS/src/auto_data_item.cpp 
+	$(CC) $(CFLAGS) -c $(INCLUDE) $< -o $@
+../AutoS/src/auto_data_paycountry.o: ../AutoS/src/auto_data_paycountry.cpp 
+	$(CC) $(CFLAGS) -c $(INCLUDE) $< -o $@
+../AutoS/src/auto_data_paygoods.o: ../AutoS/src/auto_data_paygoods.cpp 
+	$(CC) $(CFLAGS) -c $(INCLUDE) $< -o $@
+../AutoS/src/auto_data_platinfo.o: ../AutoS/src/auto_data_platinfo.cpp 
+	$(CC) $(CFLAGS) -c $(INCLUDE) $< -o $@
+../AutoS/src/auto_data_upgrade.o: ../AutoS/src/auto_data_upgrade.cpp 
+	$(CC) $(CFLAGS) -c $(INCLUDE) $< -o $@
+../AutoS/src/global_netrecv_auto.o: ../AutoS/src/global_netrecv_auto.cpp 
+	$(CC) $(CFLAGS) -c $(INCLUDE) $< -o $@
+../AutoS/src/global_netsend_auto.o: ../AutoS/src/global_netsend_auto.cpp 
+	$(CC) $(CFLAGS) -c $(INCLUDE) $< -o $@
+../AutoS/src/global_process_auto.o: ../AutoS/src/global_process_auto.cpp 
+	$(CC) $(CFLAGS) -c $(INCLUDE) $< -o $@
+../AutoS/src/global_structrecv_auto.o: ../AutoS/src/global_structrecv_auto.cpp 
+	$(CC) $(CFLAGS) -c $(INCLUDE) $< -o $@
+../AutoS/src/global_structsend_auto.o: ../AutoS/src/global_structsend_auto.cpp 
+	$(CC) $(CFLAGS) -c $(INCLUDE) $< -o $@
+../AutoS/src/server_netrecv_auto.o: ../AutoS/src/server_netrecv_auto.cpp 
+	$(CC) $(CFLAGS) -c $(INCLUDE) $< -o $@
+../AutoS/src/server_netsend_auto.o: ../AutoS/src/server_netsend_auto.cpp 
+	$(CC) $(CFLAGS) -c $(INCLUDE) $< -o $@
+../AutoS/src/server_process_auto.o: ../AutoS/src/server_process_auto.cpp 
+	$(CC) $(CFLAGS) -c $(INCLUDE) $< -o $@
+../AutoS/src/server_structrecv_auto.o: ../AutoS/src/server_structrecv_auto.cpp 
+	$(CC) $(CFLAGS) -c $(INCLUDE) $< -o $@
+../AutoS/src/server_structsend_auto.o: ../AutoS/src/server_structsend_auto.cpp 
+	$(CC) $(CFLAGS) -c $(INCLUDE) $< -o $@
 account.o: account.cpp 
 	$(CC) $(CFLAGS) -c $(INCLUDE) $<
 activity.o: activity.cpp 
@@ -63,13 +112,7 @@ actor_notify.o: actor_notify.cpp
 	$(CC) $(CFLAGS) -c $(INCLUDE) $<
 actor_send.o: actor_send.cpp 
 	$(CC) $(CFLAGS) -c $(INCLUDE) $<
-area.o: area.cpp 
-	$(CC) $(CFLAGS) -c $(INCLUDE) $<
-army.o: army.cpp 
-	$(CC) $(CFLAGS) -c $(INCLUDE) $<
 award.o: award.cpp 
-	$(CC) $(CFLAGS) -c $(INCLUDE) $<
-city.o: city.cpp 
 	$(CC) $(CFLAGS) -c $(INCLUDE) $<
 client.o: client.cpp 
 	$(CC) $(CFLAGS) -c $(INCLUDE) $<
@@ -100,10 +143,6 @@ login_net.o: login_net.cpp
 login_user.o: login_user.cpp 
 	$(CC) $(CFLAGS) -c $(INCLUDE) $<
 main.o: main.cpp 
-	$(CC) $(CFLAGS) -c $(INCLUDE) $<
-map.o: map.cpp 
-	$(CC) $(CFLAGS) -c $(INCLUDE) $<
-mapunit.o: mapunit.cpp 
 	$(CC) $(CFLAGS) -c $(INCLUDE) $<
 mem_dump.o: mem_dump.cpp 
 	$(CC) $(CFLAGS) -c $(INCLUDE) $<

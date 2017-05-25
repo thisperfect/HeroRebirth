@@ -29,9 +29,9 @@ local m_value4 = 0;
 
 -- 处理逻辑消息总入口 --
 function Network.OnSocket(cmd, buffer)
-	LogUtil.GetInstance():WriteNet("calllua cmd="..cmd);
+	netlog("calllua cmd="..cmd);
 	if buffer == nil then
-		LogUtil.GetInstance():WriteNet("buffer == nil Network.OnSocket("..cmd..")");
+		netlog("buffer == nil Network.OnSocket("..cmd..")");
 		return;
 	end
 	-- 本地发过来的连接成功,断开,异常的消息
@@ -49,7 +49,7 @@ function Network.OnSocket(cmd, buffer)
 	elseif cmd == Exception then
 		local err = buffer:ReadShort();
 		local msg = buffer:ReadString();
-		LogUtil.GetInstance():WriteNet("[OnException] error:"..err.." msg:"..msg);
+		netlog("[OnException] error:"..err.." msg:"..msg);
 		
 		if Const.NetStatus == 3 or GameManager.restart == true then
 			this.OnException();
@@ -61,7 +61,7 @@ function Network.OnSocket(cmd, buffer)
 	elseif cmd == Disconnect then
 		local err = buffer:ReadShort();
 		local msg = buffer:ReadString();
-		LogUtil.GetInstance():WriteNet("[OnDisconnect] error:"..err.." msg:"..msg);
+		netlog("[OnDisconnect] error:"..err.." msg:"..msg);
 		if Const.NetStatus == 3 then
 			this.OnDisconnect();
 		end
@@ -89,21 +89,21 @@ function Network.OnSocket(cmd, buffer)
 			Const.RecvKey = m_recv_key;
 			Const.SendKey = m_send_key;
 			
-			-- 登陆
+			-- 请求登陆验证
 			if Const.platid > 10 then
-				GameManager.SDKLogin();
+				LoginModSDKLoginProc();
 			else
-				GameManager.TestLogin();
+				LoginModTestLoginProc()
 			end
 		end
-		LogUtil.GetInstance():WriteNet("Const.NetStatus="..Const.NetStatus);
+		netlog("Const.NetStatus="..Const.NetStatus);
 		return;
 	end
 	
 	-- 普通游戏数据包
 	local datasize = buffer:ReadShort();
 	if in_proc_command_C( cmd, buffer ) == 0 then
-		LogUtil.GetInstance():WriteNet("cmd not found:"..cmd);
+		netlog("cmd not found:"..cmd);
 	end
 
 	-- 检查一下后面是否还有小数据包
@@ -112,7 +112,7 @@ function Network.OnSocket(cmd, buffer)
 		local cmd = buffer:ReadShort();
 		local datasize = buffer:ReadShort();
 		if in_proc_command_C( cmd, buffer ) == 0 then
-			LogUtil.GetInstance():WriteNet("cmd not found:"..cmd);
+			netlog("cmd not found:"..cmd);
 		end
 		buffersize = buffersize - 4 - datasize;
 	end
@@ -120,7 +120,7 @@ end
 
 -- 当连接建立时 --
 function Network.OnConnect()
-	LogUtil.GetInstance():WriteGame( "Network.OnConnect()" );
+	gamelog( "Network.OnConnect()" );
     if Const.NetStatus == 0 then
 		-- 已建立连接
 		Const.NetStatus = 1;
@@ -128,7 +128,8 @@ function Network.OnConnect()
 		local buffer = ByteBuffer.New();
 		local str = Global.GetValue( "GetDeviceDesc" );
 		if str == "" then
-			str = DeviceHelper.GetDeviceDesc();
+			--str = DeviceHelper.GetDeviceDesc();
+			str = "android"
 			Global.AddValue( "GetDeviceDesc", str );
 		end
 		local str = "";
@@ -168,10 +169,8 @@ function Network.OnConnect()
 		buffer:WriteInt( tonumber(Const.sdk_channelId) );
 		-- 详细设备信息
 		buffer:WriteString( str.."|"..Const.sdk_channelId );
-		
-		LogUtil.GetInstance():WriteGame("fruit.networkManager:SendMessage(buffer);begin");
-		fruit.networkManager:SendMessage(buffer);
-		LogUtil.GetInstance():WriteGame("fruit.networkManager:SendMessage(buffer);end");
+		-- 发送首包
+		eye.networkManager:SendMessage(buffer);
     end
 end
 
@@ -179,7 +178,7 @@ end
 function Network.OnConnectFail( buffer )
 	local err = buffer:ReadShort();
 	local msg = buffer:ReadString();
-	LogUtil.GetInstance():WriteNet("[OnConnectFail] error:"..err.." msg:"..msg);
+	netlog("[OnConnectFail] error:"..err.." msg:"..msg);
 	
 	if Const.NetStatus < 2 then
 --[[		if Const.platid > 10 then
@@ -225,193 +224,6 @@ function Network.OnDisconnect()
 		fruit.networkManager:SendConnect();
 		WaitDlgOpen();
 	end )--]]
-end
-
---  HTTP Response --
-function Network.OnHttpResponse( err, response )
-	--LogUtil.GetInstance():WriteGame( "response:"..response );
-	
-	-- 错误处理
-	if err == 1 then
-		return;
-	end
-
-	local json = require "cjson"
-	local info = json.decode(response);
-	if info == nil or info["cmd"] == nil then
-		return;
-	end
-	local cmd = info["cmd"];
-	
-	-- SDK模式下的用户信息
-	if cmd == "1" then
-		LoginModSetLoadingProgress( 0, 3, 4 );
-		LoginModLoginQueue( true );
-		local serverid = info["s"];
-		local host = info["h"];
-		local port = info["p"];
-		
-		-- 是否入口关闭
-		local closeserver = info["close"];
-		if closeserver == nil then
-			closeserver = 0;
-		end
-		
-		-- android 限制资源版本
-		local force_android_ver = info["force_android_ver"];
-		if force_android_ver == nil then
-			force_android_ver = 0;
-		end
-		
-		-- ios限制资源版本
-		local force_ios_ver = info["force_ios_ver"];
-		if force_ios_ver == nil then
-			force_ios_ver = 0;
-		end
-		
-		-- IP所在国家
-		if info["ipcountry"] ~= nil and info["ipcountry"] ~= "" then
-			g_ipCountryStr = string.lower( info["ipcountry"] );
-		end
-		LogUtil.GetInstance():WriteGame( "ipcountry:"..g_ipCountryStr );
-		
-		Const.serverid = serverid;
-		--LogUtil.GetInstance():WriteGame("Network.OnHttpResponse:host:"..host.." port:"..port.." close:"..closeserver.." force_ios_ver:"..force_ios_ver.." force_android_ver:"..force_android_ver.." nowver:"..Global.GetValue("RESOURCE_VERSION"));
-		
-		-- 强制更新版本
-		local nowver = tonumber( Global.GetValue("RESOURCE_VERSION") );
-		if tonumber(Const.sdk_sysType) == 1 and nowver <= tonumber(force_ios_ver) then
-			Network.GetForceWarning();
-			return;
-		elseif tonumber(Const.sdk_sysType) == 2 and nowver <= tonumber(force_android_ver) then
-			Network.GetForceWarning();
-			return;
-		end
-		
-		-- 维护中
-		if tonumber(closeserver) == 1 then
-			Network.GetNotice();
-		else
-			Network.SDKConnectServer( host, port );
-		end
-	
-	-- 测试模式下的服务器列表
-	elseif cmd == "2" then
-		
-		-- IP所在国家
-		if info["ipcountry"] ~= nil and info["ipcountry"] ~= "" then
-			g_ipCountryStr = string.lower( info["ipcountry"] );
-		end
-		LogUtil.GetInstance():WriteGame( "ipcountry:"..g_ipCountryStr );
-		
-		-- 服务器列表
-		Cache.ServerInfo = info["list"];
-		for i = 1, #Cache.ServerInfo, 1 do
-			LoginModAddServer( i, Cache.ServerInfo[i]["n"] );
-		end
-		
-		-- 当前已选择的服务器
-		local serinfo = Cache.GetServerInfoByID( Data.userini:ReadValue( "LASTSERVERID", "" ) );
-		if serinfo == nil then
-			serinfo = Cache.GetServerInfoByID( info["default"] );
-		end
-		LoginModSetCurrentServer( serinfo["id"], serinfo["n"] );
-
-		-- 自动登录
-		if LoginModAutoLogin() < 0 then
-			LoginModOpenTestLogin();
-		end
-		
-	-- 获取维护公告
-	elseif cmd == "3" then
-		local notice = info["notice"];
-		LoginModSetNotice( notice );
-	
-	-- 获取邮件标题
-	elseif cmd == "4" then
-		local notice = info["notice"];
-		local mailid = tonumber(info["ext"]);
-		local notice = string.split( notice, '|' );
-		local title = ""
-		local content = "";
-		local gotoMarket = "";
-		local ver = "";
-		if notice[1] then
-			title = notice[1];
-		end
-		if notice[2] then
-			content = notice[2];
-		end
-		if notice[3] then
-			ver = notice[3];
-		end
-			
-		GetMail():RecvNotifyTitle( mailid, title, content, ver );
-
-	-- 获取邮件内容
-	elseif cmd == "5" then
-		local content = info["notice"];
-		local mailid = tonumber(info["ext"]);
-		GetMail():RecvNotifyContent( mailid, content );
-		
-	-- 获取强制更新提示
-	elseif cmd == "6" then
-		local notice = info["notice"];
-		LoginModSetNotice( notice );
-	
-	-- 获取服务器列表地图
-	elseif cmd == "7" then
-		Cache.SetServerList( info["list"] );
-	
-	-- 选择新服务器	
-	elseif cmd == "8" then
-		local serverid = tonumber( info["s"] );
-		local host = info["h"];
-		local port = info["p"];
-		-- 是否入口关闭
-		local closeserver = info["close"];
-		if closeserver == nil then
-			closeserver = 0;
-		end
-
-		if tonumber( closeserver ) == 0 and serverid > 0 then
-			GameManager.Logout( 0 );
-		end
-
-    -- 翻译结果
-    elseif cmd == "9" then
-		local str = info["str"];
-		local ext = info["ext"];
-        -- 错误
---[[        if info["error_code"] ~= nil then
-            LogUtil.GetInstance():WriteGame( "Translate Error:" .. info["error_msg"] );
-            local msg = {};
-            msg.error = info["error_msg"];
-            msg.translation = "";
-            EventProtocol.dispatchEvent("ChatTranslation",msg);
-            return;
-        end--]]
-        local msg = {};
-        msg.error = nil;
-        msg.translation = str;
-        msg.ext = ext;
-        EventProtocol.dispatchEvent("ChatTranslation",msg);
-        -- 结果
-        -- print( info["trans_result"][1]["dst"] );   
-		
-	-- 获取夏日活动跨服排行榜信息
-	elseif cmd == "10" then
-		--info["list"]; 
-		--{\"r\":$rank,\"sid\":\"$serverid\",\"aid\":$actorid,\"cid\":$cityid,\"n\":$name,\"hid\":\"$headid\",\"co\":\"$countryid\",\"f\":$flower}         
-        SummerKingModSetAllServer( info );  
-        SummerKingRankingModSeverInfo( info["list"] );
-	
-	-- 当前服务器候选人在全服排名	
-	elseif cmd == "11" then
-		--info["list"];
-		-- {\"r\":$rank,\"cid\":$cityid}
-        SummerKingModSetMySeverRank( info["list"] );
-    end
 end
 
 -- 连接服务器

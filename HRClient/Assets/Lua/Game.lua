@@ -7,7 +7,7 @@ GameManager.userini = nil;
 
 -- 游戏脚本主逻辑入口
 function GameManager.OnStart()
-	LogUtil.GetInstance():WriteGame("GameManager.OnStart();begin");
+	gamelog("GameManager.OnStart();begin");
 	
 	-- 读取ini配置文件
 	GameManager.userini = IniUtil.New();
@@ -49,7 +49,7 @@ function GameManager.OnStart()
 		local _worldMapScence = GameObject.Instantiate( obj );
 	end );--]]
 	
-	LogUtil.GetInstance():WriteGame("GameManager.OnStart();end");
+	gamelog("GameManager.OnStart();end");
 end
 
 -- 游戏销毁
@@ -63,7 +63,7 @@ end
 function GameManager.Logout( voluntary )
 	-- 1主动 0被动
 	Global.AddValue("ISLOGOUT" , voluntary );
-	--fruit.networkManager:Logout();
+	--eye.networkManager:Logout();
 end
 
 
@@ -81,7 +81,7 @@ function GameManager.OnAskQuit()
     end
 
     -- 先关闭最后打开的界面
-    if fruit.uiManager:CloseLast() then
+    if eye.uiManager:CloseLast() then
         return;
     end
 
@@ -96,9 +96,9 @@ end
 GameManager.OnApplicationPauseTime = 0;
 function GameManager.OnApplicationPause( paused )
 	if paused == true then
-		LogUtil.GetInstance():WriteGame( "OnApplicationPause: paused == true" );
+		gamelog( "OnApplicationPause: paused == true" );
 	else
-		LogUtil.GetInstance():WriteGame( "OnApplicationPause: paused == false" );
+		gamelog( "OnApplicationPause: paused == false" );
 	end
 
 	-- 进入后台
@@ -109,13 +109,13 @@ function GameManager.OnApplicationPause( paused )
 	-- 从后台进入前台时
 	else
 
-		LogUtil.GetInstance():WriteGame( "PauseTime:"..GameManager.OnApplicationPauseTime.." os.time():"..os.time() );
+		gamelog( "PauseTime:"..GameManager.OnApplicationPauseTime.." os.time():"..os.time() );
 		-- 检测是否断线
 		if GameManager.OnApplicationPauseTime > 0 and os.time() - GameManager.OnApplicationPauseTime > 180 then
 			
 				if Const.NetStatus > 2 or GameManager.restart == true then
 					Invoke( function() 
-							fruit.uiManager:Clear();
+							eye.uiManager:Clear();
 							LoginModDestroy();
 							SceneManager.LoadScene( "launcher" ); 
 						end, 1/2 ); 
@@ -139,11 +139,6 @@ end
 -- 所有UI关闭事件
 function GameManager.AllUIClose()
     --GetDialogQueue():Show();
-end
-
--- 读取AssetBundle的回调
-function GameManager.OnLoadAssetBundleProc( progress, totalProgress )
-
 end
 
 -- 远程推送
