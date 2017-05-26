@@ -22,9 +22,9 @@ public class AssetBundleInfo
 public class LoadAssetRequest
 {
     public Type assetType;
-    public string[] assetNames;
+    public string assetNames;
     public LuaFunction luaFunc;
-    public Action<UnityEngine.Object[]> sharpFunc;
+    public Action<UnityEngine.Object> sharpFunc;
 }
 
 // 数据管理器 
@@ -128,21 +128,12 @@ public class ResourceManager : MonoBehaviour
         // 读取所有assetbundle名和依赖
         if ( Const.ResourceMode == "assetbundle" )
         {
-            LoadAssetAsyn<AssetBundleManifest>( "StreamingAssets", new string[] { "AssetBundleManifest" }, delegate ( UnityEngine.Object[] objs )
+            LoadAssetAsyn<AssetBundleManifest>( "StreamingAssets", "AssetBundleManifest", delegate ( UnityEngine.Object objs )
             {
-                if ( objs.Length > 0 )
+                if ( objs )
                 {
-                    m_AssetBundleManifest = objs[0] as AssetBundleManifest;
+                    m_AssetBundleManifest = objs as AssetBundleManifest;
                     m_AssetBundleNameList = m_AssetBundleManifest.GetAllAssetBundles();
-
-                    //for ( int i = 0; i < m_AssetBundleNameList.Length; i++ )
-                    //{
-                    //    int index = m_AssetBundleNameList[i].LastIndexOf( '/' );
-                    //    string path = m_AssetBundleNameList[i].Remove( 0, index + 1 );
-
-                    //    Debug.Log( "AssetBundleName >>" + path );
-                    //    LogUtil.GetInstance().WriteGame( path );
-                    //}
                     if ( callback != null )
                         callback();
                 }
@@ -534,7 +525,7 @@ public class ResourceManager : MonoBehaviour
     /// <summary>
     /// 异步载入素材
     /// </summary>
-    void LoadAssetAsyn<T>( string abName, string[] assetNames, Action<UnityEngine.Object[]> action = null, LuaFunction func = null ) where T : UnityEngine.Object
+    void LoadAssetAsyn<T>( string abName, string assetNames, Action<UnityEngine.Object> action = null, LuaFunction func = null ) where T : UnityEngine.Object
     {
         abName = GetRealAssetPath( abName );
 
@@ -584,25 +575,18 @@ public class ResourceManager : MonoBehaviour
         }
         for ( int i = 0; i < list.Count; i++ )
         {
-            string[] assetNames = list[i].assetNames;
-            List<UnityEngine.Object> result = new List<UnityEngine.Object>();
+            string assetNames = list[i].assetNames;
+            AssetBundleRequest request = bundleInfo.m_AssetBundle.LoadAssetAsync( assetNames, list[i].assetType );
+            yield return request;
 
-            AssetBundle ab = bundleInfo.m_AssetBundle;
-            for ( int j = 0; j < assetNames.Length; j++ )
-            {
-                string assetPath = assetNames[j];
-                AssetBundleRequest request = ab.LoadAssetAsync( assetPath, list[i].assetType );
-                yield return request;
-                result.Add( request.asset );
-            }
             if ( list[i].sharpFunc != null )
             {
-                list[i].sharpFunc( result.ToArray() );
+                list[i].sharpFunc( request.asset );
                 list[i].sharpFunc = null;
             }
             if ( list[i].luaFunc != null )
             {
-                list[i].luaFunc.Call( (object)result.ToArray() );
+                list[i].luaFunc.Call( request.asset );
                 list[i].luaFunc.Dispose();
                 list[i].luaFunc = null;
             }
@@ -684,7 +668,7 @@ public class ResourceManager : MonoBehaviour
     /// <summary>
     /// 非AssetBundle模式使用
     /// </summary>
-    IEnumerator OnResourceLoad<T>( string path, Action<UnityEngine.Object[]> action = null, LuaFunction func = null ) where T : UnityEngine.Object
+    IEnumerator OnResourceLoad<T>( string path, Action<UnityEngine.Object> action = null, LuaFunction func = null ) where T : UnityEngine.Object
     {
         ResourceRequest resourceRequest = Resources.LoadAsync<GameObject>( path );
         while ( !resourceRequest.isDone )
@@ -694,9 +678,7 @@ public class ResourceManager : MonoBehaviour
 
         if ( action != null )
         {
-            List<UnityEngine.Object> result = new List<UnityEngine.Object>();
-            result.Add( resourceRequest.asset );
-            action( result.ToArray() );
+            action( resourceRequest.asset );
         }
         if ( func != null )
         {
@@ -708,7 +690,7 @@ public class ResourceManager : MonoBehaviour
     /// <summary>
     /// 异步读取Sprite
     /// </summary>
-    public void LoadSpriteAsyn( string reskeyname, Action<UnityEngine.Object[]> func )
+    public void LoadSpriteAsyn( string reskeyname, Action<UnityEngine.Object> func )
     {
         if ( m_resmap_sprite == null || m_resmap_sprite.ContainsKey( reskeyname ) == false )
         {
@@ -719,7 +701,7 @@ public class ResourceManager : MonoBehaviour
 
         if ( Const.ResourceMode == "assetbundle" )
         {
-            LoadAssetAsyn<Sprite>( m_resmap_sprite[reskeyname][1], new string[] { m_resmap_sprite[reskeyname][2] }, func );
+            LoadAssetAsyn<Sprite>( m_resmap_sprite[reskeyname][1], m_resmap_sprite[reskeyname][2], func );
         }
         else
         {
@@ -741,7 +723,7 @@ public class ResourceManager : MonoBehaviour
 
         if ( Const.ResourceMode == "assetbundle" )
         {
-            LoadAssetAsyn<Sprite>( m_resmap_sprite[reskeyname][1], new string[] { m_resmap_sprite[reskeyname][2] }, null, func );
+            LoadAssetAsyn<Sprite>( m_resmap_sprite[reskeyname][1], m_resmap_sprite[reskeyname][2], null, func );
         }
         else
         {
@@ -752,7 +734,7 @@ public class ResourceManager : MonoBehaviour
     /// <summary>
     /// 异步读取Prefab
     /// </summary>
-    public void LoadPrefabAsyn( string reskeyname, Action<UnityEngine.Object[]> func )
+    public void LoadPrefabAsyn( string reskeyname, Action<UnityEngine.Object> func )
     {
         if ( m_resmap_prefab == null || m_resmap_prefab.ContainsKey( reskeyname ) == false )
         {
@@ -763,7 +745,7 @@ public class ResourceManager : MonoBehaviour
 
         if ( Const.ResourceMode == "assetbundle" )
         {
-            LoadAssetAsyn<GameObject>( m_resmap_prefab[reskeyname][1], new string[] { m_resmap_prefab[reskeyname][2] }, func );
+            LoadAssetAsyn<GameObject>( m_resmap_prefab[reskeyname][1], m_resmap_prefab[reskeyname][2], func );
         }
         else
         {
@@ -785,7 +767,7 @@ public class ResourceManager : MonoBehaviour
 
         if ( Const.ResourceMode == "assetbundle" )
         {
-            LoadAssetAsyn<GameObject>( m_resmap_prefab[reskeyname][1], new string[] { m_resmap_prefab[reskeyname][2] }, null, func );
+            LoadAssetAsyn<GameObject>( m_resmap_prefab[reskeyname][1], m_resmap_prefab[reskeyname][2], null, func );
         }
         else
         {

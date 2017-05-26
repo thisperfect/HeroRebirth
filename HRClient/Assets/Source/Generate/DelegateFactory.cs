@@ -28,10 +28,11 @@ public static class DelegateFactory
 		dict.Add(typeof(UnityEngine.Application.LogCallback), UnityEngine_Application_LogCallback);
 		dict.Add(typeof(UnityEngine.AudioClip.PCMReaderCallback), UnityEngine_AudioClip_PCMReaderCallback);
 		dict.Add(typeof(UnityEngine.AudioClip.PCMSetPositionCallback), UnityEngine_AudioClip_PCMSetPositionCallback);
-		dict.Add(typeof(System.Action<UnityEngine.Object[]>), System_Action_UnityEngine_Objects);
+		dict.Add(typeof(System.Action<UnityEngine.Object>), System_Action_UnityEngine_Object);
 		dict.Add(typeof(UnityEngine.UI.InputField.OnValidateInput), UnityEngine_UI_InputField_OnValidateInput);
 		dict.Add(typeof(UIInputFieldSubmit.OnValidateInput), UIInputFieldSubmit_OnValidateInput);
 		dict.Add(typeof(UnityEngine.RectTransform.ReapplyDrivenProperties), UnityEngine_RectTransform_ReapplyDrivenProperties);
+		dict.Add(typeof(UITween.OnFinish), UITween_OnFinish);
 	}
 
     [NoToLuaAttribute]
@@ -670,12 +671,12 @@ public static class DelegateFactory
 		}
 	}
 
-	class System_Action_UnityEngine_Objects_Event : LuaDelegate
+	class System_Action_UnityEngine_Object_Event : LuaDelegate
 	{
-		public System_Action_UnityEngine_Objects_Event(LuaFunction func) : base(func) { }
-		public System_Action_UnityEngine_Objects_Event(LuaFunction func, LuaTable self) : base(func, self) { }
+		public System_Action_UnityEngine_Object_Event(LuaFunction func) : base(func) { }
+		public System_Action_UnityEngine_Object_Event(LuaFunction func, LuaTable self) : base(func, self) { }
 
-		public void Call(UnityEngine.Object[] param0)
+		public void Call(UnityEngine.Object param0)
 		{
 			func.BeginPCall();
 			func.Push(param0);
@@ -683,7 +684,7 @@ public static class DelegateFactory
 			func.EndPCall();
 		}
 
-		public void CallWithSelf(UnityEngine.Object[] param0)
+		public void CallWithSelf(UnityEngine.Object param0)
 		{
 			func.BeginPCall();
 			func.Push(self);
@@ -693,25 +694,25 @@ public static class DelegateFactory
 		}
 	}
 
-	public static Delegate System_Action_UnityEngine_Objects(LuaFunction func, LuaTable self, bool flag)
+	public static Delegate System_Action_UnityEngine_Object(LuaFunction func, LuaTable self, bool flag)
 	{
 		if (func == null)
 		{
-			System.Action<UnityEngine.Object[]> fn = delegate(UnityEngine.Object[] param0) { };
+			System.Action<UnityEngine.Object> fn = delegate(UnityEngine.Object param0) { };
 			return fn;
 		}
 
 		if(!flag)
 		{
-			System_Action_UnityEngine_Objects_Event target = new System_Action_UnityEngine_Objects_Event(func);
-			System.Action<UnityEngine.Object[]> d = target.Call;
+			System_Action_UnityEngine_Object_Event target = new System_Action_UnityEngine_Object_Event(func);
+			System.Action<UnityEngine.Object> d = target.Call;
 			target.method = d.Method;
 			return d;
 		}
 		else
 		{
-			System_Action_UnityEngine_Objects_Event target = new System_Action_UnityEngine_Objects_Event(func, self);
-			System.Action<UnityEngine.Object[]> d = target.CallWithSelf;
+			System_Action_UnityEngine_Object_Event target = new System_Action_UnityEngine_Object_Event(func, self);
+			System.Action<UnityEngine.Object> d = target.CallWithSelf;
 			target.method = d.Method;
 			return d;
 		}
@@ -869,6 +870,55 @@ public static class DelegateFactory
 		{
 			UnityEngine_RectTransform_ReapplyDrivenProperties_Event target = new UnityEngine_RectTransform_ReapplyDrivenProperties_Event(func, self);
 			UnityEngine.RectTransform.ReapplyDrivenProperties d = target.CallWithSelf;
+			target.method = d.Method;
+			return d;
+		}
+	}
+
+	class UITween_OnFinish_Event : LuaDelegate
+	{
+		public UITween_OnFinish_Event(LuaFunction func) : base(func) { }
+		public UITween_OnFinish_Event(LuaFunction func, LuaTable self) : base(func, self) { }
+
+		public void Call(UnityEngine.GameObject param0, int param1)
+		{
+			func.BeginPCall();
+			func.Push(param0);
+			func.Push(param1);
+			func.PCall();
+			func.EndPCall();
+		}
+
+		public void CallWithSelf(UnityEngine.GameObject param0, int param1)
+		{
+			func.BeginPCall();
+			func.Push(self);
+			func.Push(param0);
+			func.Push(param1);
+			func.PCall();
+			func.EndPCall();
+		}
+	}
+
+	public static Delegate UITween_OnFinish(LuaFunction func, LuaTable self, bool flag)
+	{
+		if (func == null)
+		{
+			UITween.OnFinish fn = delegate(UnityEngine.GameObject param0, int param1) { };
+			return fn;
+		}
+
+		if(!flag)
+		{
+			UITween_OnFinish_Event target = new UITween_OnFinish_Event(func);
+			UITween.OnFinish d = target.Call;
+			target.method = d.Method;
+			return d;
+		}
+		else
+		{
+			UITween_OnFinish_Event target = new UITween_OnFinish_Event(func, self);
+			UITween.OnFinish d = target.CallWithSelf;
 			target.method = d.Method;
 			return d;
 		}

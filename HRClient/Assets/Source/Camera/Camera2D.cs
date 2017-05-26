@@ -84,10 +84,14 @@ public abstract class Camera2D : MonoBehaviour
         _TweenSize = _Camera.orthographicSize;
 
         // 摄像机默认值
-        if( defaultSize != 0 )
+        if ( defaultSize != 0 )
         {
-		    _Camera.orthographicSize = defaultSize;
+            _Camera.orthographicSize = defaultSize;
             RefreshSubCamera();
+        }
+        else
+        {
+            defaultSize = _Camera.orthographicSize;
         }
         if( defaultPos != Vector2.zero )
             MoveTo( defaultPos );

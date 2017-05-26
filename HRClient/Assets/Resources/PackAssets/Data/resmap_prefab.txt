@@ -1,2 +1,4 @@
 资源键名	Resources模式资源名	所在assetBundle名称	所在assetBundle资源名
+CharacterDefault	PackAssets/DefaultPrefab/CharacterDefault	defaultprefab	CharacterDefault
 MainCityScence	PackAssets/MainCityPrefab/MainCityScence	maincityscenceprefab	MainCityScence
+MainDlg	PackAssets/UIPrefab/MainDlg	uiprefab	MainDlg

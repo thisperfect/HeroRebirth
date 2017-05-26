@@ -28,7 +28,7 @@
 #define CLIENT_PUSHKEY_MAX	256	// 推送秘钥长度
 
 #define ACTOR_CHECK_INDEX(actor_index)		do{ if( actor_index < 0 || actor_index >= g_maxactornum ) return -1;}while(0)
-
+#define FIGHT_CHECK_INDEX(fight_index)		do{ if( fight_index < 0 || fight_index >= g_fight_maxnum ) return -1;}while(0)
 // 闰年
 #define IS_LEAP_YEAR(y)  (((y) % 4 == 0 && (y) % 100 != 0) || (y) % 400 == 0)
 

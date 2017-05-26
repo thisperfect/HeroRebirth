@@ -195,6 +195,16 @@ public static class CustomSettings
         _GT(typeof(UIText)),
         _GT(typeof(GridLayoutGroup)),
         _GT(typeof(LayoutElement)),
+        _GT(typeof(UITween)),
+        _GT(typeof(UITweenRectPosition)),
+        _GT(typeof(UITweenFade)),
+        _GT(typeof(UITweenColor)),
+        _GT(typeof(UITweenLocalPosition)),
+        _GT(typeof(UITweenLocalPositionBetween)),
+        _GT(typeof(UITweenScale)),
+        _GT(typeof(UITweenPosition)),
+        _GT(typeof(UITweenSizeDelta)),
+        _GT(typeof(UITweenCityBuilding)),
         _GT(typeof(MaskableGraphic)),
         _GT(typeof(Graphic)),
         _GT(typeof(TextGenerator)),
@@ -218,11 +228,11 @@ public static class CustomSettings
         // Gizmo
 		_GT(typeof(GizmoPlane)),
         _GT(typeof(GizmoBezierLine)),
-        _GT(typeof(MapUnitMove)),
-        _GT(typeof(MapBorder)),
         _GT(typeof(Bezier)),
         _GT(typeof(BezierMove)),
         // END
+
+        _GT(typeof(CityCamera)),
     };
 
     public static List<Type> dynamicList = new List<Type>()

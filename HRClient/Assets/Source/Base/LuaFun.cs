@@ -160,6 +160,21 @@ public class LuaFun
     }
 
     /// <summary>
+    /// 选择一个建筑
+    /// </summary>
+    private static LuaFunction _buildingselect = null;
+    public static LuaFunction buildingselect
+    {
+        get
+        {
+            if ( _buildingselect == null )
+                _buildingselect = eye.luaManager.GetFunction( "MainCity.BuildingSelect" );
+
+            return _buildingselect;
+        }
+    }
+
+    /// <summary>
 	/// 加载资源
 	/// </summary>
 	private static LuaFunction _loadAssetBundleProc = null;
@@ -173,142 +188,7 @@ public class LuaFun
 			return _loadAssetBundleProc;
 		}
 	}
-
-    /// <summary>
-    /// 世界地图初始化
-    /// </summary>
-    private static LuaFunction _worldMapStart = null;
-    public static LuaFunction worldMapStart
-    {
-        get
-        {
-            if ( _worldMapStart == null )
-                _worldMapStart = eye.luaManager.GetFunction( "WorldMap.Start" );
-
-            return _worldMapStart;
-        }
-    }
-
-    /// <summary>
-    /// 世界地图帧逻辑
-    /// </summary>
-    private static LuaFunction _worldMapUpdate = null;
-    public static LuaFunction worldMapUpdate
-    {
-        get
-        {
-            if ( _worldMapUpdate == null )
-                _worldMapUpdate = eye.luaManager.GetFunction( "WorldMap.Update" );
-
-            return _worldMapUpdate;
-        }
-    }
-
-    /// <summary>
-    /// 世界地图
-    /// </summary>
-    private static LuaFunction _worldMapViewChangeSec = null;
-    public static LuaFunction worldMapViewChangeSec
-    {
-        get
-        {
-            if ( _worldMapViewChangeSec == null )
-                _worldMapViewChangeSec = eye.luaManager.GetFunction( "WorldMap.ViewChangeSec" );
-
-            return _worldMapViewChangeSec;
-        }
-    }
-
-    /// <summary>
-    /// 世界地图
-    /// </summary>
-    private static LuaFunction _worldMapViewChangeFrame = null;
-    public static LuaFunction worldMapViewChangeFrame
-    {
-        get
-        {
-            if ( _worldMapViewChangeFrame == null )
-                _worldMapViewChangeFrame = eye.luaManager.GetFunction( "WorldMap.ViewChangeFrame" );
-
-            return _worldMapViewChangeFrame;
-        }
-    }
-
-    /// <summary>
-    /// 世界地图
-    /// </summary>
-    private static LuaFunction _worldMapOnClick = null;
-    public static LuaFunction worldMapOnClick
-    {
-        get
-        {
-            if ( _worldMapOnClick == null )
-                _worldMapOnClick = eye.luaManager.GetFunction( "WorldMap.OnClick" );
-
-            return _worldMapOnClick;
-        }
-    }
-
-    /// <summary>
-    /// 世界地图
-    /// </summary>
-    private static LuaFunction _worldMapOnDrag = null;
-    public static LuaFunction worldMapOnDrag
-    {
-        get
-        {
-            if ( _worldMapOnDrag == null )
-                _worldMapOnDrag = eye.luaManager.GetFunction( "WorldMap.OnDrag" );
-
-            return _worldMapOnDrag;
-        }
-    }
-
-     /// <summary>
-    /// 世界地图缩略图
-    /// </summary>
-    private static LuaFunction _worldMapThumbStart = null;
-    public static LuaFunction worldMapThumbStart
-    {
-        get
-        {
-            if ( _worldMapThumbStart == null )
-                _worldMapThumbStart = eye.luaManager.GetFunction( "WorldMapThumb.Start" );
-
-            return _worldMapThumbStart;
-        }
-    }
-
-    /// <summary>
-    /// 世界地图缩略图
-    /// </summary>
-    private static LuaFunction _worldMapThumbOnClick = null;
-    public static LuaFunction worldMapThumbOnClick
-    {
-        get
-        {
-            if ( _worldMapThumbOnClick == null )
-                _worldMapThumbOnClick = eye.luaManager.GetFunction( "WorldMapThumb.OnClick" );
-
-            return _worldMapThumbOnClick;
-        }
-    }
-
-    /// <summary>
-    /// 世界地图缩略图
-    /// </summary>
-    private static LuaFunction _worldMapThumbOnDrag = null;
-    public static LuaFunction worldMapThumbOnDrag
-    {
-        get
-        {
-            if ( _worldMapThumbOnDrag == null )
-                _worldMapThumbOnDrag = eye.luaManager.GetFunction( "WorldMapThumb.OnDrag" );
-
-            return _worldMapThumbOnDrag;
-        }
-    }
-        
+    
     /// <summary>
     /// 上传头像回调
     /// </summary>
@@ -339,18 +219,9 @@ public class LuaFun
         _gameLogout = null;
         _pushKey = null;
 
-        _worldMapStart = null;
-        _worldMapUpdate = null;
-        _worldMapViewChangeSec = null;
-        _worldMapViewChangeFrame = null;
-        _worldMapOnClick = null;
-        _worldMapOnDrag = null;
-        _worldMapThumbStart = null;
-        _worldMapThumbOnClick = null;
-        _worldMapThumbOnDrag = null;
-
         _photoCustomHead = null;
 
         _allUIClose = null;
+        _buildingselect = null;
     }
 }

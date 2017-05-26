@@ -3,7 +3,7 @@ local m_Dlg = nil;
 
 -- 打开界面
 function SampleDlgOpen()
-	m_Dlg = fruit.uiManager:Open( "SampleDlg" );
+	m_Dlg = eye.uiManager:Open( "SampleDlg" );
 end
 
 -- 隐藏界面
@@ -12,7 +12,7 @@ function SampleDlgClose()
 		return;
 	end
 	
-	fruit.uiManager:Close( "SampleDlg" );
+	eye.uiManager:Close( "SampleDlg" );
 end
 
 -- 删除界面
@@ -37,7 +37,7 @@ end
 -- 载入时调用
 function SampleDlgOnAwake( gameObject )
 	-- 控件赋值	
-	local objs = gameObject:GetComponent( UISystem.GetClassType() ).relatedGameObject;	
+	local objs = gameObject:GetComponent( typeof(UISystem) ).relatedGameObject;	
 end
 
 -- 界面初始化时调用

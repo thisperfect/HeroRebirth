@@ -3,7 +3,7 @@ local m_Dlg = nil;
 
 -- 打开界面
 function #NAME#Open()
-	m_Dlg = fruit.uiManager:Open( "#NAME#" );
+	m_Dlg = eye.uiManager:Open( "#NAME#" );
 end
 
 -- 隐藏界面
@@ -12,7 +12,7 @@ function #NAME#Close()
 		return;
 	end
 	
-	fruit.uiManager:Close( "#NAME#" );
+	eye.uiManager:Close( "#NAME#" );
 end
 
 -- 删除界面
@@ -37,7 +37,7 @@ end
 -- 载入时调用
 function #NAME#OnAwake( gameObject )
 	-- 控件赋值	
-	local objs = gameObject:GetComponent( UISystem.GetClassType() ).relatedGameObject;	
+	local objs = gameObject:GetComponent( typeof(UISystem) ).relatedGameObject;	
 end
 
 -- 界面初始化时调用

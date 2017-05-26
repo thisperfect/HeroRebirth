@@ -12,14 +12,14 @@ public class Test
     public static void CreatNewLuaDlg()
     {
         ProjectWindowUtil.StartNameEditingIfProjectWindowExists( 0, ScriptableObject.CreateInstance<MyDoCreateScriptAsset>(), GetSelectedPathOrFallback() + "/New Lua.lua", null,
-       "Assets/Lua/logic/ui/TemplateDlg.lua");
+       "Assets/Lua/uidlg/TemplateDlg.lua");
     }
 
     [MenuItem( "Assets/Create/LuaMod Script", false, 80 )]
     public static void CreatNewLuaMod()
     {
         ProjectWindowUtil.StartNameEditingIfProjectWindowExists( 0, ScriptableObject.CreateInstance<MyDoCreateScriptAsset>(), GetSelectedPathOrFallback() + "/New Lua.lua", null,
-       "Assets/Lua/logic/ui/mod/TemplateMod.lua" );
+       "Assets/Lua/uimod/TemplateMod.lua" );
     }
  
     public static string GetSelectedPathOrFallback()

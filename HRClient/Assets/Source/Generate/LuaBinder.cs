@@ -41,6 +41,16 @@ public static class LuaBinder
 		UIScrollViewWrap.Register(L);
 		UIDragSensorWrap.Register(L);
 		UITextWrap.Register(L);
+		UITweenWrap.Register(L);
+		UITweenRectPositionWrap.Register(L);
+		UITweenFadeWrap.Register(L);
+		UITweenColorWrap.Register(L);
+		UITweenLocalPositionWrap.Register(L);
+		UITweenLocalPositionBetweenWrap.Register(L);
+		UITweenScaleWrap.Register(L);
+		UITweenPositionWrap.Register(L);
+		UITweenSizeDeltaWrap.Register(L);
+		UITweenCityBuildingWrap.Register(L);
 		UITextTimeCountdownWrap.Register(L);
 		UITextNumCountdownWrap.Register(L);
 		UITextUnderlineWrap.Register(L);
@@ -54,10 +64,10 @@ public static class LuaBinder
 		UIHighLightMaskWrap.Register(L);
 		GizmoPlaneWrap.Register(L);
 		GizmoBezierLineWrap.Register(L);
-		MapUnitMoveWrap.Register(L);
-		MapBorderWrap.Register(L);
 		BezierWrap.Register(L);
 		BezierMoveWrap.Register(L);
+		CityCameraWrap.Register(L);
+		Camera2DWrap.Register(L);
 		L.BeginModule("UnityEngine");
 		UnityEngine_ComponentWrap.Register(L);
 		UnityEngine_TransformWrap.Register(L);
@@ -159,10 +169,13 @@ public static class LuaBinder
 		L.RegFunction("Predicate_int", System_Predicate_int);
 		L.RegFunction("Action_int", System_Action_int);
 		L.RegFunction("Comparison_int", System_Comparison_int);
-		L.RegFunction("Action_UnityEngine_Objects", System_Action_UnityEngine_Objects);
+		L.RegFunction("Action_UnityEngine_Object", System_Action_UnityEngine_Object);
 		L.EndModule();
 		L.BeginModule("UIInputFieldSubmit");
 		L.RegFunction("OnValidateInput", UIInputFieldSubmit_OnValidateInput);
+		L.EndModule();
+		L.BeginModule("UITween");
+		L.RegFunction("OnFinish", UITween_OnFinish);
 		L.EndModule();
 		L.EndModule();
 		L.BeginPreLoad();
@@ -534,7 +547,7 @@ public static class LuaBinder
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int System_Action_UnityEngine_Objects(IntPtr L)
+	static int System_Action_UnityEngine_Object(IntPtr L)
 	{
 		try
 		{
@@ -543,13 +556,13 @@ public static class LuaBinder
 
 			if (count == 1)
 			{
-				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(System.Action<UnityEngine.Object[]>), func);
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(System.Action<UnityEngine.Object>), func);
 				ToLua.Push(L, arg1);
 			}
 			else
 			{
 				LuaTable self = ToLua.CheckLuaTable(L, 2);
-				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(System.Action<UnityEngine.Object[]>), func, self);
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(System.Action<UnityEngine.Object>), func, self);
 				ToLua.Push(L, arg1);
 			}
 			return 1;
@@ -577,6 +590,33 @@ public static class LuaBinder
 			{
 				LuaTable self = ToLua.CheckLuaTable(L, 2);
 				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(UIInputFieldSubmit.OnValidateInput), func, self);
+				ToLua.Push(L, arg1);
+			}
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int UITween_OnFinish(IntPtr L)
+	{
+		try
+		{
+			int count = LuaDLL.lua_gettop(L);
+			LuaFunction func = ToLua.CheckLuaFunction(L, 1);
+
+			if (count == 1)
+			{
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(UITween.OnFinish), func);
+				ToLua.Push(L, arg1);
+			}
+			else
+			{
+				LuaTable self = ToLua.CheckLuaTable(L, 2);
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(UITween.OnFinish), func, self);
 				ToLua.Push(L, arg1);
 			}
 			return 1;

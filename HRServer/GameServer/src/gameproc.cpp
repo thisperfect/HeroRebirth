@@ -33,6 +33,7 @@
 #include "activity.h"
 #include "script_auto.h"
 #include "global_cmdqueue.h"
+#include "fight.h"
 
 #ifndef WIN32 // 这些头文件用来看ulimit设置的
 #include <stdlib.h>
@@ -311,7 +312,16 @@ int process_init( int max_connection )
 	serv_setstat( 48 );
 
 	// 读取存档
-	
+	if ( fight_init() >= 0 )
+		printf_msg( "fight Module ready!" );
+	else
+	{
+		printf_msg( "fight Module Error!" );
+		return -1;
+	}
+	LOGI( "%s-%d", __FUNCTION__, __LINE__ );
+	serv_setstat( 118 );
+
 	// 数据库多线程启动
 	if ( dbwork_start() >= 0 )
 		printf_msg( "dbwork Module ready!" );
@@ -323,7 +333,6 @@ int process_init( int max_connection )
 	LOGI( "%s-%d", __FUNCTION__, __LINE__ );
 	serv_setstat( 119 );
 
-	
 	// 全局数据
 	if ( world_data_init() < 0 )
 	{
@@ -565,6 +574,12 @@ int process_logic()
 	if ( g_speed % 5 == 0 )
 	{
 		actors_logic(); // 执行所有的角色logic
+	}
+
+	// 战场10帧一次同步
+	if ( g_speed % 10 == 0 )
+	{
+		fight_logic();
 	}
 
 	//	1秒钟一次逻辑

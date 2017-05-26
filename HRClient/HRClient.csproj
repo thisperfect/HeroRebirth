@@ -137,6 +137,8 @@
     <Compile Include="Assets\Source\Generate\BezierMoveWrap.cs" />
     <Compile Include="Assets\Source\Generate\BezierWrap.cs" />
     <Compile Include="Assets\Source\Generate\ByteBufferWrap.cs" />
+    <Compile Include="Assets\Source\Generate\Camera2DWrap.cs" />
+    <Compile Include="Assets\Source\Generate\CityCameraWrap.cs" />
     <Compile Include="Assets\Source\Generate\ConstWrap.cs" />
     <Compile Include="Assets\Source\Generate\DelegateFactory.cs" />
     <Compile Include="Assets\Source\Generate\DeviceHelperWrap.cs" />
@@ -151,8 +153,6 @@
     <Compile Include="Assets\Source\Generate\LogUtilWrap.cs" />
     <Compile Include="Assets\Source\Generate\LuaBinder.cs" />
     <Compile Include="Assets\Source\Generate\LuaInterface_DebuggerWrap.cs" />
-    <Compile Include="Assets\Source\Generate\MapBorderWrap.cs" />
-    <Compile Include="Assets\Source\Generate\MapUnitMoveWrap.cs" />
     <Compile Include="Assets\Source\Generate\NetworkManagerWrap.cs" />
     <Compile Include="Assets\Source\Generate\PathUtilWrap.cs" />
     <Compile Include="Assets\Source\Generate\ResourceManagerWrap.cs" />
@@ -184,6 +184,16 @@
     <Compile Include="Assets\Source\Generate\UITextTimeCountdown_DirectTypeWrap.cs" />
     <Compile Include="Assets\Source\Generate\UITextUnderlineWrap.cs" />
     <Compile Include="Assets\Source\Generate\UITextWrap.cs" />
+    <Compile Include="Assets\Source\Generate\UITweenCityBuildingWrap.cs" />
+    <Compile Include="Assets\Source\Generate\UITweenColorWrap.cs" />
+    <Compile Include="Assets\Source\Generate\UITweenFadeWrap.cs" />
+    <Compile Include="Assets\Source\Generate\UITweenLocalPositionBetweenWrap.cs" />
+    <Compile Include="Assets\Source\Generate\UITweenLocalPositionWrap.cs" />
+    <Compile Include="Assets\Source\Generate\UITweenPositionWrap.cs" />
+    <Compile Include="Assets\Source\Generate\UITweenRectPositionWrap.cs" />
+    <Compile Include="Assets\Source\Generate\UITweenScaleWrap.cs" />
+    <Compile Include="Assets\Source\Generate\UITweenSizeDeltaWrap.cs" />
+    <Compile Include="Assets\Source\Generate\UITweenWrap.cs" />
     <Compile Include="Assets\Source\Generate\UnityEngine_AnimationBlendModeWrap.cs" />
     <Compile Include="Assets\Source\Generate\UnityEngine_AnimationClipWrap.cs" />
     <Compile Include="Assets\Source\Generate\UnityEngine_AnimationStateWrap.cs" />
@@ -270,10 +280,6 @@
     <Compile Include="Assets\Source\Manager\ResourceManager.cs" />
     <Compile Include="Assets\Source\Manager\ThreadManager.cs" />
     <Compile Include="Assets\Source\Manager\UIManager.cs" />
-    <Compile Include="Assets\Source\Map\MapBorder.cs" />
-    <Compile Include="Assets\Source\Map\MapUnitMove.cs" />
-    <Compile Include="Assets\Source\Map\WorldMap.cs" />
-    <Compile Include="Assets\Source\Map\WorldMapCamera.cs" />
     <Compile Include="Assets\Source\Net\ByteBuffer.cs" />
     <Compile Include="Assets\Source\Net\IPv6SupportMidleware.cs" />
     <Compile Include="Assets\Source\Net\SocketClient.cs" />

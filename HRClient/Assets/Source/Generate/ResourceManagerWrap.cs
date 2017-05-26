@@ -269,21 +269,21 @@ public class ResourceManagerWrap
 				obj.LoadSpriteAsyn(arg0, arg1);
 				return 0;
 			}
-			else if (count == 3 && TypeChecker.CheckTypes(L, 1, typeof(ResourceManager), typeof(string), typeof(System.Action<UnityEngine.Object[]>)))
+			else if (count == 3 && TypeChecker.CheckTypes(L, 1, typeof(ResourceManager), typeof(string), typeof(System.Action<UnityEngine.Object>)))
 			{
 				ResourceManager obj = (ResourceManager)ToLua.ToObject(L, 1);
 				string arg0 = ToLua.ToString(L, 2);
-				System.Action<UnityEngine.Object[]> arg1 = null;
+				System.Action<UnityEngine.Object> arg1 = null;
 				LuaTypes funcType3 = LuaDLL.lua_type(L, 3);
 
 				if (funcType3 != LuaTypes.LUA_TFUNCTION)
 				{
-					 arg1 = (System.Action<UnityEngine.Object[]>)ToLua.ToObject(L, 3);
+					 arg1 = (System.Action<UnityEngine.Object>)ToLua.ToObject(L, 3);
 				}
 				else
 				{
 					LuaFunction func = ToLua.ToLuaFunction(L, 3);
-					arg1 = DelegateFactory.CreateDelegate(typeof(System.Action<UnityEngine.Object[]>), func) as System.Action<UnityEngine.Object[]>;
+					arg1 = DelegateFactory.CreateDelegate(typeof(System.Action<UnityEngine.Object>), func) as System.Action<UnityEngine.Object>;
 				}
 
 				obj.LoadSpriteAsyn(arg0, arg1);
@@ -315,21 +315,21 @@ public class ResourceManagerWrap
 				obj.LoadPrefabAsyn(arg0, arg1);
 				return 0;
 			}
-			else if (count == 3 && TypeChecker.CheckTypes(L, 1, typeof(ResourceManager), typeof(string), typeof(System.Action<UnityEngine.Object[]>)))
+			else if (count == 3 && TypeChecker.CheckTypes(L, 1, typeof(ResourceManager), typeof(string), typeof(System.Action<UnityEngine.Object>)))
 			{
 				ResourceManager obj = (ResourceManager)ToLua.ToObject(L, 1);
 				string arg0 = ToLua.ToString(L, 2);
-				System.Action<UnityEngine.Object[]> arg1 = null;
+				System.Action<UnityEngine.Object> arg1 = null;
 				LuaTypes funcType3 = LuaDLL.lua_type(L, 3);
 
 				if (funcType3 != LuaTypes.LUA_TFUNCTION)
 				{
-					 arg1 = (System.Action<UnityEngine.Object[]>)ToLua.ToObject(L, 3);
+					 arg1 = (System.Action<UnityEngine.Object>)ToLua.ToObject(L, 3);
 				}
 				else
 				{
 					LuaFunction func = ToLua.ToLuaFunction(L, 3);
-					arg1 = DelegateFactory.CreateDelegate(typeof(System.Action<UnityEngine.Object[]>), func) as System.Action<UnityEngine.Object[]>;
+					arg1 = DelegateFactory.CreateDelegate(typeof(System.Action<UnityEngine.Object>), func) as System.Action<UnityEngine.Object>;
 				}
 
 				obj.LoadPrefabAsyn(arg0, arg1);

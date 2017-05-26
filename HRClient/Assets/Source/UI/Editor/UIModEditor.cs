@@ -18,7 +18,7 @@ public class UIModEditor : Editor
             foreach ( GameObject obj in uimod.relatedGameObject )
             {
                 string localstr = string.Empty;
-                localstr = string.Format( "local m_ui{0}; --{1}\n", obj.name, obj.GetType() );
+                localstr = string.Format( "local m_ui{0} = nil; --{1}\n", obj.name, obj.GetType() );
                 str += localstr;
             }
             Debug.LogError( str );
@@ -33,10 +33,6 @@ public class UIModEditor : Editor
                 index += 1;
             }
             Debug.LogError( str );
-            ////创建窗口
-            //Rect wr = new Rect( 0, 0, 500, 500 );
-            //EditorWindow window = EditorWindow.GetWindowWithRect( typeof( EditorWindow ), wr, true, "lua name" );
-            //window.Show();
         }
     }
 }

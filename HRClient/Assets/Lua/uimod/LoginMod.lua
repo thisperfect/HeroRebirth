@@ -208,6 +208,7 @@ function LoginModOpenLoading()
 	
 	-- 需要显示的
 	m_uiLoading.gameObject:SetActive( true );
+	m_uiLoading.transform:GetComponent( "Slider" ).value = 0.0;
 	
     -- 读取所有AssetBundle
     eye.resourceManager:LoadAllAssetBundle();	
@@ -216,9 +217,11 @@ end
 -- 读取AssetBundle的回调
 function LoginModOnLoadAssetBundleProc( assetBundleName, progress, totalProgress )
 	if progress == totalProgress then
+		m_uiLoading.transform:GetComponent( "Slider" ).value = progress/totalProgress;
 		-- 加载主城
 		LoadPrefabAsyn( "MainCityScence", function( obj )
-			local _mainCityScence = GameObject.Instantiate( obj[0] );
+			local _mainCityScence = GameObject.Instantiate( obj );
+			MainDlgOpen();
 			LoginModClose();
 		end );
 	end

@@ -39,29 +39,16 @@ public class CityCamera : Camera2D
         if( _DragGain )
             return;
 
-		//if( obj == null || obj.tag != "Building" )
-		//	city.SelectBuilding( null );
-		//else
-		//	city.SelectBuilding( obj.transform );
-
-       
-        //if( obj!= null)
-        //{
-        //    // NPC
-        //    LocalNPC npc = obj.GetComponent<LocalNPC>();
-        //    if (npc != null)
-        //        npc.Touch();
-
-        //    // 免费头
-        //    CityBuildingHead head = obj.GetComponent<CityBuildingHead>();
-        //    if ( head != null && head.type != 0 )
-        //    {
-        //        LuaFun.buildingHeadAction.Call( new object[] { head.index, head.type } );
-        //    }
-        //    RecUtil.GetInstance().WriteClickCity(obj.gameObject.name);
-        //}
-        //else
-        //    RecUtil.GetInstance().WriteClickCity("");
+        if ( obj != null && obj.tag == "Building" )
+        {
+            TweenPosToInBound( obj.transform.localPosition, 0.2f );
+            //TweenSizeTo( defaultSize *0.8f, 0.2f );
+            LuaFun.buildingselect.Call( obj );
+        }
+        else
+        {
+            //TweenSizeTo( defaultSize, 0.2f );
+        }
 	}
     protected override void OnClick(Transform obj)
     {
@@ -113,7 +100,7 @@ public class CityCamera : Camera2D
     void RefreshLayersSize()
     {
         //if( _OnCameraTween == null )
-        //    _OnCameraTween = fruit.gameManager.uluaMgr.lua.GetFunction( "BuildingCameraOnTween" );
+        //    _OnCameraTween = eye.gameManager.uluaMgr.lua.GetFunction( "BuildingCameraOnTween" );
         //_OnCameraTween.Call( _Camera.orthographicSize );
         if ( zoomLock )
             return;
