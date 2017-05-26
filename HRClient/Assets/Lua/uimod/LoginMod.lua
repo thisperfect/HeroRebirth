@@ -223,6 +223,7 @@ function LoginModOnLoadAssetBundleProc( assetBundleName, progress, totalProgress
 			local _mainCityScence = GameObject.Instantiate( obj );
 			MainDlgOpen();
 			LoginModClose();
+			netsend_list_C( 0 );
 		end );
 	end
 end

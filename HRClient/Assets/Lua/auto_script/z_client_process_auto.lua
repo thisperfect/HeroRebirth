@@ -36,12 +36,12 @@ function proc_login_C( recvValue )
 		GetPlayer().m_usertype = recvValue.m_usertype;
 		
 		-- GM号启动FPS
-		if GetPlayer().m_usertype >= 100 then
+--[[		if GetPlayer().m_usertype >= 100 then
 			FPSObject():SetActive( true );
-		end
+		end--]]
 	
 		-- 启动loading
-		LoginModOpenLoading();	
+		LoginModOpenLoading();
 	end
 end
 
@@ -49,21 +49,62 @@ end
 function proc_list_C( recvValue )
 	-- process.
 	-- EventProtocol.addEventListener( "proc_list_C", function( recvValue ) end )
-	EventProtocol.dispatchEvent( "proc_list_C", recvValue );
+	-- EventProtocol.dispatchEvent( "proc_list_C", recvValue );
+	-- 无角色
+	if recvValue.m_actor_num <= 0 then
+	
+		-- 创建角色
+		local sendValue = {};
+		sendValue.m_aclass = 0;
+		sendValue.m_name = "xx"
+		sendValue.m_name_length = string.len( sendValue.m_name );
+		netsend_create_C( sendValue );
+		
+	else
+		if recvValue.m_listinfo[1].m_lockstat == 1 then
+			Data.userini:WriteValue( "USERNAME", "" );
+			Data.userini:WriteValue( "PASSTOKEN", "" );
+			local lock_endtime = recvValue.m_listinfo[1].m_lock_endtime - os.time();
+			if lock_endtime > 0 then
+				lock_endtime = getTimeStringBySecond( lock_endtime );
+			else
+				lock_endtime = "";
+			end
+			--Alert( T(516).."\n"..lock_endtime, T(509), function() Application.Quit() end );
+		else
+			-- 进入游戏
+			netsend_entergame_C( recvValue.m_listinfo[1].m_actorid );
+			print( "Enter Game:"..recvValue.m_listinfo[1].m_actorid );
+			gamelog( "Enter Game:"..recvValue.m_listinfo[1].m_actorid )
+		end
+	end
 end
 
 -- m_result=0,m_actorid=0,m_createtime=0,
 function proc_create_C( recvValue )
 	-- process.
 	-- EventProtocol.addEventListener( "proc_create_C", function( recvValue ) end )
-	EventProtocol.dispatchEvent( "proc_create_C", recvValue );
+	-- EventProtocol.dispatchEvent( "proc_create_C", recvValue );
+	if recvValue.m_result == 0 then
+		-- 创建成功，进入游戏
+		netsend_entergame_C( recvValue.m_actorid );
+		print( "Create Actor Success:"..recvValue.m_actorid );
+		gamelog( "Create Actor Success:"..recvValue.m_actorid );
+	else
+		print( "Create Actor Fail（Same Name）" )
+		gamelog( "Create Actor Fail（Same Name）" )
+	end
 end
 
 -- m_actorid=0,m_data_int=0,m_data_short=0,m_data_char=0,m_serverid=0,m_servertime=0,m_createtime=0,
 function proc_enterinfo_C( recvValue )
 	-- process.
 	-- EventProtocol.addEventListener( "proc_enterinfo_C", function( recvValue ) end )
-	EventProtocol.dispatchEvent( "proc_enterinfo_C", recvValue );
+	--EventProtocol.dispatchEvent( "proc_enterinfo_C", recvValue );
+	Const.NetStatus = 3;
+	Const.serverid = recvValue.m_serverid;
+	Const.actorid = recvValue.m_actorid;
+	GetPlayer().m_createtime = recvValue.m_createtime;
 end
 
 -- m_result=0,m_actorid=0,
@@ -84,14 +125,15 @@ end
 function proc_notify_C( recvValue )
 	-- process.
 	-- EventProtocol.addEventListener( "proc_notify_C", function( recvValue ) end )
-	EventProtocol.dispatchEvent( "proc_notify_C", recvValue );
+	-- EventProtocol.dispatchEvent( "proc_notify_C", recvValue );
+	RecvActorNotify( recvValue );
 end
 
 -- m_actorid=0,m_name="[22]",m_aclass=0,m_shape=0,m_level=0,m_experience=0,m_experience_max=0,m_token=0,m_viplevel=0,
 function proc_actorinfo_C( recvValue )
 	-- process.
 	-- EventProtocol.addEventListener( "proc_actorinfo_C", function( recvValue ) end )
-	EventProtocol.dispatchEvent( "proc_actorinfo_C", recvValue );
+	--EventProtocol.dispatchEvent( "proc_actorinfo_C", recvValue );
 end
 
 -- m_itemoffset=0,m_usenum=0,m_effres=0,

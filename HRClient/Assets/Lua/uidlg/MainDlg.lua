@@ -4,6 +4,7 @@ local m_uiButtonListB = nil; --UnityEngine.GameObject
 local m_uiButtonListR = nil; --UnityEngine.GameObject
 local m_uiShowButtonT = nil; --UnityEngine.GameObject
 local m_uiShowButtonF = nil; --UnityEngine.GameObject
+local testnum;
 
 -- 打开界面
 function MainDlgOpen()
@@ -48,6 +49,11 @@ function MainDlgOnEvent( nType, nControlID, value, gameObject )
 			m_uiButtonListR:GetComponent( typeof(UITweenRectPosition) ):Play( false );
 			m_uiShowButtonT.gameObject:SetActive( true );
 			m_uiShowButtonF.gameObject:SetActive( false );
+		
+		-- 
+		elseif nControlID == 101 then
+			
+			
 			
         end
 	end
@@ -61,6 +67,7 @@ function MainDlgOnAwake( gameObject )
 	m_uiButtonListR = objs[1];
 	m_uiShowButtonT = objs[2];
 	m_uiShowButtonF = objs[3];
+	testnum = objs[4];
 end
 
 -- 界面初始化时调用
@@ -92,3 +99,9 @@ end
 ----------------------------------------
 -- 自定
 ----------------------------------------
+function MainDlgOnSetTestNum( value )
+	if m_Dlg == nil then
+		return
+	end
+	testnum:GetComponent( typeof(UIText) ).text = value;
+end

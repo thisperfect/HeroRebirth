@@ -33,6 +33,7 @@ extern int g_maxactornum;
 extern int g_save_wait;
 extern MYSQL *myGame;
 extern MYSQL *myData;
+extern int g_speed;
 
 Actor *g_actors = NULL;
 int g_actornum = 0;
@@ -485,6 +486,8 @@ void actor_logic( int actor_index )
 	{
 		g_actors[actor_index].talkspeed_frame -= 1;
 	}
+
+	actor_notify_value( actor_index, NOTIFY_NORMAL, 1, &g_speed, NULL );
 	// 除GM外，控制加速
 	//if ( g_actors[actor_index].admin < 90 && g_actors[actor_index].checkspeed_time == 0 )
 	//{
