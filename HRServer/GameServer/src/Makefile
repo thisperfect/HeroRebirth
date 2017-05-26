@@ -29,6 +29,7 @@ award.cpp \
 client.cpp \
 db.cpp \
 dbredis.cpp \
+fight.cpp \
 gamelog.cpp \
 gameproc.cpp \
 global.cpp \
@@ -53,7 +54,7 @@ wqueue.cpp \
 
 
 INCLUDE = -I ../include  -I ../AutoS/include -I  ../../LKUtils/include  -I ../../LKNetServer/include  -I ../../Lua/src  -I /usr/include/mysql  -I ../../hiredis_linux
-LIBRARY = -L ../../../public/lib -L /usr/lib
+LIBRARY = -L ../../../public/lib -L /usr/lib/mysql
 OBJ = $(SRC:.cpp=.o)
 LIB = -llua -llknet -llkutils -lmysqlclient -lhiredis -lpthread -ldl -lm
 EXE = ../../../exec/hrserver
@@ -119,6 +120,8 @@ client.o: client.cpp
 db.o: db.cpp 
 	$(CC) $(CFLAGS) -c $(INCLUDE) $<
 dbredis.o: dbredis.cpp 
+	$(CC) $(CFLAGS) -c $(INCLUDE) $<
+fight.o: fight.cpp 
 	$(CC) $(CFLAGS) -c $(INCLUDE) $<
 gamelog.o: gamelog.cpp 
 	$(CC) $(CFLAGS) -c $(INCLUDE) $<
