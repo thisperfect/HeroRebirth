@@ -205,6 +205,70 @@ function struct_NetS_ItemInfo_recv( buffer )
 	return recvValue;
 end
 
+function struct_NetS_FightRoomActor_recv( buffer )
+	local recvValue = {};
+	recvValue.m_name_length = buffer:ReadSByte();
+	recvValue.m_name = buffer:ReadStringWithLen( recvValue.m_name_length );
+	recvValue.m_level = buffer:ReadShort();
+	recvValue.m_actorid = buffer:ReadInt();
+	recvValue.m_headid = buffer:ReadInt();
+	recvValue.m_ready = buffer:ReadSByte();
+	return recvValue;
+end
+
+function struct_NetS_FightRoomInfo_recv( buffer )
+	local recvValue = {};
+	recvValue.m_attack_actornum = buffer:ReadSByte();
+	recvValue.m_attack_actorinfo = {};
+	for tmpi=1,3,1 do
+		local tmpValue={};
+		tmpValue = struct_NetS_FightRoomActor_recv( buffer );
+		table.insert( recvValue.m_attack_actorinfo, tmpValue );
+	end
+	recvValue.m_defense_actornum = buffer:ReadSByte();
+	recvValue.m_defense_actorinfo = {};
+	for tmpi=1,3,1 do
+		local tmpValue={};
+		tmpValue = struct_NetS_FightRoomActor_recv( buffer );
+		table.insert( recvValue.m_defense_actorinfo, tmpValue );
+	end
+	recvValue.m_fightid = buffer:ReadInt();
+	recvValue.m_pvpnum = buffer:ReadSByte();
+	return recvValue;
+end
+
+function struct_NetS_FightRoomQuit_recv( buffer )
+	local recvValue = {};
+	recvValue.m_fightid = buffer:ReadInt();
+	recvValue.m_actorid = buffer:ReadInt();
+	return recvValue;
+end
+
+function struct_NetS_FightRoomSetHero_recv( buffer )
+	local recvValue = {};
+	recvValue.m_fightid = buffer:ReadInt();
+	return recvValue;
+end
+
+function struct_NetS_FightRoomReady_recv( buffer )
+	local recvValue = {};
+	recvValue.m_fightid = buffer:ReadInt();
+	recvValue.m_actorid = buffer:ReadInt();
+	return recvValue;
+end
+
+function struct_NetS_FightStart_recv( buffer )
+	local recvValue = {};
+	recvValue.m_fightid = buffer:ReadInt();
+	return recvValue;
+end
+
+function struct_NetS_FightTurns_recv( buffer )
+	local recvValue = {};
+	recvValue.m_turns = buffer:ReadInt();
+	return recvValue;
+end
+
 function struct_NetS_AwardInfo_recv( buffer )
 	local recvValue = {};
 	recvValue.m_kind = buffer:ReadInt();

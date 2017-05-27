@@ -1,4 +1,7 @@
 资源键名	Resources模式资源名	所在assetBundle名称	所在assetBundle资源名
 CharacterDefault	PackAssets/DefaultPrefab/CharacterDefault	defaultprefab	CharacterDefault
 MainCityScence	PackAssets/MainCityPrefab/MainCityScence	maincityscenceprefab	MainCityScence
+FightScence	PackAssets/FightPrefab/FightScence	fightscenceprefab	FightScence
 MainDlg	PackAssets/UIPrefab/MainDlg	uiprefab	MainDlg
+FightRoomInfoDlg	PackAssets/UIPrefab/FightRoomInfoDlg	uiprefab	FightRoomInfoDlg
+FightRoomSetHeroDlg	PackAssets/UIPrefab/FightRoomSetHeroDlg	uiprefab	FightRoomSetHeroDlg

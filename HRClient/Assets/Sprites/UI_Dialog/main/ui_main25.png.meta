@@ -86,7 +86,7 @@ TextureImporter:
     serializedVersion: 2
     sprites: []
     outline: []
-  spritePackingTag: ui_main
+  spritePackingTag: uipack_main
   userData: 
   assetBundleName: 
   assetBundleVariant: 

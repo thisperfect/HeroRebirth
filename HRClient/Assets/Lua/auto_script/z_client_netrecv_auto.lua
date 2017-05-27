@@ -90,6 +90,36 @@ function netrecv_body_C( buffer )
 	proc_body_C( recvValue );
 end
 
+function netrecv_fightroominfo_C( buffer )
+	local recvValue = struct_NetS_FightRoomInfo_recv( buffer );
+	proc_fightroominfo_C( recvValue );
+end
+
+function netrecv_fightroomquit_C( buffer )
+	local recvValue = struct_NetS_FightRoomQuit_recv( buffer );
+	proc_fightroomquit_C( recvValue );
+end
+
+function netrecv_fightroomsethero_C( buffer )
+	local recvValue = struct_NetS_FightRoomSetHero_recv( buffer );
+	proc_fightroomsethero_C( recvValue );
+end
+
+function netrecv_fightroomready_C( buffer )
+	local recvValue = struct_NetS_FightRoomReady_recv( buffer );
+	proc_fightroomready_C( recvValue );
+end
+
+function netrecv_fightroomstart_C( buffer )
+	local recvValue = struct_NetS_FightStart_recv( buffer );
+	proc_fightroomstart_C( recvValue );
+end
+
+function netrecv_fightturns_C( buffer )
+	local recvValue = struct_NetS_FightTurns_recv( buffer );
+	proc_fightturns_C( recvValue );
+end
+
 Proc_Command = {
 	[CMDS_LOGIN]=netrecv_login_C;
 	[CMDS_LIST]=netrecv_list_C;
@@ -109,6 +139,12 @@ Proc_Command = {
 	[CMDS_AWARDINFOLIST]=netrecv_awardinfolist_C;
 	[CMDS_EXPERIENCE]=netrecv_experience_C;
 	[CMDS_BODY]=netrecv_body_C;
+	[CMDS_FIGHTROOMINFO]=netrecv_fightroominfo_C;
+	[CMDS_FIGHTROOMQUIT]=netrecv_fightroomquit_C;
+	[CMDS_FIGHTROOMSETHERO]=netrecv_fightroomsethero_C;
+	[CMDS_FIGHTROOMREADY]=netrecv_fightroomready_C;
+	[CMDS_FIGHTROOMSTART]=netrecv_fightroomstart_C;
+	[CMDS_FIGHTTURNS]=netrecv_fightturns_C;
 }
 
 function in_proc_command_C( cmd, buffer )

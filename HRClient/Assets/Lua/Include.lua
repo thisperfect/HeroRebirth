@@ -38,9 +38,9 @@ PlayMode		= UnityEngine.PlayMode
 ParticleAnimator= UnityEngine.ParticleAnimator
 TouchPhase 		= UnityEngine.TouchPhase
 AnimationBlendMode = UnityEngine.AnimationBlendMode
-SceneManager = UnityEngine.SceneManagement.SceneManager
 Image   = UnityEngine.UI.Image
 SpriteRenderer = UnityEngine.SpriteRenderer--]]
+SceneManager = UnityEngine.SceneManagement.SceneManager
 WWW = UnityEngine.WWW
 
 require "auto_script/z_client_struct_auto"
@@ -66,4 +66,6 @@ require "fight/fight_unit"
 require "fight/fight_room"
 require "uimod/LoginMod"
 require "uidlg/MainDlg"
+require "uidlg/FightRoomInfoDlg"
+require "uidlg/FightRoomSetHeroDlg"
 

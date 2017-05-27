@@ -26,6 +26,7 @@
 #include "award.h"
 #include "script_auto.h"
 #include "activity.h"
+#include "fight.h"
 
 extern Global global;
 extern SConfig g_Config;
@@ -35,9 +36,13 @@ extern MYSQL *myGame;
 extern MYSQL *myData;
 extern int g_speed;
 
+extern Fight *g_fight;
+extern int g_fight_maxnum;
+
 Actor *g_actors = NULL;
 int g_actornum = 0;
 int g_maxactorid = 0;
+
 
 //-----------------------------------------------------------------------------
 // actors_init
@@ -486,8 +491,6 @@ void actor_logic( int actor_index )
 	{
 		g_actors[actor_index].talkspeed_frame -= 1;
 	}
-
-	actor_notify_value( actor_index, NOTIFY_NORMAL, 1, &g_speed, NULL );
 	// 除GM外，控制加速
 	//if ( g_actors[actor_index].admin < 90 && g_actors[actor_index].checkspeed_time == 0 )
 	//{
@@ -503,8 +506,7 @@ void actor_logic( int actor_index )
 	//	}
 	//}
 
-	if ( g_actors[actor_index].isexit == 1 /*&&
-		(g_actors[actor_index].stat != ACTOR_STAT_FIGHT || g_actors[actor_index].fight_index < 0)*/ )
+	if ( g_actors[actor_index].isexit == 1 && g_actors[actor_index].fight_index < 0 )
 	{
 		actor_send_remove( actor_index );
 		return;
@@ -522,9 +524,37 @@ int actor_change_index( int old_index, int new_index )
 	memcpy( &g_actors[new_index], &g_actors[old_index], sizeof(Actor) );
 	g_actors[new_index].isexit = 0;
 
+	// 改变战场索引
+	if ( g_actors[new_index].fight_index >= 0 )
+	{
+		char has = 0;
+		int fight_index = g_actors[new_index].fight_index;
+		for ( int tmpi = 0; tmpi < FIGHT_ACTORNUM; tmpi++ )
+		{
+			if ( g_fight[fight_index].attack_index[tmpi] == old_index )
+			{
+				g_fight[fight_index].attack_index[tmpi] = new_index;
+				has = 1;
+				break;
+			}
+		}
+		if ( has == 0 )
+		{
+			for ( int tmpi = 0; tmpi < FIGHT_ACTORNUM; tmpi++ )
+			{
+				if ( g_fight[fight_index].defense_index[tmpi] == old_index )
+				{
+					g_fight[fight_index].defense_index[tmpi] = new_index;
+					break;
+				}
+			}
+		}
+	}
+
 	// 清空旧角色
 	memset( &(g_actors[old_index]), 0, sizeof(Actor) );
 	g_actors[old_index].view_areaindex = -1;
+
 	return 0;
 }
 
@@ -595,6 +625,7 @@ int actor_enterworld( int client_index, int actorid, int actor_index )
 	// 登入log
 	g_actors[actor_index].accountid = account_in( actor_index, 0 );
 	g_actors[actor_index].cdkeywait = 0;
+	g_actors[actor_index].fight_index = -1;
 
 	// 角色信息
 	actor_getinfo( actor_index );

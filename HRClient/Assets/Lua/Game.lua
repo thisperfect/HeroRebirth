@@ -4,6 +4,8 @@ g_ipCountryStr = "us";
 GameManager = {};
 GameManager.restart = false; -- 强制重启
 GameManager.userini = nil;
+GameManager.MainCityScence = nil;
+GameManager.FightScence = nil;
 
 -- 游戏脚本主逻辑入口
 function GameManager.OnStart()
@@ -42,13 +44,7 @@ function GameManager.OnStart()
 	
 	-- 打开登陆界面
 	LoginModOpen();
-	
-	
-	
-	--[[LoadPrefabAsyn( "WorldMap", function( obj )
-		local _worldMapScence = GameObject.Instantiate( obj );
-	end );--]]
-	
+
 	gamelog("GameManager.OnStart();end");
 end
 

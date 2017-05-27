@@ -1,5 +1,7 @@
 -- 通用短消息发送
 ASKINFO_NORMAL		= 	0;
+ASKINFO_FIGHTMATCH		= 	10;
+ASKINFO_FIGHTROOMQUIT 	= 11;
 
 function system_askinfo( msgid, msg, ... )
 	-- 未进入游戏不允许发送通用短协议

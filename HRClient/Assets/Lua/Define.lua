@@ -26,11 +26,20 @@ end
 function T( nameid )
     return GetLocalizeText( nameid );
 end
+
 -- 写gamelog
 function gamelog( msg )
 	LogUtil.GetInstance():WriteGame( msg );
 end
+
 -- 写netlog
 function netlog( msg )
 	LogUtil.GetInstance():WriteNet( msg );
+end
+
+-- 清空所有子节点
+function clearChild( object )
+	for i = 0 ,object.transform.childCount - 1 do
+        GameObject.Destroy( object.transform:GetChild(i).gameObject );
+    end
 end

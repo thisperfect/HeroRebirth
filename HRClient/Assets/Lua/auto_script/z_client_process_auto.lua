@@ -206,3 +206,51 @@ function proc_body_C( recvValue )
 	EventProtocol.dispatchEvent( "proc_body_C", recvValue );
 end
 
+
+
+-- m_attack_actornum=0,m_attack_actorinfo={m_name_length=0,m_name="[m_name_length]",m_level=0,m_actorid=0,m_headid=0,m_ready=0,[m_attack_actornum]},m_defense_actornum=0,m_defense_actorinfo={m_name_length=0,m_name="[m_name_length]",m_level=0,m_actorid=0,m_headid=0,m_ready=0,[m_defense_actornum]},m_fightid=0,m_pvpnum=0,
+function proc_fightroominfo_C( recvValue )
+	-- process.
+	-- EventProtocol.addEventListener( "proc_fightroominfo_C", function( recvValue ) end )
+	--EventProtocol.dispatchEvent( "proc_fightroominfo_C", recvValue );
+	FightRoomInfoDlgRefurbish( recvValue );
+end
+
+-- m_fightid=0,m_actorid=0,
+function proc_fightroomquit_C( recvValue )
+	-- process.
+	-- EventProtocol.addEventListener( "proc_fightroomquit_C", function( recvValue ) end )
+	--EventProtocol.dispatchEvent( "proc_fightroomquit_C", recvValue );
+end
+
+-- m_fightid=0,m_actorid=0,
+function proc_fightroomready_C( recvValue )
+	-- process.
+	-- EventProtocol.addEventListener( "proc_fightroomready_C", function( recvValue ) end )
+	--EventProtocol.dispatchEvent( "proc_fightroomready_C", recvValue );
+end
+
+-- m_fightid=0,
+function proc_fightroomsethero_C( recvValue )
+	-- process.
+	-- EventProtocol.addEventListener( "proc_fightroomsethero_C", function( recvValue ) end )
+	--EventProtocol.dispatchEvent( "proc_fightroomsethero_C", recvValue );
+	FightRoomInfoDlgSetHero( recvValue );
+end
+
+-- m_fightid=0,
+function proc_fightroomstart_C( recvValue )
+	-- process.
+	-- EventProtocol.addEventListener( "proc_fightroomstart_C", function( recvValue ) end )
+	--EventProtocol.dispatchEvent( "proc_fightroomstart_C", recvValue );
+	GetFightRoom():Create( recvValue );
+end
+
+-- m_turns=0,
+function proc_fightturns_C( recvValue )
+	-- process.
+	-- EventProtocol.addEventListener( "proc_fightturns_C", function( recvValue ) end )
+	--EventProtocol.dispatchEvent( "proc_fightturns_C", recvValue );
+	GetFightRoom():Logic( recvValue );
+end
+

@@ -198,7 +198,7 @@ end
 -- 向socket写入数据异常
 function Network.OnException() 
 	if Const.NetStatus > 2 or GameManager.restart == true then
-		fruit.uiManager:Clear();
+		eye.uiManager:Clear();
 		LoginModDestroy();
 		SceneManager.LoadScene( "launcher" );
 	end
@@ -214,7 +214,7 @@ end
 -- 服务器发过来的包大小不对
 function Network.OnDisconnect()
 	if Const.NetStatus > 2 then
-		fruit.uiManager:Clear();
+		eye.uiManager:Clear();
 		LoginModDestroy();
 		SceneManager.LoadScene( "launcher" );
 	end
@@ -237,7 +237,7 @@ end
 function Network.Ping( state )
 	-- 正常状态发ping包
 	if state == 0 then
-		if Const.NetStatus < 3 then
+		--[[if Const.NetStatus < 3 then
 			if Novice_IsIn() == true then
 				if MainDlgPing() then
 					MainDlgPing().transform:GetComponent( "ShowPing" ):Response();
@@ -250,14 +250,14 @@ function Network.Ping( state )
 		end
 		local sendValue = {};
 		sendValue.m_time = 0;
-		netsend_pingrequest_C( sendValue );
+		netsend_pingrequest_C( sendValue );--]]
 
 	-- 关闭网络不好提醒	
 	elseif state == 1 then
 		--WaitDlgClose();
 		
 	-- 显示网络不好提醒	
-	elseif state == 2 and Novice_IsIn() == false and RecUtil.GetInstance():IsRec() then
+	elseif state == 2 then
 		--WaitDlgOpen();
 	end
 	return 0;

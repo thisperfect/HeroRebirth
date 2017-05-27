@@ -20,6 +20,12 @@ int netsend_iteminfo_S( int actor_index, char send_type, SLK_NetS_ItemInfo *pVal
 int netsend_awardinfolist_S( int actor_index, char send_type, SLK_NetS_AwardInfoList *pValue );
 int netsend_experience_S( int actor_index, char send_type, SLK_NetS_Experience *pValue );
 int netsend_body_S( int actor_index, char send_type, SLK_NetS_Body *pValue );
+int netsend_fightroominfo_S( int actor_index, char send_type, SLK_NetS_FightRoomInfo *pValue );
+int netsend_fightroomquit_S( int actor_index, char send_type, SLK_NetS_FightRoomQuit *pValue );
+int netsend_fightroomsethero_S( int actor_index, char send_type, SLK_NetS_FightRoomSetHero *pValue );
+int netsend_fightroomready_S( int actor_index, char send_type, SLK_NetS_FightRoomReady *pValue );
+int netsend_fightroomstart_S( int actor_index, char send_type, SLK_NetS_FightStart *pValue );
+int netsend_fightturns_S( int actor_index, char send_type, SLK_NetS_FightTurns *pValue );
 
 int netsend_userawarded_S( int actor_index, char send_type, SLK_NetU_UserAwarded *pValue );
 int netsend_gmlocalcmd_S( int actor_index, char send_type, SLK_NetC_Gmlocalcmd *pValue );

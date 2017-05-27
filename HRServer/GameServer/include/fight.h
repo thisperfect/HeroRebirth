@@ -3,13 +3,15 @@
 #define FIGHT_ACTORNUM	3 // 战场玩家人数3V3
 
 #define FIGHT_STATE_NORMAL	0 // 缺省
-#define FIGHT_STATE_WAIT	1 // 等待
-#define FIGHT_STATE_START	2 // 开始
+#define FIGHT_STATE_MATCH	1 // 匹配中
+#define FIGHT_STATE_SETHERO	2 // 等待布阵
+#define FIGHT_STATE_START	3 // 开始
 
 // PVP实时战场
 typedef struct _fight
 {
 	int id;								// 保证唯一性
+	char pvpnum;						// 1=1v1 2=2v2 3=3v3
 	char state;							// 当前状态
 	int turns;							// 回合
 	int attack_index[FIGHT_ACTORNUM];	// 攻击方索引
@@ -23,11 +25,12 @@ typedef struct _fight
 }Fight;
 
 int fight_init();
-int fight_create( int actor_index );
-void fight_logic();
-int fight_join( int fightid, char side, int actor_index );
+int fight_match( int actor_index );
+int fight_create( int actor_index, char pvpnum );
+int fight_join( int fight_index, int actor_index );
 int fight_quit( int actor_index );
 int fight_ready( int actor_index );
 int fight_ready_check( int fight_index );
 int fight_start( int fight_index );
+void fight_logic();
 #endif // !_FIGHT_H_

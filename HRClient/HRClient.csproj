@@ -121,6 +121,7 @@
     <Compile Include="Assets\Source\Camera\Camera3D.cs" />
     <Compile Include="Assets\Source\Camera\Camera3dDragable.cs" />
     <Compile Include="Assets\Source\Camera\CityCamera.cs" />
+    <Compile Include="Assets\Source\Camera\FightCamera.cs" />
     <Compile Include="Assets\Source\Effect\Bezier.cs" />
     <Compile Include="Assets\Source\Effect\BezierMove.cs" />
     <Compile Include="Assets\Source\Effect\FXTypeWriter.cs" />
@@ -237,6 +238,7 @@
     <Compile Include="Assets\Source\Generate\UnityEngine_RendererWrap.cs" />
     <Compile Include="Assets\Source\Generate\UnityEngine_ResourcesWrap.cs" />
     <Compile Include="Assets\Source\Generate\UnityEngine_RigidbodyWrap.cs" />
+    <Compile Include="Assets\Source\Generate\UnityEngine_SceneManagement_SceneManagerWrap.cs" />
     <Compile Include="Assets\Source\Generate\UnityEngine_ScreenWrap.cs" />
     <Compile Include="Assets\Source\Generate\UnityEngine_ShaderWrap.cs" />
     <Compile Include="Assets\Source\Generate\UnityEngine_SkinnedMeshRendererWrap.cs" />

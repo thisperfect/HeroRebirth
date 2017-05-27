@@ -15,6 +15,8 @@
 #include "activity.h"
 #include "script_auto.h"
 #include "login.h"
+#include "fight.h"
+
 extern SConfig g_Config;
 extern Global global;
 
@@ -29,6 +31,12 @@ int system_askinfo( int actor_index, int msgid, char *pstr, int *pvalue )
 	switch ( msgid )
 	{
 	case ASKINFO_NORMAL:
+		break;
+	case ASKINFO_FIGHTMATCH: // 匹配战斗
+		fight_match( actor_index );
+		break;
+	case ASKINFO_FIGHTROOMQUIT: // 退出匹配的战斗
+		fight_quit( actor_index );
 		break;
 	default:
 		break;

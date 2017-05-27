@@ -220,7 +220,7 @@ function LoginModOnLoadAssetBundleProc( assetBundleName, progress, totalProgress
 		m_uiLoading.transform:GetComponent( "Slider" ).value = progress/totalProgress;
 		-- 加载主城
 		LoadPrefabAsyn( "MainCityScence", function( obj )
-			local _mainCityScence = GameObject.Instantiate( obj );
+			GameManager.MainCityScence = GameObject.Instantiate( obj );
 			MainDlgOpen();
 			LoginModClose();
 			netsend_list_C( 0 );

@@ -8,7 +8,6 @@ function RecvActorNotify(recvValue)
     local msg = recvValue.m_msg;
     
     if msgid == NOTIFY_NORMAL then
-       MainDlgOnSetTestNum( value[1] )
 		
     end
 end

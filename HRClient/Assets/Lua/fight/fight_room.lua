@@ -65,7 +65,20 @@ function FightRoom:Logic()
 end
 
 -- 创建一个战场
-function FightRoom:Create()
-	
+function FightRoom:Create( recvValue )
+	MainDlgClose();
+	FightRoomSetHeroDlgClose();
+	GameManager.MainCityScence.gameObject:SetActive( false );
+	LoadPrefabAsyn( "FightScence", function( obj )
+			GameManager.FightScence = GameObject.Instantiate( obj );
+		end );
 end
 
+-- 全局
+G_FightRoom = nil;
+function GetFightRoom()
+	if G_FightRoom == nil then
+		G_FightRoom = FightRoom.new();
+	end
+	return G_FightRoom;
+end

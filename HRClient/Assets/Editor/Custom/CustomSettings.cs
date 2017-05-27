@@ -142,6 +142,7 @@ public static class CustomSettings
         _GT(typeof(BlendWeights)),           
         _GT(typeof(RenderTexture)),
         _GT(typeof(Resources)),
+        _GT(typeof(UnityEngine.SceneManagement.SceneManager)),
 
         // unity2d
         _GT(typeof(SpriteRenderer)),
