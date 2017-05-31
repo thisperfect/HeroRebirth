@@ -36,6 +36,7 @@ public static class DelegateFactory
 		dict.Add(typeof(UIInputFieldSubmit.OnValidateInput), UIInputFieldSubmit_OnValidateInput);
 		dict.Add(typeof(UnityEngine.RectTransform.ReapplyDrivenProperties), UnityEngine_RectTransform_ReapplyDrivenProperties);
 		dict.Add(typeof(UITween.OnFinish), UITween_OnFinish);
+		dict.Add(typeof(DragonBones.ListenerDelegate<DragonBones.EventObject>), DragonBones_ListenerDelegate_DragonBones_EventObject);
 	}
 
     [NoToLuaAttribute]
@@ -1067,6 +1068,55 @@ public static class DelegateFactory
 		{
 			UITween_OnFinish_Event target = new UITween_OnFinish_Event(func, self);
 			UITween.OnFinish d = target.CallWithSelf;
+			target.method = d.Method;
+			return d;
+		}
+	}
+
+	class DragonBones_ListenerDelegate_DragonBones_EventObject_Event : LuaDelegate
+	{
+		public DragonBones_ListenerDelegate_DragonBones_EventObject_Event(LuaFunction func) : base(func) { }
+		public DragonBones_ListenerDelegate_DragonBones_EventObject_Event(LuaFunction func, LuaTable self) : base(func, self) { }
+
+		public void Call(string param0, DragonBones.EventObject param1)
+		{
+			func.BeginPCall();
+			func.Push(param0);
+			func.PushObject(param1);
+			func.PCall();
+			func.EndPCall();
+		}
+
+		public void CallWithSelf(string param0, DragonBones.EventObject param1)
+		{
+			func.BeginPCall();
+			func.Push(self);
+			func.Push(param0);
+			func.PushObject(param1);
+			func.PCall();
+			func.EndPCall();
+		}
+	}
+
+	public static Delegate DragonBones_ListenerDelegate_DragonBones_EventObject(LuaFunction func, LuaTable self, bool flag)
+	{
+		if (func == null)
+		{
+			DragonBones.ListenerDelegate<DragonBones.EventObject> fn = delegate(string param0, DragonBones.EventObject param1) { };
+			return fn;
+		}
+
+		if(!flag)
+		{
+			DragonBones_ListenerDelegate_DragonBones_EventObject_Event target = new DragonBones_ListenerDelegate_DragonBones_EventObject_Event(func);
+			DragonBones.ListenerDelegate<DragonBones.EventObject> d = target.Call;
+			target.method = d.Method;
+			return d;
+		}
+		else
+		{
+			DragonBones_ListenerDelegate_DragonBones_EventObject_Event target = new DragonBones_ListenerDelegate_DragonBones_EventObject_Event(func, self);
+			DragonBones.ListenerDelegate<DragonBones.EventObject> d = target.CallWithSelf;
 			target.method = d.Method;
 			return d;
 		}

@@ -170,6 +170,43 @@ public static class LuaBinder
 		L.BeginModule("UITextTimeCountdown");
 		UITextTimeCountdown_DirectTypeWrap.Register(L);
 		L.EndModule();
+		L.BeginModule("DragonBones");
+		DragonBones_UnityFactoryWrap.Register(L);
+		DragonBones_AnimationTimelineStateWrap.Register(L);
+		DragonBones_AnimationFrameDataWrap.Register(L);
+		DragonBones_AnimationStateWrap.Register(L);
+		DragonBones_AnimationFadeOutModeWrap.Register(L);
+		DragonBones_AnimationWrap.Register(L);
+		DragonBones_AnimationDataWrap.Register(L);
+		DragonBones_AnimationConfigWrap.Register(L);
+		DragonBones_ActionDataWrap.Register(L);
+		DragonBones_ActionTypeWrap.Register(L);
+		DragonBones_ArmatureWrap.Register(L);
+		DragonBones_ArmatureDataWrap.Register(L);
+		DragonBones_ArmatureTypeWrap.Register(L);
+		DragonBones_BoneWrap.Register(L);
+		DragonBones_BoneDataWrap.Register(L);
+		DragonBones_BoneFrameDataWrap.Register(L);
+		DragonBones_BoneTimelineDataWrap.Register(L);
+		DragonBones_BoneTimelineStateWrap.Register(L);
+		DragonBones_DragonBonesWrap.Register(L);
+		DragonBones_DragonBonesDataWrap.Register(L);
+		DragonBones_TransformWrap.Register(L);
+		DragonBones_TransformObjectWrap.Register(L);
+		DragonBones_UnityArmatureComponentWrap.Register(L);
+		DragonBones_BaseFactoryWrap.Register(L);
+		DragonBones_TimelineState_DragonBones_AnimationFrameData_DragonBones_AnimationDataWrap.Register(L);
+		DragonBones_BaseObjectWrap.Register(L);
+		DragonBones_FrameData_DragonBones_AnimationFrameDataWrap.Register(L);
+		DragonBones_TimelineData_DragonBones_AnimationFrameDataWrap.Register(L);
+		DragonBones_TweenFrameData_DragonBones_BoneFrameDataWrap.Register(L);
+		DragonBones_FrameData_DragonBones_BoneFrameDataWrap.Register(L);
+		DragonBones_TimelineData_DragonBones_BoneFrameDataWrap.Register(L);
+		DragonBones_TweenTimelineState_DragonBones_BoneFrameData_DragonBones_BoneTimelineDataWrap.Register(L);
+		DragonBones_TimelineState_DragonBones_BoneFrameData_DragonBones_BoneTimelineDataWrap.Register(L);
+		DragonBones_UnityEventDispatcher_DragonBones_EventObjectWrap.Register(L);
+		L.RegFunction("ListenerDelegate_DragonBones_EventObject", DragonBones_ListenerDelegate_DragonBones_EventObject);
+		L.EndModule();
 		L.BeginModule("System");
 		L.RegFunction("Action", System_Action);
 		L.RegFunction("Predicate_int", System_Predicate_int);
@@ -515,6 +552,33 @@ public static class LuaBinder
 			{
 				LuaTable self = ToLua.CheckLuaTable(L, 2);
 				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(UnityEngine.RectTransform.ReapplyDrivenProperties), func, self);
+				ToLua.Push(L, arg1);
+			}
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int DragonBones_ListenerDelegate_DragonBones_EventObject(IntPtr L)
+	{
+		try
+		{
+			int count = LuaDLL.lua_gettop(L);
+			LuaFunction func = ToLua.CheckLuaFunction(L, 1);
+
+			if (count == 1)
+			{
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(DragonBones.ListenerDelegate<DragonBones.EventObject>), func);
+				ToLua.Push(L, arg1);
+			}
+			else
+			{
+				LuaTable self = ToLua.CheckLuaTable(L, 2);
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(DragonBones.ListenerDelegate<DragonBones.EventObject>), func, self);
 				ToLua.Push(L, arg1);
 			}
 			return 1;

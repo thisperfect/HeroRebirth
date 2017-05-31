@@ -66,6 +66,7 @@ require "fight/fight_unit"
 require "fight/fight_room"
 require "uimod/LoginMod"
 require "uidlg/MainDlg"
+require "uidlg/FightDlg"
 require "uidlg/FightRoomInfoDlg"
 require "uidlg/FightRoomSetHeroDlg"
 

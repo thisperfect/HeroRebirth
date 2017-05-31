@@ -95,6 +95,7 @@
     <ClCompile Include="AutoS\src\auto_actor.cpp" />
     <ClCompile Include="AutoS\src\auto_actor_hero.cpp" />
     <ClCompile Include="AutoS\src\auto_actor_item.cpp" />
+    <ClCompile Include="AutoS\src\auto_data_hero.cpp" />
     <ClCompile Include="AutoS\src\auto_data_item.cpp" />
     <ClCompile Include="AutoS\src\auto_data_paycountry.cpp" />
     <ClCompile Include="AutoS\src\auto_data_paygoods.cpp" />
@@ -149,6 +150,7 @@
     <ClInclude Include="AutoS\include\auto_actor.h" />
     <ClInclude Include="AutoS\include\auto_actor_hero.h" />
     <ClInclude Include="AutoS\include\auto_actor_item.h" />
+    <ClInclude Include="AutoS\include\auto_data_hero.h" />
     <ClInclude Include="AutoS\include\auto_data_item.h" />
     <ClInclude Include="AutoS\include\auto_data_paycountry.h" />
     <ClInclude Include="AutoS\include\auto_data_paygoods.h" />

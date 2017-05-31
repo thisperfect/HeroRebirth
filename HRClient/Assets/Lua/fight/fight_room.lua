@@ -68,10 +68,19 @@ end
 function FightRoom:Create( recvValue )
 	MainDlgClose();
 	FightRoomSetHeroDlgClose();
-	GameManager.MainCityScence.gameObject:SetActive( false );
+	if GameManager.MainCityScence ~= nil then
+		GameManager.MainCityScence.gameObject:SetActive( false );
+	end
+	-- 战场
 	LoadPrefabAsyn( "FightScence", function( obj )
 			GameManager.FightScence = GameObject.Instantiate( obj );
 		end );
+		
+	-- 成员
+	local unitObj = FightUnit.new();
+	unitObj:Create( self.m_auto_increment, 1, {} );
+	table.insert( self.m_attack_units, unitObj );
+	self.m_auto_increment = self.m_auto_increment + 1;
 end
 
 -- 全局

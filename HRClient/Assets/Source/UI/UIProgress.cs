@@ -2,6 +2,21 @@
 using UnityEngine.UI;
 using System.Collections;
 
+public class MyRangeAttribute : PropertyAttribute
+{
+    // 这3个变量是在Inspector面板中显示的  
+    public float min;    // 定义一个float类型的最大  
+    public float max;    // 定义一个float类型的最大  
+    public string label; // 显示标签  
+    public MyRangeAttribute( float min, float max, string label = "" )
+    {
+        this.min = min;
+        this.max = max;
+        this.label = label;
+    }
+
+}
+
 public class UIProgress : MonoBehaviour 
 {
 	public enum ProgressMode
@@ -17,7 +32,7 @@ public class UIProgress : MonoBehaviour
 	public Image			progress;
 	public ProgressMode		mode = ProgressMode.Scale;
 
-	public void SetValue( float value )
+    public void SetValue( float value )
 	{
         if ( _OriginValue == Vector2.zero )
             _OriginValue = progress.rectTransform.sizeDelta;
