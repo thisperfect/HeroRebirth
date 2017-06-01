@@ -205,6 +205,29 @@ function struct_NetS_ItemInfo_recv( buffer )
 	return recvValue;
 end
 
+function struct_HeroAttr_recv( buffer )
+	local recvValue = {};
+	recvValue.m_life = buffer:ReadInt();
+	recvValue.m_attack = buffer:ReadInt();
+	recvValue.m_defence = buffer:ReadInt();
+	recvValue.m_precision = buffer:ReadUShort();
+	recvValue.m_dodge = buffer:ReadUShort();
+	recvValue.m_crit = buffer:ReadUShort();
+	recvValue.m_crit_resist = buffer:ReadUShort();
+	recvValue.m_crit_damage = buffer:ReadInt();
+	recvValue.m_crit_damage_resist = buffer:ReadInt();
+	recvValue.m_speed_attack = buffer:ReadUShort();
+	recvValue.m_speed_move = buffer:ReadUShort();
+	recvValue.m_ignore_defence = buffer:ReadUShort();
+	recvValue.m_damage_increase = buffer:ReadInt();
+	recvValue.m_damage_reduce = buffer:ReadInt();
+	recvValue.m_skillid={};
+	for tmpi=1,4,1 do
+		recvValue.m_skillid[tmpi] = buffer:ReadShort();
+	end
+	return recvValue;
+end
+
 function struct_NetS_FightRoomActor_recv( buffer )
 	local recvValue = {};
 	recvValue.m_name_length = buffer:ReadSByte();
@@ -260,12 +283,34 @@ end
 function struct_NetS_FightStart_recv( buffer )
 	local recvValue = {};
 	recvValue.m_fightid = buffer:ReadInt();
+	recvValue.m_attack_godattr = struct_HeroAttr_recv( buffer );
+	recvValue.m_defense_godattr = struct_HeroAttr_recv( buffer );
+	recvValue.m_attack_godkind = buffer:ReadShort();
+	recvValue.m_defense_godkind = buffer:ReadShort();
+	recvValue.m_side = buffer:ReadSByte();
+	recvValue.m_maxtime = buffer:ReadInt();
+	return recvValue;
+end
+
+function struct_NetS_FightCommand_recv( buffer )
+	local recvValue = {};
+	recvValue.m_side = buffer:ReadSByte();
+	recvValue.m_cmd = buffer:ReadSByte();
+	recvValue.m_kind = buffer:ReadShort();
+	recvValue.m_attr = struct_HeroAttr_recv( buffer );
 	return recvValue;
 end
 
 function struct_NetS_FightTurns_recv( buffer )
 	local recvValue = {};
 	recvValue.m_turns = buffer:ReadInt();
+	recvValue.m_count = buffer:ReadShort();
+	recvValue.m_list = {};
+	for tmpi=1,recvValue.m_count,1 do
+		local tmpValue={};
+		tmpValue = struct_NetS_FightCommand_recv( buffer );
+		table.insert( recvValue.m_list, tmpValue );
+	end
 	return recvValue;
 end
 

@@ -64,3 +64,11 @@ function netsend_askinfo_C( sendValue )
 	eye.networkManager:SendMessage(buf);
 end
 
+-- m_fightid=0,m_cmd=0,m_value=0,
+function netsend_fightcommand_C( sendValue )
+	local buf = ByteBuffer.New();
+	buf:WriteShort( CMDC_FIGHTCOMMAND );
+	struct_NetC_FightCommand_send( buf, sendValue );
+	eye.networkManager:SendMessage(buf);
+end
+

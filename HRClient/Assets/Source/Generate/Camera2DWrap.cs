@@ -23,6 +23,7 @@ public class Camera2DWrap
 		L.RegFunction("__tostring", ToLua.op_ToString);
 		L.RegVar("subCamera", get_subCamera, set_subCamera);
 		L.RegVar("enableTouchEffect", get_enableTouchEffect, set_enableTouchEffect);
+		L.RegVar("pixelsPerUnit", get_pixelsPerUnit, set_pixelsPerUnit);
 		L.RegVar("moveDecay", get_moveDecay, set_moveDecay);
 		L.RegVar("horizontalLock", get_horizontalLock, set_horizontalLock);
 		L.RegVar("verticalLock", get_verticalLock, set_verticalLock);
@@ -302,6 +303,25 @@ public class Camera2DWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index enableTouchEffect on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_pixelsPerUnit(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Camera2D obj = (Camera2D)o;
+			float ret = obj.pixelsPerUnit;
+			LuaDLL.lua_pushnumber(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index pixelsPerUnit on a nil value" : e.Message);
 		}
 	}
 
@@ -625,6 +645,25 @@ public class Camera2DWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index enableTouchEffect on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_pixelsPerUnit(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Camera2D obj = (Camera2D)o;
+			float arg0 = (float)LuaDLL.luaL_checknumber(L, 2);
+			obj.pixelsPerUnit = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index pixelsPerUnit on a nil value" : e.Message);
 		}
 	}
 

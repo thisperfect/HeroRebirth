@@ -219,16 +219,16 @@ function LoginModOnLoadAssetBundleProc( assetBundleName, progress, totalProgress
 	if progress == totalProgress then
 		m_uiLoading.transform:GetComponent( "Slider" ).value = progress/totalProgress;
 		-- 加载主城
---[[		LoadPrefabAsyn( "MainCityScence", function( obj )
+		LoadPrefabAsyn( "MainCityScence", function( obj )
 			GameManager.MainCityScence = GameObject.Instantiate( obj );
 			MainDlgOpen();
 			LoginModClose();
 			netsend_list_C( 0 );
-		end );--]]
+		end );
 		
-		LoginModClose();
+--[[		LoginModClose();
 		FightDlgOpen();
-		GetFightRoom():Create( recvValue );
+		GetFightRoom():Create( { m_fightid = 1, m_side = 1, m_maxtime = 150 } );--]]
 	end
 end
 

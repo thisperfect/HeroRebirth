@@ -43,3 +43,19 @@ function clearChild( object )
         GameObject.Destroy( object.transform:GetChild(i).gameObject );
     end
 end
+
+-- ÑÓÊ±Ö´ÐÐ
+function Invoke(func, delay, param, name)
+    if param == nil then
+        param = 0;
+    end
+    if name == nil then
+        name = "";
+    end
+    eye.gameManager.delayExecute = func;
+    eye.gameManager:GameInvoke(delay, param, name);
+end
+-- Í£Ö¹ÑÓÊ±Ö´ÐÐ
+function InvokeStop(name)
+    eye.gameManager:GameInvoke_Stop(name);
+end

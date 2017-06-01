@@ -214,6 +214,9 @@ public static class LuaBinder
 		L.RegFunction("Comparison_int", System_Comparison_int);
 		L.RegFunction("Action_UnityEngine_Object", System_Action_UnityEngine_Object);
 		L.EndModule();
+		L.BeginModule("GameManager");
+		L.RegFunction("LuaExecute", GameManager_LuaExecute);
+		L.EndModule();
 		L.BeginModule("UIInputFieldSubmit");
 		L.RegFunction("OnValidateInput", UIInputFieldSubmit_OnValidateInput);
 		L.EndModule();
@@ -714,6 +717,33 @@ public static class LuaBinder
 			{
 				LuaTable self = ToLua.CheckLuaTable(L, 2);
 				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(System.Action<UnityEngine.Object>), func, self);
+				ToLua.Push(L, arg1);
+			}
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int GameManager_LuaExecute(IntPtr L)
+	{
+		try
+		{
+			int count = LuaDLL.lua_gettop(L);
+			LuaFunction func = ToLua.CheckLuaFunction(L, 1);
+
+			if (count == 1)
+			{
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(GameManager.LuaExecute), func);
+				ToLua.Push(L, arg1);
+			}
+			else
+			{
+				LuaTable self = ToLua.CheckLuaTable(L, 2);
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(GameManager.LuaExecute), func, self);
 				ToLua.Push(L, arg1);
 			}
 			return 1;

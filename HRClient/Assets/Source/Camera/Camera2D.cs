@@ -19,6 +19,7 @@ public abstract class Camera2D : MonoBehaviour
 
     // 点击特效
     public bool enableTouchEffect = true;
+    public float pixelsPerUnit = 100.0f;
 
 	// 速度衰减（乘）
 	public float moveDecay = 0.075f;
@@ -546,9 +547,9 @@ public abstract class Camera2D : MonoBehaviour
 		pos.y += offsetY;
 
 		// 根据摄像机Size算出移动限制Y 1 position = 100 pixel
-		float limitY = ( mapSize.y / 2f - _Camera.orthographicSize * 100f ) / 100f;
+		float limitY = ( mapSize.y / 2f - _Camera.orthographicSize * pixelsPerUnit ) / pixelsPerUnit;
 		// 分辨率算出X
-		float limitX = ( mapSize.x / 2f - ( (float)Screen.width / (float)Screen.height ) * _Camera.orthographicSize * 100f ) / 100f;
+		float limitX = ( mapSize.x / 2f - ( (float)Screen.width / (float)Screen.height ) * _Camera.orthographicSize * pixelsPerUnit ) / pixelsPerUnit;
 
 		// 限制移动
         if ( !horizontalLock )

@@ -43,3 +43,9 @@ function struct_NetC_AskInfo_send( buf, sendValue )
 	buf:WriteStringWithLength( sendValue.m_msg );
 end
 
+function struct_NetC_FightCommand_send( buf, sendValue )
+	buf:WriteInt( sendValue.m_fightid );
+	buf:WriteSByte( sendValue.m_cmd );
+	buf:WriteInt( sendValue.m_value );
+end
+

@@ -8,9 +8,13 @@ public class GameManagerWrap
 	{
 		L.BeginClass(typeof(GameManager), typeof(UnityEngine.MonoBehaviour));
 		L.RegFunction("setDesignContentScale", setDesignContentScale);
+		L.RegFunction("GameInvoke", GameInvoke);
+		L.RegFunction("GameInvoke_Stop", GameInvoke_Stop);
 		L.RegFunction("__eq", op_Equality);
 		L.RegFunction("__tostring", ToLua.op_ToString);
 		L.RegVar("isInBackground", get_isInBackground, set_isInBackground);
+		L.RegVar("delayExecute", get_delayExecute, set_delayExecute);
+		L.RegFunction("LuaExecute", GameManager_LuaExecute);
 		L.EndClass();
 	}
 
@@ -21,6 +25,42 @@ public class GameManagerWrap
 		{
 			ToLua.CheckArgsCount(L, 0);
 			GameManager.setDesignContentScale();
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int GameInvoke(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 4);
+			GameManager obj = (GameManager)ToLua.CheckObject(L, 1, typeof(GameManager));
+			float arg0 = (float)LuaDLL.luaL_checknumber(L, 2);
+			object arg1 = ToLua.ToVarObject(L, 3);
+			string arg2 = ToLua.CheckString(L, 4);
+			obj.GameInvoke(arg0, arg1, arg2);
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int GameInvoke_Stop(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 2);
+			GameManager obj = (GameManager)ToLua.CheckObject(L, 1, typeof(GameManager));
+			string arg0 = ToLua.CheckString(L, 2);
+			obj.GameInvoke_Stop(arg0);
 			return 0;
 		}
 		catch(Exception e)
@@ -62,6 +102,25 @@ public class GameManagerWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_delayExecute(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			GameManager obj = (GameManager)o;
+			GameManager.LuaExecute ret = obj.delayExecute;
+			ToLua.Push(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index delayExecute on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int set_isInBackground(IntPtr L)
 	{
 		try
@@ -69,6 +128,64 @@ public class GameManagerWrap
 			bool arg0 = LuaDLL.luaL_checkboolean(L, 2);
 			GameManager.isInBackground = arg0;
 			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_delayExecute(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			GameManager obj = (GameManager)o;
+			GameManager.LuaExecute arg0 = null;
+			LuaTypes funcType2 = LuaDLL.lua_type(L, 2);
+
+			if (funcType2 != LuaTypes.LUA_TFUNCTION)
+			{
+				 arg0 = (GameManager.LuaExecute)ToLua.CheckObject(L, 2, typeof(GameManager.LuaExecute));
+			}
+			else
+			{
+				LuaFunction func = ToLua.ToLuaFunction(L, 2);
+				arg0 = DelegateFactory.CreateDelegate(typeof(GameManager.LuaExecute), func) as GameManager.LuaExecute;
+			}
+
+			obj.delayExecute = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index delayExecute on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int GameManager_LuaExecute(IntPtr L)
+	{
+		try
+		{
+			int count = LuaDLL.lua_gettop(L);
+			LuaFunction func = ToLua.CheckLuaFunction(L, 1);
+
+			if (count == 1)
+			{
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(GameManager.LuaExecute), func);
+				ToLua.Push(L, arg1);
+			}
+			else
+			{
+				LuaTable self = ToLua.CheckLuaTable(L, 2);
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(GameManager.LuaExecute), func, self);
+				ToLua.Push(L, arg1);
+			}
+			return 1;
 		}
 		catch(Exception e)
 		{

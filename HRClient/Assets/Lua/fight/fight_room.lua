@@ -10,20 +10,23 @@ function FightRoom:ctor()
 end
 
 function FightRoom:Reset()
-	self.m_id				=	0;	-- 战场ID
-	self.m_turn				=	0;	-- 当前第几回合(N帧1个回合)
-	self.m_auto_increment	=	1;	-- 自动增量，每增加一个单元自增
-	self.m_cmdqueue		=	Queue.new();	-- 服务器帧驱动队列
+	self.m_fightid			=	0;				-- 战场ID
+	self.m_maxtime			=	0;				-- 战场时间
+	self.m_turns			=	0;				-- 当前第几回合(N帧1个回合)
+	self.m_server_turns		=	0;				-- 当前第几回合(N帧1个回合)
+	self.m_auto_increment	=	0;				-- 自动增量，每增加一个单元自增
+	self.m_cmdqueue			=	Queue.new();	-- 服务器帧驱动队列
+	self.m_side				=	0;				-- 我是攻击方1还是防御方-1
 	
-	-- 攻击方
-	self.m_attack_op		=	Queue.new();	-- 同步到的操作队列
-	self.m_attack_units		=	{};				-- 单元
-	self.m_attack_unitnum 	=	0;				-- 单元总数量
+	-- 我方
+	self.m_our_units		=	{};				-- 单元
+	self.m_our_unitnum 		=	0;				-- 单元总数量
+	self.m_our_god			=	nil;			-- 神邸
 	
-	-- 防守方
-	self.m_defense_op		=	Queue.new();
-	self.m_defense_units	=	{};
-	self.m_defense_unitnum 	=	0;	
+	-- 敌方
+	self.m_enemy_units		=	{};
+	self.m_enemy_unitnum 	=	0;	
+	self.m_enemy_god		=	nil;
 end
 
 -- 帧驱动
@@ -38,26 +41,11 @@ end
 
 -- 回合逻辑
 function FightRoom:Logic()
-	
-	-- 操作队列
-	while Queue.has( self.m_attack_op ) do
-		local op = Queue.popFirst( self.m_attack_op );
-		if op then
-			
-		end
-	end
-	while Queue.has( self.m_defense_op ) do
-		local op = Queue.popFirst( self.m_defense_op );
-		if op then
-			
-		end
-	end
-	
 	-- 战斗单元逻辑
-	for k, v in pairs( self.m_attack_units ) do
+	for k, v in pairs( self.m_our_units ) do
 		v:Logic( self );
 	end
-	for k, v in pairs( self.m_defense_units ) do
+	for k, v in pairs( self.m_enemy_units ) do
 		v:Logic( self );
 	end
 	
@@ -71,16 +59,59 @@ function FightRoom:Create( recvValue )
 	if GameManager.MainCityScence ~= nil then
 		GameManager.MainCityScence.gameObject:SetActive( false );
 	end
+	
+	self.m_fightid = recvValue.m_fightid;
+	self.m_side = recvValue.m_side;
+	self.m_maxtime = recvValue.m_maxtime;
+	if self.m_side == 1 then
+		-- 我是攻击方
+	else
+		-- 我是防御方
+	end
+	
 	-- 战场
-	LoadPrefabAsyn( "FightScence", function( obj )
-			GameManager.FightScence = GameObject.Instantiate( obj );
-		end );
-		
-	-- 成员
+	GameManager.FightScence = GameObject.Instantiate( LoadPrefab( "FightScence" ) );
+	GameManager.FightScence.transform:Find("Camera").localPosition = Vector3( 930, 0, -10000 );
+	
+	Invoke( function()
+		GameManager.FightScence.transform:Find("Camera"):GetComponent( "FightCamera" ):TweenPosToInBound( Vector3( -930, 0, -10000 ), 1 );
+	end, 1, param, "11111")
+	
+	Invoke( function()
+		FightDlgShow();
+	end, 1, param, "22222")
+	
+	-- 我方神邸
+	self.m_our_god = FightUnit.new();
+	self.m_our_god:CreateGod( 1, 1, { m_life = 10000 } );
+	self.m_our_god:Play( "wind_left_loop", 0 );
+	self.m_our_god:SetPos( -1400, 0 );
+	
+	
+	-- 敌方神邸
+	self.m_enemy_god = FightUnit.new();
+	self.m_enemy_god:CreateGod( -1, 1, { m_life = 10000 } );
+	self.m_enemy_god:Play( "wind_left_loop", 0 );
+	self.m_enemy_god:SetPos( 1400, 0 );
+	
+	-- 倒计时
+	FightDlgChangeCountdown( self.m_maxtime - self.m_server_turns/3 );
+	-- 血条
+	FightDlgChangeOurLife( 10000, 10000 );
+	FightDlgChangeEnemyLife( 10000, 10000 );
+end
+
+-- 创建一个单元
+function FightRoom:AddUnit( recvValue )
 	local unitObj = FightUnit.new();
-	unitObj:Create( self.m_auto_increment, 1, {} );
+	unitObj:Create( recvValue.m_side, 1, {} );
 	table.insert( self.m_attack_units, unitObj );
+end
+
+-- 获取自动增量
+function FightRoom:GetIncrement()
 	self.m_auto_increment = self.m_auto_increment + 1;
+	return self.m_auto_increment;
 end
 
 -- 全局
@@ -91,3 +122,4 @@ function GetFightRoom()
 	end
 	return G_FightRoom;
 end
+

@@ -179,5 +179,40 @@ public class GameManager : MonoBehaviour {
         }
 #endif
     }
- 
+
+    /*********************************************************/
+    // 延时执行
+    /*********************************************************/
+    public delegate void LuaExecute( object param );
+    public LuaExecute delayExecute = null;
+    Dictionary<string, Coroutine> _InvokeList = new Dictionary<string, Coroutine>();
+    public void GameInvoke( float delay, object param, string name )
+    {
+        if ( delayExecute == null )
+            return;
+
+        if ( name != "" )
+            _InvokeList.Add( name, StartCoroutine( Execute( delayExecute, delay, param, name ) ) );
+        else
+            StartCoroutine( Execute( delayExecute, delay, param, name ) );
+
+        delayExecute = null;
+    }
+    public void GameInvoke_Stop( string name )
+    {
+        if ( !_InvokeList.ContainsKey( name ) )
+            return;
+
+        StopCoroutine( _InvokeList[name] );
+        _InvokeList.Remove( name );
+        delayExecute = null;
+    }
+    IEnumerator Execute( LuaExecute func, float delay, object param, string name )
+    {
+        yield return new WaitForSeconds( delay );
+        if ( name != "" )
+            _InvokeList.Remove( name );
+        func( param );
+        yield return null;
+    }
 }

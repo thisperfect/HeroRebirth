@@ -31,6 +31,7 @@ public static class DelegateFactory
 		dict.Add(typeof(UnityEngine.Events.UnityAction<UnityEngine.SceneManagement.Scene,UnityEngine.SceneManagement.LoadSceneMode>), UnityEngine_Events_UnityAction_UnityEngine_SceneManagement_Scene_UnityEngine_SceneManagement_LoadSceneMode);
 		dict.Add(typeof(UnityEngine.Events.UnityAction<UnityEngine.SceneManagement.Scene>), UnityEngine_Events_UnityAction_UnityEngine_SceneManagement_Scene);
 		dict.Add(typeof(UnityEngine.Events.UnityAction<UnityEngine.SceneManagement.Scene,UnityEngine.SceneManagement.Scene>), UnityEngine_Events_UnityAction_UnityEngine_SceneManagement_Scene_UnityEngine_SceneManagement_Scene);
+		dict.Add(typeof(GameManager.LuaExecute), GameManager_LuaExecute);
 		dict.Add(typeof(System.Action<UnityEngine.Object>), System_Action_UnityEngine_Object);
 		dict.Add(typeof(UnityEngine.UI.InputField.OnValidateInput), UnityEngine_UI_InputField_OnValidateInput);
 		dict.Add(typeof(UIInputFieldSubmit.OnValidateInput), UIInputFieldSubmit_OnValidateInput);
@@ -815,6 +816,53 @@ public static class DelegateFactory
 		{
 			UnityEngine_Events_UnityAction_UnityEngine_SceneManagement_Scene_UnityEngine_SceneManagement_Scene_Event target = new UnityEngine_Events_UnityAction_UnityEngine_SceneManagement_Scene_UnityEngine_SceneManagement_Scene_Event(func, self);
 			UnityEngine.Events.UnityAction<UnityEngine.SceneManagement.Scene,UnityEngine.SceneManagement.Scene> d = target.CallWithSelf;
+			target.method = d.Method;
+			return d;
+		}
+	}
+
+	class GameManager_LuaExecute_Event : LuaDelegate
+	{
+		public GameManager_LuaExecute_Event(LuaFunction func) : base(func) { }
+		public GameManager_LuaExecute_Event(LuaFunction func, LuaTable self) : base(func, self) { }
+
+		public void Call(object param0)
+		{
+			func.BeginPCall();
+			func.Push(param0);
+			func.PCall();
+			func.EndPCall();
+		}
+
+		public void CallWithSelf(object param0)
+		{
+			func.BeginPCall();
+			func.Push(self);
+			func.Push(param0);
+			func.PCall();
+			func.EndPCall();
+		}
+	}
+
+	public static Delegate GameManager_LuaExecute(LuaFunction func, LuaTable self, bool flag)
+	{
+		if (func == null)
+		{
+			GameManager.LuaExecute fn = delegate(object param0) { };
+			return fn;
+		}
+
+		if(!flag)
+		{
+			GameManager_LuaExecute_Event target = new GameManager_LuaExecute_Event(func);
+			GameManager.LuaExecute d = target.Call;
+			target.method = d.Method;
+			return d;
+		}
+		else
+		{
+			GameManager_LuaExecute_Event target = new GameManager_LuaExecute_Event(func, self);
+			GameManager.LuaExecute d = target.CallWithSelf;
 			target.method = d.Method;
 			return d;
 		}
