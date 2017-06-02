@@ -115,8 +115,8 @@ end
 function FightRoom:AddUnit( recvValue )
 	local unitObj = FightUnit.new();		
 	unitObj:Create( recvValue.m_side, recvValue.m_kind, {}, function() 
-		unitObj:Play( "move", 0 );
 		unitObj:SetPos( -1400*recvValue.m_side, 0 );
+		unitObj:ChangeState( 1 );
 		if recvValue.m_side == self.m_side then
 			-- 加入我方
 			table.insert( self.m_our_units, unitObj );

@@ -33,6 +33,7 @@ function FightUnit:Reset()
 	self.m_posy				=	0;  -- 位置
 	self.m_toposx			=	0;  -- 位置
 	self.m_toposy			=	0;  -- 位置
+	self.m_timer			=	0;
 	
 	-- 基础属性
 	self.m_life						=	0;	-- 当前生命值(固定数值)
@@ -81,7 +82,13 @@ function FightUnit:Logic()
 		v:Logic( self );
 	end
 	if self.m_job < 100 then
-		self:Move();
+		if self.m_state == 1 then
+			self:Move();
+		elseif self.m_state == 2 then
+			self:Attack();
+		elseif self.m_state == 3 then
+			self:Dead();
+		end
 	end
 end
 
@@ -140,14 +147,42 @@ function FightUnit:SetPos( posx, posy )
 	self.m_obj.transform.localPosition = Vector3( posx, posy, 0 );
 	
 	-- 目标点
-	self.m_toposx	= self.m_posx * self.m_side;
+	self.m_toposx	= self.m_posx * -self.m_side;
 	self.m_toposy 	= self.m_posy;
 end
 
--- 设置敌方还是我方
+-- 设置状态
+function FightUnit:ChangeState( state )
+	self.m_state = state;
+	actionName = "move";
+	if state == 1 then
+		actionName = "move";
+	elseif state == 2 then
+		actionName = "attack";
+	elseif state == 3 then
+		actionName = "death";
+	end
+	self.m_obj.transform:GetChild(0):GetComponent( "UnityArmatureComponent" ).animation:Play( actionName, 0 );
+end
+
+-- 行走
 function FightUnit:Move()	
-	self.m_posx	= self.m_posx + self.m_side*5;
+	--self.m_posx	= self.m_posx + self.m_side*5;
+	
+	--self.m_timer = self.m_timer + Time.deltaTime;
+	print( self.m_toposx )
+	print( Time.deltaTime )
 	--self.m_obj.transform.localPosition = Vector3.MoveTowards( self.m_obj.transform.localPosition, Vector3( self.m_posx, self.m_posy, 0 ), 1 );
-	--self.m_obj.transform.localPosition = Vector3.Lerp( self.m_obj.transform.localPosition, Vector3( self.m_toposx, self.m_toposy, 0 ), 0.1 );
-	self.m_obj.transform.localPosition = Vector3( self.m_posx, self.m_posy, 0 );
+	self.m_obj.transform.localPosition = Vector3.Lerp( self.m_obj.transform.localPosition, Vector3( self.m_toposx, self.m_toposy, 0 ), 1-Time.deltaTime );
+	--self.m_obj.transform.localPosition = Vector3( self.m_posx, self.m_posy, 0 );
+end
+
+-- 攻击
+function FightUnit:Attack()
+	
+end
+
+-- 死亡
+function FightUnit:Dead()
+	
 end
