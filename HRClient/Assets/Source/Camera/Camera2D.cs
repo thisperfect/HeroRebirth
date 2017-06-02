@@ -238,29 +238,31 @@ public abstract class Camera2D : MonoBehaviour
 		// 触摸版
 		if( Input.touchCount == 0 )
 		{
-			// 缩放回弹	
-			if( _Camera.orthographicSize < zoomInLimit )
+            if ( zoomLock == false )
             {
-				_Camera.orthographicSize += 0.05f;
-                if( _Camera.orthographicSize > zoomInLimit )
-                    _Camera.orthographicSize = zoomInLimit;
-                // 矫正位置
-                Move( 0f, 0f );
+                // 缩放回弹	
+			    if( _Camera.orthographicSize < zoomInLimit )
+                {
+				    _Camera.orthographicSize += 0.05f;
+                    if( _Camera.orthographicSize > zoomInLimit )
+                        _Camera.orthographicSize = zoomInLimit;
+                    // 矫正位置
+                    Move( 0f, 0f );
 
-                RefreshSubCamera();
-            }
-			else if( _Camera.orthographicSize > zoomOutLimit )
-            {
-				_Camera.orthographicSize -= 0.05f;
-                if ( _Camera.orthographicSize < zoomOutLimit )
-                    _Camera.orthographicSize = zoomOutLimit;
-                // 矫正位置
-                Move( 0f, 0f );
+                    RefreshSubCamera();
+                }
+			    else if( _Camera.orthographicSize > zoomOutLimit )
+                {
+				    _Camera.orthographicSize -= 0.05f;
+                    if ( _Camera.orthographicSize < zoomOutLimit )
+                        _Camera.orthographicSize = zoomOutLimit;
+                    // 矫正位置
+                    Move( 0f, 0f );
                 
-                RefreshSubCamera();
-            }
-
-			_Lock = false;			
+                    RefreshSubCamera();
+                }
+            }	
+        	_Lock = false;		
 		}
 		else
 		{
@@ -456,7 +458,7 @@ public abstract class Camera2D : MonoBehaviour
 #endif
 
         // 移动动量
-		if( _Momentum != Vector2.zero )
+        if ( _Momentum != Vector2.zero )
 		{
 			Move( _Momentum.x, _Momentum.y );
 			
