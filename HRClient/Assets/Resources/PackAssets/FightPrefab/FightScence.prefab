@@ -67,6 +67,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4103726850270912}
+  - component: {fileID: 114560450961946074}
   m_Layer: 9
   m_Name: FightScence
   m_TagString: Untagged
@@ -1027,6 +1028,20 @@ MonoBehaviour:
   - {x: 0.5, y: 0}
   - {x: 0.3, y: 0}
   - {x: 0.1, y: 0}
+--- !u!114 &114560450961946074
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1059871758947198}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06d1722597ccf4940bd7c839ed3c6607, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LockStepTurnID: 0
+  LockstepTurnLength: 200
+  GameFrameTurnLength: 50
 --- !u!124 &124091251192824302
 Behaviour:
   m_ObjectHideFlags: 1

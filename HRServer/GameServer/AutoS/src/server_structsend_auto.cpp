@@ -279,6 +279,28 @@ int struct_NetS_ItemInfo_send( char **pptr, int *psize, SLK_NetS_ItemInfo *pValu
 	return 0;
 }
 
+int struct_HeroAttr_send( char **pptr, int *psize, SLK_HeroAttr *pValue )
+{
+	int tmpi = 0;
+
+	LKSET_DWORD_SEND( (*pptr), &pValue->m_life, (*psize) );
+	LKSET_DWORD_SEND( (*pptr), &pValue->m_attack, (*psize) );
+	LKSET_DWORD_SEND( (*pptr), &pValue->m_defence, (*psize) );
+	LKSET_WORD_SEND( (*pptr), &pValue->m_precision, (*psize) );
+	LKSET_WORD_SEND( (*pptr), &pValue->m_dodge, (*psize) );
+	LKSET_WORD_SEND( (*pptr), &pValue->m_crit, (*psize) );
+	LKSET_WORD_SEND( (*pptr), &pValue->m_crit_resist, (*psize) );
+	LKSET_DWORD_SEND( (*pptr), &pValue->m_crit_damage, (*psize) );
+	LKSET_DWORD_SEND( (*pptr), &pValue->m_crit_damage_resist, (*psize) );
+	LKSET_WORD_SEND( (*pptr), &pValue->m_speed_attack, (*psize) );
+	LKSET_WORD_SEND( (*pptr), &pValue->m_speed_move, (*psize) );
+	LKSET_WORD_SEND( (*pptr), &pValue->m_ignore_defence, (*psize) );
+	LKSET_DWORD_SEND( (*pptr), &pValue->m_damage_increase, (*psize) );
+	LKSET_DWORD_SEND( (*pptr), &pValue->m_damage_reduce, (*psize) );
+	LKSET_MEM_SEND( (*pptr), pValue->m_skillid, 4*sizeof(short), (*psize) );
+	return 0;
+}
+
 int struct_NetS_FightRoomActor_send( char **pptr, int *psize, SLK_NetS_FightRoomActor *pValue )
 {
 	int tmpi = 0;
@@ -343,6 +365,24 @@ int struct_NetS_FightStart_send( char **pptr, int *psize, SLK_NetS_FightStart *p
 	int tmpi = 0;
 
 	LKSET_DWORD_SEND( (*pptr), &pValue->m_fightid, (*psize) );
+	struct_HeroAttr_send( pptr, psize, &pValue->m_attack_godattr );
+	struct_HeroAttr_send( pptr, psize, &pValue->m_defense_godattr );
+	LKSET_WORD_SEND( (*pptr), &pValue->m_attack_godkind, (*psize) );
+	LKSET_WORD_SEND( (*pptr), &pValue->m_defense_godkind, (*psize) );
+	LKSET_SBYTE_SEND( (*pptr), &pValue->m_side, (*psize) );
+	LKSET_DWORD_SEND( (*pptr), &pValue->m_maxtime, (*psize) );
+	LKSET_DWORD_SEND( (*pptr), &pValue->m_randseed, (*psize) );
+	return 0;
+}
+
+int struct_NetS_FightCommand_send( char **pptr, int *psize, SLK_NetS_FightCommand *pValue )
+{
+	int tmpi = 0;
+
+	LKSET_SBYTE_SEND( (*pptr), &pValue->m_side, (*psize) );
+	LKSET_SBYTE_SEND( (*pptr), &pValue->m_cmd, (*psize) );
+	LKSET_WORD_SEND( (*pptr), &pValue->m_kind, (*psize) );
+	struct_HeroAttr_send( pptr, psize, &pValue->m_attr );
 	return 0;
 }
 
@@ -351,6 +391,11 @@ int struct_NetS_FightTurns_send( char **pptr, int *psize, SLK_NetS_FightTurns *p
 	int tmpi = 0;
 
 	LKSET_DWORD_SEND( (*pptr), &pValue->m_turns, (*psize) );
+	LKSET_WORD_SEND( (*pptr), &pValue->m_count, (*psize) );
+	for( tmpi = 0; tmpi < pValue->m_count; tmpi++ )
+	{
+		struct_NetS_FightCommand_send( pptr, psize, &pValue->m_list[tmpi] );
+	}
 	return 0;
 }
 

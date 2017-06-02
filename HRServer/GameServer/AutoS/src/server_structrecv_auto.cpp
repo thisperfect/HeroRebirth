@@ -120,3 +120,13 @@ int struct_NetC_AskInfo_recv( char **pptr, int *psize, SLK_NetC_AskInfo *pValue 
 	return 0;
 }
 
+int struct_NetC_FightCommand_recv( char **pptr, int *psize, SLK_NetC_FightCommand *pValue )
+{
+	int tmpi = 0;
+
+	LKSET_DWORD_RECV( &pValue->m_fightid, (*pptr), (*psize) );
+	LKSET_SBYTE_RECV( &pValue->m_cmd, (*pptr), (*psize) );
+	LKSET_DWORD_RECV( &pValue->m_value, (*pptr), (*psize) );
+	return 0;
+}
+

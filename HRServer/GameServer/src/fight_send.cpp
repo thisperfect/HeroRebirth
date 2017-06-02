@@ -119,6 +119,12 @@ static int _fightroom_start_make( int fight_index, SLK_NetS_FightStart *pValue )
 {
 	FIGHT_CHECK_INDEX( fight_index );
 	pValue->m_fightid = g_fight[fight_index].id;
+	pValue->m_maxtime = g_fight[fight_index].maxtime;
+	pValue->m_randseed = g_fight[fight_index].randseed;
+	//SLK_HeroAttr m_attack_godattr;	//服务器发送开始-神邸属性
+	//SLK_HeroAttr m_defense_godattr;	//服务器发送开始-神邸属性
+	//short m_attack_godkind;	//服务器发送开始-神邸种类
+	//short m_defense_godkind;	//服务器发送开始-神邸种类
 	return 0;
 }
 
@@ -126,9 +132,21 @@ static int _fightroom_start_make( int fight_index, SLK_NetS_FightStart *pValue )
 int fightroom_start_sendroom( int fight_index )
 {
 	FIGHT_CHECK_INDEX( fight_index );
-	SLK_NetS_FightStart pValue;
+	SLK_NetS_FightStart pValue = { 0 };
 	_fightroom_start_make( fight_index, &pValue );
-	netsend_fightroomstart_S( fight_index, SENDTYPE_FIGHT, &pValue );
+	for ( int i = 0; i < FIGHT_ACTORNUM; i++ )
+	{
+		if ( g_fight[fight_index].attack_index[i] >= 0 )
+		{
+			pValue.m_side = fight_getside( g_fight[fight_index].attack_index[i] );
+			netsend_fightroomstart_S( g_fight[fight_index].attack_index[i], SENDTYPE_ACTOR, &pValue );
+		}
+		if ( g_fight[fight_index].defense_index[i] >= 0 )
+		{
+			pValue.m_side = fight_getside( g_fight[fight_index].defense_index[i] );
+			netsend_fightroomstart_S( g_fight[fight_index].defense_index[i], SENDTYPE_ACTOR, &pValue );
+		}
+	}
 	return 0;
 }
 
@@ -137,8 +155,9 @@ int fightroom_start_sendactor( int fight_index, int actor_index )
 {
 	FIGHT_CHECK_INDEX( fight_index );
 	ACTOR_CHECK_INDEX( actor_index );
-	SLK_NetS_FightStart pValue;
+	SLK_NetS_FightStart pValue = { 0 };
 	_fightroom_start_make( fight_index, &pValue );
+	pValue.m_side = fight_getside( actor_index );
 	netsend_fightroomstart_S( actor_index, SENDTYPE_ACTOR, &pValue );
 	return 0;
 }
@@ -147,6 +166,12 @@ int fightroom_start_sendactor( int fight_index, int actor_index )
 static int _fightroom_turns_make( int fight_index, SLK_NetS_FightTurns *pValue )
 {
 	pValue->m_turns = g_fight[fight_index].turns;
+	for ( int tmpi = 0; tmpi < 10; tmpi++ )
+	{
+		if ( fight_command_queue_fetch( fight_index, &pValue->m_list[pValue->m_count] ) < 0 )
+			break;
+		pValue->m_count++;
+	}
 	return 0;
 }
 
@@ -154,7 +179,7 @@ static int _fightroom_turns_make( int fight_index, SLK_NetS_FightTurns *pValue )
 int fightroom_turns_sendroom( int fight_index )
 {
 	FIGHT_CHECK_INDEX( fight_index );
-	SLK_NetS_FightTurns pValue;
+	SLK_NetS_FightTurns pValue = { 0 };
 	_fightroom_turns_make( fight_index, &pValue );
 	netsend_fightturns_S( fight_index, SENDTYPE_FIGHT, &pValue );
 	return 0;
@@ -165,7 +190,7 @@ int fightroom_turns_sendactor( int fight_index, int actor_index )
 {
 	FIGHT_CHECK_INDEX( fight_index );
 	ACTOR_CHECK_INDEX( actor_index );
-	SLK_NetS_FightTurns pValue;
+	SLK_NetS_FightTurns pValue = { 0 };
 	_fightroom_turns_make( fight_index, &pValue );
 	netsend_fightturns_S( actor_index, SENDTYPE_ACTOR, &pValue );
 	return 0;

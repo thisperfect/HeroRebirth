@@ -342,7 +342,7 @@ GameObject:
   - component: {fileID: 4267752179586848}
   - component: {fileID: 114847389977506354}
   m_Layer: 0
-  m_Name: armatureName
+  m_Name: armatureName_hero_brute_dragon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1483,7 +1483,7 @@ MonoBehaviour:
   dragonBonesJSON: {fileID: 4900000, guid: 1850378114fc17e42b714f47a807a049, type: 3}
   textureAtlasJSON:
   - Assets/Resources/PackAssets/DragonBonesRes/hero_brute_dragon/hero_brute_dragon_tex.json
-  armatureName: armatureName
+  armatureName: armatureName_hero_brute_dragon
   animationName: move
   _sortingLayerName: Fight
   _sortingOrder: 100

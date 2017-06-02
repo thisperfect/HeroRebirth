@@ -55,7 +55,7 @@ GameObject:
   - component: {fileID: 4362277647500410}
   - component: {fileID: 114313012037991608}
   m_Layer: 0
-  m_Name: armatureName
+  m_Name: arm_hero_pirate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2603,7 +2603,7 @@ MonoBehaviour:
   dragonBonesJSON: {fileID: 4900000, guid: b2d1495dc600e594b9c77e3188ec7697, type: 3}
   textureAtlasJSON:
   - Assets/Resources/PackAssets/DragonBonesRes/hero_pirate/hero_pirate_tex.json
-  armatureName: armatureName
+  armatureName: arm_hero_pirate
   animationName: 
   _sortingLayerName: Fight
   _sortingOrder: 100

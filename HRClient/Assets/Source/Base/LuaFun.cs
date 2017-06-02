@@ -204,6 +204,20 @@ public class LuaFun
         }
     }
 
+    /// <summary>
+    /// 战斗帧逻辑
+    /// </summary>
+    private static LuaFunction _fightFrameTurn = null;
+    public static LuaFunction fightFrameTurn
+    {
+        get
+        {
+            if ( _fightFrameTurn == null )
+                _fightFrameTurn = eye.luaManager.GetFunction( "FightFrameTurn" );
+
+            return _fightFrameTurn;
+        }
+    }
 
     public static void Destroy()
     {
@@ -223,5 +237,6 @@ public class LuaFun
 
         _allUIClose = null;
         _buildingselect = null;
+        _fightFrameTurn = null;
     }
 }

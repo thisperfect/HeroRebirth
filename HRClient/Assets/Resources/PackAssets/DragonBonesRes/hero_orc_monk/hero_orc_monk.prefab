@@ -495,7 +495,7 @@ GameObject:
   - component: {fileID: 4544336483693298}
   - component: {fileID: 114227833573213230}
   m_Layer: 0
-  m_Name: armatureName
+  m_Name: arm_hero_orc_monk
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2463,7 +2463,7 @@ MonoBehaviour:
   dragonBonesJSON: {fileID: 4900000, guid: ad59e59067be1ed4fa435c1b349559de, type: 3}
   textureAtlasJSON:
   - Assets/Resources/PackAssets/DragonBonesRes/hero_orc_monk/hero_orc_monk_tex.json
-  armatureName: armatureName
+  armatureName: arm_hero_orc_monk
   animationName: 
   _sortingLayerName: Fight
   _sortingOrder: 100

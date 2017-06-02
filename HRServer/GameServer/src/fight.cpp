@@ -54,6 +54,7 @@ int fight_init()
 		}
 	}
 	g_fightid++;
+	printf_msg( "fight  maxcount=%d  memory=%0.2fMB\n", g_fight_maxnum, (sizeof(Fight) * ( g_fight_maxnum + 1 )) / 1024.0 / 1024.0 );
 	return 0;
 }
 
@@ -82,14 +83,14 @@ char fight_getside( int actor_index )
 	{
 		if ( g_fight[fight_index].attack_index[i] == actor_index )
 		{
-			return 0;
+			return 1;
 		}
 		if ( g_fight[fight_index].defense_index[i] == actor_index )
 		{
-			return 1;
+			return -1;
 		}
 	}
-	return -1;
+	return 0;
 }
 
 // 战场状态
@@ -185,6 +186,8 @@ int fight_create( int actor_index, char pvpnum )
 	g_fight[fight_index].state = FIGHT_STATE_MATCH;
 	g_fight[fight_index].id = g_fightid++;
 	g_fight[fight_index].pvpnum = pvpnum;
+	g_fight[fight_index].maxtime = 150;
+	g_fight[fight_index].randseed = (int)time( NULL );
 	g_fight[fight_index].attack_actornum += 1;
 	g_fight[fight_index].attack_index[0] = actor_index;
 	g_actors[actor_index].fight_index = fight_index;
@@ -350,4 +353,74 @@ void fight_logic()
 			g_fight[tmpi].turns++;
 		}
 	}
+}
+
+// 接收一个客户端传过来的指令
+int fight_command( int actor_index, SLK_NetC_FightCommand *pValue )
+{
+	ACTOR_CHECK_INDEX( actor_index );
+	FIGHT_CHECK_INDEX( g_actors[actor_index].fight_index );
+	int fight_index = g_actors[actor_index].fight_index;
+	// 我是攻击方1还是防御方-1
+	char side = fight_getside( actor_index );
+	SLK_NetS_FightCommand cmdinfo = { 0 };
+	cmdinfo.m_side = side;
+	cmdinfo.m_cmd = pValue->m_cmd;
+	cmdinfo.m_kind = pValue->m_value;
+	fight_command_queue_add( fight_index, &cmdinfo );
+	return 0;
+}
+
+// 战斗指令添加到队列
+int fight_command_queue_add( int fight_index, SLK_NetS_FightCommand *cmdinfo )
+{
+	FIGHT_CHECK_INDEX( fight_index );
+	// 获取尾部
+	int queue_tail = g_fight[fight_index].command_queue_tail + 1;
+	if ( queue_tail >= FIGHT_COMMANDNUM )
+	{
+		queue_tail = 0;
+	}
+
+	// 当队列已经满了
+	if ( g_fight[fight_index].command_queue_head == queue_tail )
+	{
+		return -1;
+	}
+
+	// 将数据复制进来
+	int index = g_fight[fight_index].command_queue_tail;
+	if ( index >= 0 && index < FIGHT_COMMANDNUM )
+	{
+		memcpy( &g_fight[fight_index].command_queue[index], cmdinfo, sizeof(SLK_NetS_FightCommand) );
+	}
+
+	// 尾部步进
+	g_fight[fight_index].command_queue_tail = queue_tail;
+	return 0;
+}
+
+// 队列出队
+int fight_command_queue_fetch( int fight_index, SLK_NetS_FightCommand *outcmd )
+{
+	FIGHT_CHECK_INDEX( fight_index );
+	if ( g_fight[fight_index].command_queue_tail == g_fight[fight_index].command_queue_head )
+	{
+		return -1;
+	}
+
+	// 从队列中取出一项
+	int index = g_fight[fight_index].command_queue_head;
+	if ( index >= 0 && index < FIGHT_COMMANDNUM )
+	{
+		memcpy( outcmd, &g_fight[fight_index].command_queue[index], sizeof(SLK_NetS_FightCommand) );
+	}
+
+	// 头部步进
+	g_fight[fight_index].command_queue_head++;
+	if ( g_fight[fight_index].command_queue_head >= FIGHT_COMMANDNUM )
+	{
+		g_fight[fight_index].command_queue_head = 0;
+	}
+	return 0;
 }

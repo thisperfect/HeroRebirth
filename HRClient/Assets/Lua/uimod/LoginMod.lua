@@ -225,7 +225,6 @@ function LoginModOnLoadAssetBundleProc( assetBundleName, progress, totalProgress
 			LoginModClose();
 			netsend_list_C( 0 );
 		end );
-		
 --[[		LoginModClose();
 		FightDlgOpen();
 		GetFightRoom():Create( { m_fightid = 1, m_side = 1, m_maxtime = 150 } );--]]

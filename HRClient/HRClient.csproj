@@ -310,6 +310,7 @@
     <Compile Include="Assets\Source\Gizmo\GizmoPlane.cs" />
     <Compile Include="Assets\Source\Gizmo\GizmoRing.cs" />
     <Compile Include="Assets\Source\Manager\GameManager.cs" />
+    <Compile Include="Assets\Source\Manager\LockStepManager.cs" />
     <Compile Include="Assets\Source\Manager\LuaManager.cs" />
     <Compile Include="Assets\Source\Manager\NetworkManager.cs" />
     <Compile Include="Assets\Source\Manager\PackageManager.cs" />
@@ -359,6 +360,8 @@
     <Compile Include="Assets\Source\UI\UITextTimeCountup.cs" />
     <Compile Include="Assets\Source\UI\UITextUnderline.cs" />
     <Compile Include="Assets\Source\UI\UITextUnderlineEx.cs" />
+    <Compile Include="Assets\Source\Unit\FightUnit.cs" />
+    <Compile Include="Assets\Source\Unit\UnitMove.cs" />
     <Compile Include="Assets\Source\eye.cs" />
     <Compile Include="Assets\ThirdPartyPlugin\DragonBones\3rdParty\MiniJSON.cs" />
     <Compile Include="Assets\ThirdPartyPlugin\DragonBones\src\DragonBones\animation\Animation.cs" />

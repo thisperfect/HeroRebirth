@@ -240,7 +240,7 @@ GameObject:
   - component: {fileID: 4911228176975396}
   - component: {fileID: 114914599247917440}
   m_Layer: 0
-  m_Name: armatureName
+  m_Name: arm_polemaster
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2253,7 +2253,7 @@ MonoBehaviour:
   dragonBonesJSON: {fileID: 4900000, guid: b588ce30fce8b8c42ae468d296873e26, type: 3}
   textureAtlasJSON:
   - Assets/Resources/PackAssets/DragonBonesRes/hero_polemaster/hero_polemaster_tex.json
-  armatureName: armatureName
+  armatureName: arm_polemaster
   animationName: move
   _sortingLayerName: Fight
   _sortingOrder: 100

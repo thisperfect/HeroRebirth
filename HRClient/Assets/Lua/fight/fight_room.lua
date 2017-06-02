@@ -12,6 +12,7 @@ end
 function FightRoom:Reset()
 	self.m_fightid			=	0;				-- 战场ID
 	self.m_maxtime			=	0;				-- 战场时间
+	self.m_randseed			=	0;				-- 随机种子
 	self.m_turns			=	0;				-- 当前第几回合(N帧1个回合)
 	self.m_server_turns		=	0;				-- 当前第几回合(N帧1个回合)
 	self.m_auto_increment	=	0;				-- 自动增量，每增加一个单元自增
@@ -43,13 +44,17 @@ end
 function FightRoom:Logic()
 	-- 战斗单元逻辑
 	for k, v in pairs( self.m_our_units ) do
-		v:Logic( self );
+		v:Logic();
 	end
 	for k, v in pairs( self.m_enemy_units ) do
-		v:Logic( self );
+		v:Logic();
 	end
-	
-	self.m_turn = self.m_turn + 1;
+	self.m_our_god:Logic( self );
+	self.m_enemy_god:Logic( self );
+	self.m_turns = self.m_turns + 1;
+end
+
+function myrand( down, up )
 end
 
 -- 创建一个战场
@@ -59,10 +64,13 @@ function FightRoom:Create( recvValue )
 	if GameManager.MainCityScence ~= nil then
 		GameManager.MainCityScence.gameObject:SetActive( false );
 	end
-	
+	self:Reset();
 	self.m_fightid = recvValue.m_fightid;
 	self.m_side = recvValue.m_side;
 	self.m_maxtime = recvValue.m_maxtime;
+	self.m_randseed = recvValue.m_randseed;
+	custom.randseed( self.m_randseed );
+	
 	if self.m_side == 1 then
 		-- 我是攻击方
 	else
@@ -79,6 +87,7 @@ function FightRoom:Create( recvValue )
 	
 	Invoke( function()
 		FightDlgShow();
+		GameManager.FightScence.transform:GetComponent( "LockStepManager" ).enabled = true;
 	end, 1, param, "22222")
 	
 	-- 我方神邸
@@ -96,16 +105,27 @@ function FightRoom:Create( recvValue )
 	
 	-- 倒计时
 	FightDlgChangeCountdown( self.m_maxtime - self.m_server_turns/3 );
+	
 	-- 血条
 	FightDlgChangeOurLife( 10000, 10000 );
 	FightDlgChangeEnemyLife( 10000, 10000 );
 end
 
--- 创建一个单元
+-- 加入一个单元
 function FightRoom:AddUnit( recvValue )
-	local unitObj = FightUnit.new();
-	unitObj:Create( recvValue.m_side, 1, {} );
-	table.insert( self.m_attack_units, unitObj );
+	local unitObj = FightUnit.new();		
+	unitObj:Create( recvValue.m_side, recvValue.m_kind, {}, function() 
+		unitObj:Play( "move", 0 );
+		unitObj:SetPos( -1400*recvValue.m_side, 0 );
+		if recvValue.m_side == self.m_side then
+			-- 加入我方
+			table.insert( self.m_our_units, unitObj );
+		else
+			-- 加入敌方
+			table.insert( self.m_enemy_units, unitObj );
+		end
+	
+	end );
 end
 
 -- 获取自动增量
@@ -121,5 +141,10 @@ function GetFightRoom()
 		G_FightRoom = FightRoom.new();
 	end
 	return G_FightRoom;
+end
+
+-- 战斗回合
+function FightFrameTurn()
+	GetFightRoom():Logic();
 end
 

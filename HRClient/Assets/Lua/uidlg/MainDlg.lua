@@ -55,6 +55,11 @@ function MainDlgOnEvent( nType, nControlID, value, gameObject )
 		-- 竞技	
 		elseif nControlID == 102 then
 			FightRoomInfoDlgMatch();
+			
+		-- 任务	
+		elseif nControlID == 104 then
+			FightDlgOpen();
+			GetFightRoom():Create( {m_fightid = -1, m_side = 1, m_maxtime = 150, m_randseed = os.time() } );
         end
 	end
 end

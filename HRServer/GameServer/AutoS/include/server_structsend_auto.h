@@ -164,6 +164,25 @@ struct _slk_NetS_ItemInfo {
 };
 typedef struct _slk_NetS_ItemInfo SLK_NetS_ItemInfo;	//道具信息
 
+struct _slk_HeroAttr {
+	int m_life;	//生命值(固定数值)
+	int m_attack;	//攻击(固定数值)
+	int m_defence;	//防御(固定数值)
+	unsigned short m_precision;	//命中率(百分比数值)
+	unsigned short m_dodge;	//闪避率(百分比数值)
+	unsigned short m_crit;	//暴击率(百分比数值)
+	unsigned short m_crit_resist;	//抗暴率(百分比数值)
+	int m_crit_damage;	//暴伤(固定数值)
+	int m_crit_damage_resist;	//暴伤减免(固定数值)
+	unsigned short m_speed_attack;	//攻速(固定数值)
+	unsigned short m_speed_move;	//移速(固定数值)
+	unsigned short m_ignore_defence;	//破击率(百分比数值)
+	int m_damage_increase;	//伤害加成(固定数值)
+	int m_damage_reduce;	//伤害减免(固定数值)
+	short m_skillid[4];	//技能
+};
+typedef struct _slk_HeroAttr SLK_HeroAttr;	//英雄属性
+
 struct _slk_NetS_FightRoomActor {
 	char m_name_length;	//名称长度
 	char m_name[32];	//名称
@@ -202,12 +221,29 @@ struct _slk_NetS_FightRoomReady {
 typedef struct _slk_NetS_FightRoomReady SLK_NetS_FightRoomReady;	//战场房间玩家准备好
 
 struct _slk_NetS_FightStart {
-	int m_fightid;	//战场ID
+	int m_fightid;	//服务器发送开始-战场ID
+	SLK_HeroAttr m_attack_godattr;	//服务器发送开始-神邸属性
+	SLK_HeroAttr m_defense_godattr;	//服务器发送开始-神邸属性
+	short m_attack_godkind;	//服务器发送开始-神邸种类
+	short m_defense_godkind;	//服务器发送开始-神邸种类
+	char m_side;	//服务器发送开始-我是哪方
+	int m_maxtime;	//服务器发送开始-战斗时间
+	int m_randseed;	//服务器发送开始-随机种子
 };
 typedef struct _slk_NetS_FightStart SLK_NetS_FightStart;	//战斗开始发送玩家阵容
 
+struct _slk_NetS_FightCommand {
+	char m_side;	//哪方
+	char m_cmd;	//指令
+	short m_kind;	//种类
+	SLK_HeroAttr m_attr;	//属性
+};
+typedef struct _slk_NetS_FightCommand SLK_NetS_FightCommand;	//战斗指令
+
 struct _slk_NetS_FightTurns {
-	int m_turns;	//战斗回合
+	int m_turns;	//服务器发送-战斗回合
+	short m_count;	//服务器发送-本回合指令数
+	SLK_NetS_FightCommand m_list[10];	//服务器发送-本回合指令
 };
 typedef struct _slk_NetS_FightTurns SLK_NetS_FightTurns;	//每回合战斗驱动
 
@@ -258,12 +294,14 @@ int struct_ItemSmpInfo_send( char **pptr, int *psize, SLK_ItemSmpInfo *pValue );
 int struct_NetS_ItemList_send( char **pptr, int *psize, SLK_NetS_ItemList *pValue );
 int struct_ItemAttr_send( char **pptr, int *psize, SLK_ItemAttr *pValue );
 int struct_NetS_ItemInfo_send( char **pptr, int *psize, SLK_NetS_ItemInfo *pValue );
+int struct_HeroAttr_send( char **pptr, int *psize, SLK_HeroAttr *pValue );
 int struct_NetS_FightRoomActor_send( char **pptr, int *psize, SLK_NetS_FightRoomActor *pValue );
 int struct_NetS_FightRoomInfo_send( char **pptr, int *psize, SLK_NetS_FightRoomInfo *pValue );
 int struct_NetS_FightRoomQuit_send( char **pptr, int *psize, SLK_NetS_FightRoomQuit *pValue );
 int struct_NetS_FightRoomSetHero_send( char **pptr, int *psize, SLK_NetS_FightRoomSetHero *pValue );
 int struct_NetS_FightRoomReady_send( char **pptr, int *psize, SLK_NetS_FightRoomReady *pValue );
 int struct_NetS_FightStart_send( char **pptr, int *psize, SLK_NetS_FightStart *pValue );
+int struct_NetS_FightCommand_send( char **pptr, int *psize, SLK_NetS_FightCommand *pValue );
 int struct_NetS_FightTurns_send( char **pptr, int *psize, SLK_NetS_FightTurns *pValue );
 int struct_NetS_AwardInfo_send( char **pptr, int *psize, SLK_NetS_AwardInfo *pValue );
 int struct_NetS_AwardInfoList_send( char **pptr, int *psize, SLK_NetS_AwardInfoList *pValue );

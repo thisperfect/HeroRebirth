@@ -289,6 +289,7 @@ function struct_NetS_FightStart_recv( buffer )
 	recvValue.m_defense_godkind = buffer:ReadShort();
 	recvValue.m_side = buffer:ReadSByte();
 	recvValue.m_maxtime = buffer:ReadInt();
+	recvValue.m_randseed = buffer:ReadInt();
 	return recvValue;
 end
 

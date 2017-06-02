@@ -2576,6 +2576,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   subCamera: {fileID: 0}
   enableTouchEffect: 0
+  pixelsPerUnit: 100
   moveDecay: 0.075
   horizontalLock: 0
   verticalLock: 1

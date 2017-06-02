@@ -44,10 +44,18 @@ struct _slk_NetC_AskInfo {
 };
 typedef struct _slk_NetC_AskInfo SLK_NetC_AskInfo;	//客户端发送短请求
 
+struct _slk_NetC_FightCommand {
+	int m_fightid;	//客户端发送-战场发送指令
+	char m_cmd;	//客户端发送-战场发送指令
+	int m_value;	//客户端发送-战场发送指令
+};
+typedef struct _slk_NetC_FightCommand SLK_NetC_FightCommand;	//战斗指令
+
 int struct_NetC_Login_recv( char **pptr, int *psize, SLK_NetC_Login *pValue );
 int struct_NetC_Create_recv( char **pptr, int *psize, SLK_NetC_Create *pValue );
 int struct_NetC_Heart_recv( char **pptr, int *psize, SLK_NetC_Heart *pValue );
 int struct_NetC_Gmcmd_recv( char **pptr, int *psize, SLK_NetC_Gmcmd *pValue );
 int struct_NetC_AskInfo_recv( char **pptr, int *psize, SLK_NetC_AskInfo *pValue );
+int struct_NetC_FightCommand_recv( char **pptr, int *psize, SLK_NetC_FightCommand *pValue );
 
 #endif

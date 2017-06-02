@@ -6,6 +6,7 @@
 #include "gameproc.h"
 #include "system_askinfo.h"
 #include "actor.h"
+#include "fight.h"
 extern SConfig g_Config;
 
 void proc_userawarded_S( int client_index, SLK_NetU_UserAwarded *pValue )
@@ -110,5 +111,11 @@ void proc_askinfo_S( int client_index, SLK_NetC_AskInfo *pValue )
 {
 	// process.
 	system_askinfo( client_index, pValue->m_msgid, pValue->m_msg, pValue->m_value );
+}
+
+void proc_fightcommand_S( int client_index, SLK_NetC_FightCommand *pValue )
+{
+	// process.
+	fight_command( client_index, pValue );
 }
 

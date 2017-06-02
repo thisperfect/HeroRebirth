@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4792838205370596}
   - component: {fileID: 114919862744632082}
   m_Layer: 0
-  m_Name: armatureName
+  m_Name: arm_shadow_assassin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2393,7 +2393,7 @@ MonoBehaviour:
   dragonBonesJSON: {fileID: 4900000, guid: e1f54d470ce14e94ba73da6e5d73948b, type: 3}
   textureAtlasJSON:
   - Assets/Resources/PackAssets/DragonBonesRes/hero_shadow_assassin/hero_shadow_assassin_tex.json
-  armatureName: armatureName
+  armatureName: arm_shadow_assassin
   animationName: 
   _sortingLayerName: Fight
   _sortingOrder: 100

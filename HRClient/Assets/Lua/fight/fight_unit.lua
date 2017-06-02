@@ -31,6 +31,8 @@ function FightUnit:Reset()
 	self.m_obj				=	nil;-- 对象
 	self.m_posx				=	0;  -- 位置
 	self.m_posy				=	0;  -- 位置
+	self.m_toposx			=	0;  -- 位置
+	self.m_toposy			=	0;  -- 位置
 	
 	-- 基础属性
 	self.m_life						=	0;	-- 当前生命值(固定数值)
@@ -78,17 +80,25 @@ function FightUnit:Logic()
 	for k, v in pairs( self.m_events ) do
 		v:Logic( self );
 	end
+	if self.m_job < 100 then
+		self:Move();
+	end
 end
 
 -- 创建
-function FightUnit:Create( side, kind, attr )
+function FightUnit:Create( side, kind, attr, callback )
 	self.m_id = GetFightRoom():GetIncrement();
 	self.m_side = side;
 	self.m_kind = kind;
-	local prefab = LoadPrefab( heroprefab[kind] )
-	self.m_obj = GameObject.Instantiate( prefab );
-	self.m_obj.transform:SetParent( GameManager.FightScence.transform:Find("Land").transform );
-	self.m_obj.transform.localScale = Vector3( side, 1, 1 );
+
+	LoadPrefabAsyn( heroprefab[kind], function( obj )
+			self.m_obj = GameObject.Instantiate( obj );
+			self.m_obj.transform:SetParent( GameManager.FightScence.transform:Find("Land").transform );
+			self.m_obj.transform.localScale = Vector3( side, 1, 1 );
+			if callback then
+				callback();
+			end
+		end );
 end
 
 -- 创建神邸
@@ -120,7 +130,7 @@ end
 
 -- 删除
 function FightUnit:Play( actionName, loop )
-	self.m_obj.transform:Find("armatureName"):GetComponent( "UnityArmatureComponent" ).animation:Play( actionName, loop );
+	self.m_obj.transform:GetChild(0):GetComponent( "UnityArmatureComponent" ).animation:Play( actionName, loop );
 end
 
 -- 设置位置
@@ -128,11 +138,16 @@ function FightUnit:SetPos( posx, posy )
 	self.m_posx				=	posx;
 	self.m_posy				=	posy;
 	self.m_obj.transform.localPosition = Vector3( posx, posy, 0 );
+	
+	-- 目标点
+	self.m_toposx	= self.m_posx * self.m_side;
+	self.m_toposy 	= self.m_posy;
 end
 
 -- 设置敌方还是我方
-function FightUnit:SetPos( posx, posy )
-	self.m_posx				=	posx;
-	self.m_posy				=	posy;
-	self.m_obj.transform.localPosition = Vector3( posx, posy, 0 );
+function FightUnit:Move()	
+	self.m_posx	= self.m_posx + self.m_side*5;
+	--self.m_obj.transform.localPosition = Vector3.MoveTowards( self.m_obj.transform.localPosition, Vector3( self.m_posx, self.m_posy, 0 ), 1 );
+	--self.m_obj.transform.localPosition = Vector3.Lerp( self.m_obj.transform.localPosition, Vector3( self.m_toposx, self.m_toposy, 0 ), 0.1 );
+	self.m_obj.transform.localPosition = Vector3( self.m_posx, self.m_posy, 0 );
 end
