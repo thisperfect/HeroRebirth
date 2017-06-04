@@ -109,13 +109,18 @@ function FightRoom:Create( recvValue )
 	-- 血条
 	FightDlgChangeOurLife( 10000, 10000 );
 	FightDlgChangeEnemyLife( 10000, 10000 );
+	
+	
+	GetFightRoom():AddUnit( {m_side = -1, m_kind = 1, m_offsetx = -200} )
+	--GetFightRoom():AddUnit( {m_side = -1, m_kind = 2, m_offsetx = -400} )
+	--GetFightRoom():AddUnit( {m_side = -1, m_kind = 3, m_offsetx = -600} )
 end
 
 -- 加入一个单元
 function FightRoom:AddUnit( recvValue )
 	local unitObj = FightUnit.new();		
 	unitObj:Create( recvValue.m_side, recvValue.m_kind, {}, function() 
-		unitObj:SetPos( -1400*recvValue.m_side, 0 );
+		unitObj:SetPos( -1400*recvValue.m_side + recvValue.m_offsetx, 0 );
 		unitObj:ChangeState( 1 );
 		if recvValue.m_side == self.m_side then
 			-- 加入我方

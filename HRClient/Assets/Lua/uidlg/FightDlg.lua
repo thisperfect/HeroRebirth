@@ -154,7 +154,7 @@ function FightDlgSelectHero( offset )
 	sendValue.m_value = offset;
 	if GetFightRoom().m_fightid < 0 then
 		-- 本地
-		GetFightRoom():AddUnit( {m_side = 1, m_kind = offset} )
+		GetFightRoom():AddUnit( {m_side = 1, m_kind = offset, m_offsetx = 0} )
 	else
 		-- 网络
 		netsend_fightcommand_C( sendValue );

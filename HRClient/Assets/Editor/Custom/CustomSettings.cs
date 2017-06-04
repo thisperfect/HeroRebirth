@@ -171,6 +171,7 @@ public static class CustomSettings
         _GT(typeof(NetworkManager)),
         _GT(typeof(Localization)),
         _GT(typeof(DeviceHelper)),
+		_GT(typeof(UnitMove)),
 
         // UI
         _GT(typeof(UIMod)),

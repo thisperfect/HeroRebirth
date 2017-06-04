@@ -33,7 +33,7 @@ function FightUnit:Reset()
 	self.m_posy				=	0;  -- 位置
 	self.m_toposx			=	0;  -- 位置
 	self.m_toposy			=	0;  -- 位置
-	self.m_timer			=	0;
+	self.m_attackcd		=	0;	-- 攻击冷却
 	
 	-- 基础属性
 	self.m_life						=	0;	-- 当前生命值(固定数值)
@@ -82,6 +82,7 @@ function FightUnit:Logic()
 		v:Logic( self );
 	end
 	if self.m_job < 100 then
+		self:FindTarget();
 		if self.m_state == 1 then
 			self:Move();
 		elseif self.m_state == 2 then
@@ -97,7 +98,7 @@ function FightUnit:Create( side, kind, attr, callback )
 	self.m_id = GetFightRoom():GetIncrement();
 	self.m_side = side;
 	self.m_kind = kind;
-
+	self.m_speed_attack = custom.rand( 30, 60 )
 	LoadPrefabAsyn( heroprefab[kind], function( obj )
 			self.m_obj = GameObject.Instantiate( obj );
 			self.m_obj.transform:SetParent( GameManager.FightScence.transform:Find("Land").transform );
@@ -153,36 +154,81 @@ end
 
 -- 设置状态
 function FightUnit:ChangeState( state )
+	if self.m_state == state then
+		return
+	end
 	self.m_state = state;
 	actionName = "move";
 	if state == 1 then
 		actionName = "move";
+		--self.m_obj:GetComponent( "UnitMove" ).toPosition = Vector3( self.m_toposx, self.m_toposy, 0 );
+		--self.m_obj:GetComponent( "UnitMove" ).speed = 30 
+		self.m_obj:GetComponent( "UnitMove" ).stat = 0;
+		self.m_obj.transform:GetChild(0):GetComponent( "UnityArmatureComponent" ).animation:Play( actionName, 0 );
 	elseif state == 2 then
 		actionName = "attack";
+		self.m_obj:GetComponent( "UnitMove" ).stat = 1;
 	elseif state == 3 then
 		actionName = "death";
+		self.m_obj:GetComponent( "UnitMove" ).stat = 1;
 	end
-	self.m_obj.transform:GetChild(0):GetComponent( "UnityArmatureComponent" ).animation:Play( actionName, 0 );
 end
 
 -- 行走
 function FightUnit:Move()	
-	--self.m_posx	= self.m_posx + self.m_side*5;
-	
+	self.m_posx	= self.m_posx + self.m_side*5; -- 比如每秒30回合，一回合走10像素，那么每秒走30*30个像素
+	--print( self.m_obj.transform.localPosition.x .. "~" .. self.m_posx )
+	--print( os.time() )
 	--self.m_timer = self.m_timer + Time.deltaTime;
-	print( self.m_toposx )
-	print( Time.deltaTime )
-	--self.m_obj.transform.localPosition = Vector3.MoveTowards( self.m_obj.transform.localPosition, Vector3( self.m_posx, self.m_posy, 0 ), 1 );
-	self.m_obj.transform.localPosition = Vector3.Lerp( self.m_obj.transform.localPosition, Vector3( self.m_toposx, self.m_toposy, 0 ), 1-Time.deltaTime );
+	--print self.m_toposx )
+	--print( Time.deltaTime )
+	--self.m_obj.transform.localPosition = Vector3.MoveTowards( self.m_obj.transform.localPosition, Vector3( self.m_posx, self.m_posy, 0 ), 10 );
+	--self.m_obj.transform.localPosition = Vector3.Lerp( self.m_obj.transform.localPosition, Vector3( self.m_posx, self.m_posy, 0 ), Time.deltaTime );
 	--self.m_obj.transform.localPosition = Vector3( self.m_posx, self.m_posy, 0 );
+	
+		self.m_obj:GetComponent( "UnitMove" ).toPosition = Vector3( self.m_posx, self.m_posy, 0 );
+		self.m_obj:GetComponent( "UnitMove" ).speed = 150;
+		
+		--print( self.m_obj.transform.localPosition.x .. "~" .. self.m_posx )
 end
 
 -- 攻击
 function FightUnit:Attack()
-	
+	self.m_attackcd = self.m_attackcd + 1
+	if self.m_attackcd == self.m_speed_attack then
+		self.m_obj.transform:GetChild(0):GetComponent( "UnityArmatureComponent" ).animation:Play( actionName, 1 );
+		self.m_attackcd = 0;
+	end
 end
 
 -- 死亡
 function FightUnit:Dead()
 	
+end
+
+-- 发现目标
+function FightUnit:FindTarget()
+	local targetList = {};
+	if self.m_side == -1 then
+		targetList = GetFightRoom().m_our_units;
+	else
+		targetList = GetFightRoom().m_enemy_units;
+	end
+	
+	local myPos = cc.p( self.m_posx, self.m_posy );
+	local targetUnit = nil;
+	local minDistance = 100000;
+	for k, v in pairs( targetList ) do
+		local d = cc.pGetDistance(myPos,{x=v.m_posx,y=v.m_posy});
+		if d < minDistance and d < 100 then
+			minDistance = d;
+			targetUnit = v
+		end
+	end
+	
+	if targetUnit ~= nil then
+		self:ChangeState( 2 );
+	else
+		self:ChangeState( 1 );
+	end
 end

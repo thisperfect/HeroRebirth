@@ -27,6 +27,7 @@ public static class LuaBinder
 		NetworkManagerWrap.Register(L);
 		LocalizationWrap.Register(L);
 		DeviceHelperWrap.Register(L);
+		UnitMoveWrap.Register(L);
 		UIModWrap.Register(L);
 		UISystemWrap.Register(L);
 		UIManagerWrap.Register(L);
