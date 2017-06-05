@@ -24,6 +24,7 @@ public static class LuaBinder
 		PathUtilWrap.Register(L);
 		GameManagerWrap.Register(L);
 		ResourceManagerWrap.Register(L);
+		ObjectPoolManagerWrap.Register(L);
 		NetworkManagerWrap.Register(L);
 		LocalizationWrap.Register(L);
 		DeviceHelperWrap.Register(L);

@@ -224,6 +224,25 @@ function LoginModOnLoadAssetBundleProc( assetBundleName, progress, totalProgress
 			MainDlgOpen();
 			LoginModClose();
 			netsend_list_C( 0 );
+			
+			coroutine.start( function()
+			-- 测试对象
+			eye.objectPoolManager:CreatePool("hero_brute_dragon", 5, 10, LoadPrefab(heroprefab[1]))
+
+			eye.objectPoolManager:CreatePool("hero_centaur", 5, 10, LoadPrefab(heroprefab[2]))
+
+			eye.objectPoolManager:CreatePool("hero_faith_healer", 5, 10, LoadPrefab(heroprefab[3]))
+
+			eye.objectPoolManager:CreatePool("hero_orc_monk", 5, 10, LoadPrefab(heroprefab[4]))
+
+			eye.objectPoolManager:CreatePool("hero_pirate", 5, 10, LoadPrefab(heroprefab[5]))
+
+			eye.objectPoolManager:CreatePool("hero_polemaster", 5, 10, LoadPrefab(heroprefab[6]))
+
+			eye.objectPoolManager:CreatePool("hero_shadow_assassin", 5, 10, LoadPrefab(heroprefab[7]))
+			--coroutine.wait( 1/30 );
+			end)
+	
 		end );
 --[[		LoginModClose();
 		FightDlgOpen();

@@ -12,13 +12,14 @@ public class DragonBones_UnityFactoryWrap
 		L.RegFunction("Clear", Clear);
 		L.RegFunction("BuildArmatureComponent", BuildArmatureComponent);
 		L.RegFunction("GetTextureDisplay", GetTextureDisplay);
-		L.RegFunction("LoadDragonBonesData", LoadDragonBonesData);
-		L.RegFunction("LoadTextureAtlasData", LoadTextureAtlasData);
+		L.RegFunction("LoadData", LoadData);
 		L.RegFunction("RefreshAllTextureAtlas", RefreshAllTextureAtlas);
+		L.RegFunction("ReplaceSlotDisplay", ReplaceSlotDisplay);
 		L.RegFunction("New", _CreateDragonBones_UnityFactory);
 		L.RegFunction("__tostring", ToLua.op_ToString);
 		L.RegVar("factory", get_factory, null);
 		L.RegVar("defaultShaderName", get_defaultShaderName, set_defaultShaderName);
+		L.RegVar("defaultUIShaderName", get_defaultUIShaderName, set_defaultUIShaderName);
 		L.RegVar("soundEventManager", get_soundEventManager, null);
 		L.EndClass();
 	}
@@ -106,14 +107,15 @@ public class DragonBones_UnityFactoryWrap
 	{
 		try
 		{
-			ToLua.CheckArgsCount(L, 6);
+			ToLua.CheckArgsCount(L, 7);
 			DragonBones.UnityFactory obj = (DragonBones.UnityFactory)ToLua.CheckObject(L, 1, typeof(DragonBones.UnityFactory));
 			string arg0 = ToLua.CheckString(L, 2);
 			string arg1 = ToLua.CheckString(L, 3);
 			string arg2 = ToLua.CheckString(L, 4);
 			string arg3 = ToLua.CheckString(L, 5);
 			UnityEngine.GameObject arg4 = (UnityEngine.GameObject)ToLua.CheckUnityObject(L, 6, typeof(UnityEngine.GameObject));
-			DragonBones.UnityArmatureComponent o = obj.BuildArmatureComponent(arg0, arg1, arg2, arg3, arg4);
+			bool arg5 = LuaDLL.luaL_checkboolean(L, 7);
+			DragonBones.UnityArmatureComponent o = obj.BuildArmatureComponent(arg0, arg1, arg2, arg3, arg4, arg5);
 			ToLua.Push(L, o);
 			return 1;
 		}
@@ -143,74 +145,18 @@ public class DragonBones_UnityFactoryWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int LoadDragonBonesData(IntPtr L)
+	static int LoadData(IntPtr L)
 	{
 		try
 		{
-			int count = LuaDLL.lua_gettop(L);
-
-			if (count == 4 && TypeChecker.CheckTypes(L, 1, typeof(DragonBones.UnityFactory), typeof(UnityEngine.TextAsset), typeof(string), typeof(float)))
-			{
-				DragonBones.UnityFactory obj = (DragonBones.UnityFactory)ToLua.ToObject(L, 1);
-				UnityEngine.TextAsset arg0 = (UnityEngine.TextAsset)ToLua.ToObject(L, 2);
-				string arg1 = ToLua.ToString(L, 3);
-				float arg2 = (float)LuaDLL.lua_tonumber(L, 4);
-				DragonBones.DragonBonesData o = obj.LoadDragonBonesData(arg0, arg1, arg2);
-				ToLua.PushObject(L, o);
-				return 1;
-			}
-			else if (count == 4 && TypeChecker.CheckTypes(L, 1, typeof(DragonBones.UnityFactory), typeof(string), typeof(string), typeof(float)))
-			{
-				DragonBones.UnityFactory obj = (DragonBones.UnityFactory)ToLua.ToObject(L, 1);
-				string arg0 = ToLua.ToString(L, 2);
-				string arg1 = ToLua.ToString(L, 3);
-				float arg2 = (float)LuaDLL.lua_tonumber(L, 4);
-				DragonBones.DragonBonesData o = obj.LoadDragonBonesData(arg0, arg1, arg2);
-				ToLua.PushObject(L, o);
-				return 1;
-			}
-			else
-			{
-				return LuaDLL.luaL_throw(L, "invalid arguments to method: DragonBones.UnityFactory.LoadDragonBonesData");
-			}
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int LoadTextureAtlasData(IntPtr L)
-	{
-		try
-		{
-			int count = LuaDLL.lua_gettop(L);
-
-			if (count == 4 && TypeChecker.CheckTypes(L, 1, typeof(DragonBones.UnityFactory), typeof(UnityEngine.TextAsset), typeof(string), typeof(float)))
-			{
-				DragonBones.UnityFactory obj = (DragonBones.UnityFactory)ToLua.ToObject(L, 1);
-				UnityEngine.TextAsset arg0 = (UnityEngine.TextAsset)ToLua.ToObject(L, 2);
-				string arg1 = ToLua.ToString(L, 3);
-				float arg2 = (float)LuaDLL.lua_tonumber(L, 4);
-				DragonBones.UnityTextureAtlasData o = obj.LoadTextureAtlasData(arg0, arg1, arg2);
-				ToLua.PushObject(L, o);
-				return 1;
-			}
-			else if (count == 4 && TypeChecker.CheckTypes(L, 1, typeof(DragonBones.UnityFactory), typeof(string), typeof(string), typeof(float)))
-			{
-				DragonBones.UnityFactory obj = (DragonBones.UnityFactory)ToLua.ToObject(L, 1);
-				string arg0 = ToLua.ToString(L, 2);
-				string arg1 = ToLua.ToString(L, 3);
-				float arg2 = (float)LuaDLL.lua_tonumber(L, 4);
-				DragonBones.UnityTextureAtlasData o = obj.LoadTextureAtlasData(arg0, arg1, arg2);
-				ToLua.PushObject(L, o);
-				return 1;
-			}
-			else
-			{
-				return LuaDLL.luaL_throw(L, "invalid arguments to method: DragonBones.UnityFactory.LoadTextureAtlasData");
-			}
+			ToLua.CheckArgsCount(L, 4);
+			DragonBones.UnityFactory obj = (DragonBones.UnityFactory)ToLua.CheckObject(L, 1, typeof(DragonBones.UnityFactory));
+			DragonBones.UnityDragonBonesData arg0 = (DragonBones.UnityDragonBonesData)ToLua.CheckUnityObject(L, 2, typeof(DragonBones.UnityDragonBonesData));
+			bool arg1 = LuaDLL.luaL_checkboolean(L, 3);
+			float arg2 = (float)LuaDLL.luaL_checknumber(L, 4);
+			DragonBones.DragonBonesData o = obj.LoadData(arg0, arg1, arg2);
+			ToLua.PushObject(L, o);
+			return 1;
 		}
 		catch(Exception e)
 		{
@@ -223,10 +169,56 @@ public class DragonBones_UnityFactoryWrap
 	{
 		try
 		{
-			ToLua.CheckArgsCount(L, 1);
+			ToLua.CheckArgsCount(L, 2);
 			DragonBones.UnityFactory obj = (DragonBones.UnityFactory)ToLua.CheckObject(L, 1, typeof(DragonBones.UnityFactory));
-			obj.RefreshAllTextureAtlas();
+			DragonBones.UnityArmatureComponent arg0 = (DragonBones.UnityArmatureComponent)ToLua.CheckUnityObject(L, 2, typeof(DragonBones.UnityArmatureComponent));
+			obj.RefreshAllTextureAtlas(arg0);
 			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int ReplaceSlotDisplay(IntPtr L)
+	{
+		try
+		{
+			int count = LuaDLL.lua_gettop(L);
+
+			if (count == 7 && TypeChecker.CheckTypes(L, 1, typeof(DragonBones.UnityFactory), typeof(string), typeof(string), typeof(string), typeof(string), typeof(DragonBones.Slot), typeof(int)))
+			{
+				DragonBones.UnityFactory obj = (DragonBones.UnityFactory)ToLua.ToObject(L, 1);
+				string arg0 = ToLua.ToString(L, 2);
+				string arg1 = ToLua.ToString(L, 3);
+				string arg2 = ToLua.ToString(L, 4);
+				string arg3 = ToLua.ToString(L, 5);
+				DragonBones.Slot arg4 = (DragonBones.Slot)ToLua.ToObject(L, 6);
+				int arg5 = (int)LuaDLL.lua_tonumber(L, 7);
+				obj.ReplaceSlotDisplay(arg0, arg1, arg2, arg3, arg4, arg5);
+				return 0;
+			}
+			else if (count == 10 && TypeChecker.CheckTypes(L, 1, typeof(DragonBones.UnityFactory), typeof(string), typeof(string), typeof(string), typeof(string), typeof(DragonBones.Slot), typeof(UnityEngine.Texture2D), typeof(UnityEngine.Material), typeof(bool), typeof(int)))
+			{
+				DragonBones.UnityFactory obj = (DragonBones.UnityFactory)ToLua.ToObject(L, 1);
+				string arg0 = ToLua.ToString(L, 2);
+				string arg1 = ToLua.ToString(L, 3);
+				string arg2 = ToLua.ToString(L, 4);
+				string arg3 = ToLua.ToString(L, 5);
+				DragonBones.Slot arg4 = (DragonBones.Slot)ToLua.ToObject(L, 6);
+				UnityEngine.Texture2D arg5 = (UnityEngine.Texture2D)ToLua.ToObject(L, 7);
+				UnityEngine.Material arg6 = (UnityEngine.Material)ToLua.ToObject(L, 8);
+				bool arg7 = LuaDLL.lua_toboolean(L, 9);
+				int arg8 = (int)LuaDLL.lua_tonumber(L, 10);
+				obj.ReplaceSlotDisplay(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8);
+				return 0;
+			}
+			else
+			{
+				return LuaDLL.luaL_throw(L, "invalid arguments to method: DragonBones.UnityFactory.ReplaceSlotDisplay");
+			}
 		}
 		catch(Exception e)
 		{
@@ -268,6 +260,25 @@ public class DragonBones_UnityFactoryWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_defaultUIShaderName(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			DragonBones.UnityFactory obj = (DragonBones.UnityFactory)o;
+			string ret = obj.defaultUIShaderName;
+			LuaDLL.lua_pushstring(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index defaultUIShaderName on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int get_soundEventManager(IntPtr L)
 	{
 		object o = null;
@@ -302,6 +313,25 @@ public class DragonBones_UnityFactoryWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index defaultShaderName on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_defaultUIShaderName(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			DragonBones.UnityFactory obj = (DragonBones.UnityFactory)o;
+			string arg0 = ToLua.CheckString(L, 2);
+			obj.defaultUIShaderName = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index defaultUIShaderName on a nil value" : e.Message);
 		}
 	}
 }

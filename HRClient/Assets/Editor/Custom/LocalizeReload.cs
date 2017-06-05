@@ -7,6 +7,9 @@ public class LocalizeReload
     [MenuItem ("Localize/LocalizeReload" )]  
     public static void ChangeSelectStyle ()  
     {
-        Localization.init();        
+        Localization.init();  
+        
+             
     }
+
 }

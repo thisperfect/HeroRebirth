@@ -100,6 +100,20 @@ public class eye {
         }
     }
 
+    /// <summary>
+    /// 对象池管理器
+    /// </summary>
+    private static ObjectPoolManager _objectPoolManager = null;
+    public static ObjectPoolManager objectPoolManager
+    {
+        get
+        {
+            if ( _objectPoolManager == null )
+                _objectPoolManager = manager.GetComponent<ObjectPoolManager>();
+            return _objectPoolManager;
+        }
+    }
+
     ///// <summary>
     ///// 本地推送管理器
     ///// </summary>
@@ -137,6 +151,7 @@ public class eye {
         _networkManager = null;
         _uiManager = null;
         _resourceManager = null;
+        _objectPoolManager = null;
         //_scenceManager = null;
         //_nativeNotificationManager = null;
         //_voiceManager = null;

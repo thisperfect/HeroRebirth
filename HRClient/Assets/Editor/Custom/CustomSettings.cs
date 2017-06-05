@@ -168,6 +168,7 @@ public static class CustomSettings
 
         _GT(typeof(GameManager)),
         _GT(typeof(ResourceManager)),
+        _GT(typeof(ObjectPoolManager)),
         _GT(typeof(NetworkManager)),
         _GT(typeof(Localization)),
         _GT(typeof(DeviceHelper)),

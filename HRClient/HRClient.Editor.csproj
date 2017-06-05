@@ -177,6 +177,9 @@
     <Compile Include="Assets\Source\UI\Editor\UITextTimeCountupEditor.cs" />
     <Compile Include="Assets\Source\UI\Editor\UITextUnderlineEditor.cs" />
     <Compile Include="Assets\Source\UI\Editor\UITextUnderlineExEditor.cs" />
+    <Compile Include="Assets\ThirdPartyPlugin\DragonBones\src\DragonBones\unity\Editor\AssetProcess.cs" />
+    <Compile Include="Assets\ThirdPartyPlugin\DragonBones\src\DragonBones\unity\Editor\DragonBonesIcons.cs" />
+    <Compile Include="Assets\ThirdPartyPlugin\DragonBones\src\DragonBones\unity\Editor\UnityArmatureEditor.cs" />
     <Compile Include="Assets\ThirdPartyPlugin\DragonBones\src\DragonBones\unity\Editor\UnityEditor.cs" />
     <Compile Include="Assets\ToLua\Editor\Extend\ToLua_LuaInterface_EventObject.cs" />
     <Compile Include="Assets\ToLua\Editor\Extend\ToLua_LuaInterface_LuaConstructor.cs" />

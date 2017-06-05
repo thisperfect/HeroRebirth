@@ -16,6 +16,7 @@ public class eyeWrap
 		L.RegVar("networkManager", get_networkManager, null);
 		L.RegVar("uiManager", get_uiManager, null);
 		L.RegVar("resourceManager", get_resourceManager, null);
+		L.RegVar("objectPoolManager", get_objectPoolManager, null);
 		L.RegVar("serverTime", get_serverTime, null);
 		L.EndClass();
 	}
@@ -135,6 +136,20 @@ public class eyeWrap
 		try
 		{
 			ToLua.Push(L, eye.resourceManager);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_objectPoolManager(IntPtr L)
+	{
+		try
+		{
+			ToLua.Push(L, eye.objectPoolManager);
 			return 1;
 		}
 		catch(Exception e)

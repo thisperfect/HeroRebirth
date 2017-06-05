@@ -53,6 +53,8 @@ public class GameManager : MonoBehaviour {
             m_pLocalResverIni.SetGlobal();
         LogUtil.GetInstance().WriteGame( "STEP 3" );
 
+        Utils.Add<ObjectPoolManager>( gameObject );	// 添加对象池管理器
+        LogUtil.GetInstance().WriteGame( "Add ObjectPoolManager" );
         Utils.Add<ResourceManager>( gameObject );	// 添加资源管理器组件
         LogUtil.GetInstance().WriteGame( "Add ResourceManager" );
         Utils.Add<SocketClient>( gameObject );	// 添加socket组件

@@ -108,11 +108,13 @@
     <Compile Include="Assets\Source\Base\Const.cs" />
     <Compile Include="Assets\Source\Base\Converter.cs" />
     <Compile Include="Assets\Source\Base\DeviceHelper.cs" />
+    <Compile Include="Assets\Source\Base\GameObjectPool.cs" />
     <Compile Include="Assets\Source\Base\Global.cs" />
     <Compile Include="Assets\Source\Base\Localization.cs" />
     <Compile Include="Assets\Source\Base\LuaConst.cs" />
     <Compile Include="Assets\Source\Base\LuaFun.cs" />
     <Compile Include="Assets\Source\Base\LuaHelper.cs" />
+    <Compile Include="Assets\Source\Base\ObjectPool.cs" />
     <Compile Include="Assets\Source\Base\ShareData.cs" />
     <Compile Include="Assets\Source\Base\ShowFPS.cs" />
     <Compile Include="Assets\Source\Base\Utils.cs" />
@@ -189,6 +191,7 @@
     <Compile Include="Assets\Source\Generate\LuaBinder.cs" />
     <Compile Include="Assets\Source\Generate\LuaInterface_DebuggerWrap.cs" />
     <Compile Include="Assets\Source\Generate\NetworkManagerWrap.cs" />
+    <Compile Include="Assets\Source\Generate\ObjectPoolManagerWrap.cs" />
     <Compile Include="Assets\Source\Generate\PathUtilWrap.cs" />
     <Compile Include="Assets\Source\Generate\ResourceManagerWrap.cs" />
     <Compile Include="Assets\Source\Generate\ShakeWrap.cs" />
@@ -229,6 +232,7 @@
     <Compile Include="Assets\Source\Generate\UITweenScaleWrap.cs" />
     <Compile Include="Assets\Source\Generate\UITweenSizeDeltaWrap.cs" />
     <Compile Include="Assets\Source\Generate\UITweenWrap.cs" />
+    <Compile Include="Assets\Source\Generate\UnitMoveWrap.cs" />
     <Compile Include="Assets\Source\Generate\UnityEngine_AnimationBlendModeWrap.cs" />
     <Compile Include="Assets\Source\Generate\UnityEngine_AnimationClipWrap.cs" />
     <Compile Include="Assets\Source\Generate\UnityEngine_AnimationStateWrap.cs" />
@@ -313,6 +317,7 @@
     <Compile Include="Assets\Source\Manager\LockStepManager.cs" />
     <Compile Include="Assets\Source\Manager\LuaManager.cs" />
     <Compile Include="Assets\Source\Manager\NetworkManager.cs" />
+    <Compile Include="Assets\Source\Manager\ObjectPoolManager.cs" />
     <Compile Include="Assets\Source\Manager\PackageManager.cs" />
     <Compile Include="Assets\Source\Manager\ResourceManager.cs" />
     <Compile Include="Assets\Source\Manager\ThreadManager.cs" />
@@ -391,10 +396,14 @@
     <Compile Include="Assets\ThirdPartyPlugin\DragonBones\src\DragonBones\parser\ObjectDataParser.cs" />
     <Compile Include="Assets\ThirdPartyPlugin\DragonBones\src\DragonBones\texture\TextureData.cs" />
     <Compile Include="Assets\ThirdPartyPlugin\DragonBones\src\DragonBones\unity\UnityArmatureComponent.cs" />
+    <Compile Include="Assets\ThirdPartyPlugin\DragonBones\src\DragonBones\unity\UnityBone.cs" />
+    <Compile Include="Assets\ThirdPartyPlugin\DragonBones\src\DragonBones\unity\UnityCombineMesh.cs" />
+    <Compile Include="Assets\ThirdPartyPlugin\DragonBones\src\DragonBones\unity\UnityDragonBonesData.cs" />
     <Compile Include="Assets\ThirdPartyPlugin\DragonBones\src\DragonBones\unity\UnityEventDispatcher.cs" />
     <Compile Include="Assets\ThirdPartyPlugin\DragonBones\src\DragonBones\unity\UnityFactory.cs" />
     <Compile Include="Assets\ThirdPartyPlugin\DragonBones\src\DragonBones\unity\UnitySlot.cs" />
     <Compile Include="Assets\ThirdPartyPlugin\DragonBones\src\DragonBones\unity\UnityTextureData.cs" />
+    <Compile Include="Assets\ThirdPartyPlugin\DragonBones\src\DragonBones\unity\UnityUGUIDisplay.cs" />
     <Compile Include="Assets\ToLua\BaseType\LuaInterface_EventObjectWrap.cs" />
     <Compile Include="Assets\ToLua\BaseType\LuaInterface_LuaConstructorWrap.cs" />
     <Compile Include="Assets\ToLua\BaseType\LuaInterface_LuaFieldWrap.cs" />

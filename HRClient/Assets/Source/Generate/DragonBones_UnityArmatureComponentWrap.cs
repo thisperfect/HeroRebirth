@@ -9,18 +9,32 @@ public class DragonBones_UnityArmatureComponentWrap
 		L.BeginClass(typeof(DragonBones.UnityArmatureComponent), typeof(DragonBones.UnityEventDispatcher<DragonBones.EventObject>));
 		L.RegFunction("_onClear", _onClear);
 		L.RegFunction("Dispose", Dispose);
-		L.RegFunction("LoadData", LoadData);
+		L.RegFunction("CollectBones", CollectBones);
+		L.RegFunction("ShowBones", ShowBones);
+		L.RegFunction("RemoveBones", RemoveBones);
 		L.RegFunction("__eq", op_Equality);
 		L.RegFunction("__tostring", ToLua.op_ToString);
-		L.RegVar("dragonBonesJSON", get_dragonBonesJSON, set_dragonBonesJSON);
-		L.RegVar("textureAtlasJSON", get_textureAtlasJSON, set_textureAtlasJSON);
+		L.RegVar("unityData", get_unityData, set_unityData);
 		L.RegVar("armatureName", get_armatureName, set_armatureName);
 		L.RegVar("animationName", get_animationName, set_animationName);
+		L.RegVar("isUGUI", get_isUGUI, set_isUGUI);
+		L.RegVar("zorderIsDirty", get_zorderIsDirty, set_zorderIsDirty);
+		L.RegVar("sortingMode", get_sortingMode, set_sortingMode);
+		L.RegVar("flipX", get_flipX, set_flipX);
+		L.RegVar("flipY", get_flipY, set_flipY);
+		L.RegVar("addNormal", get_addNormal, set_addNormal);
+		L.RegVar("slotsRoot", get_slotsRoot, set_slotsRoot);
+		L.RegVar("bonesRoot", get_bonesRoot, set_bonesRoot);
+		L.RegVar("unityBones", get_unityBones, set_unityBones);
+		L.RegVar("boneHierarchy", get_boneHierarchy, set_boneHierarchy);
 		L.RegVar("armature", get_armature, null);
 		L.RegVar("animation", get_animation, null);
 		L.RegVar("sortingLayerName", get_sortingLayerName, set_sortingLayerName);
 		L.RegVar("sortingOrder", get_sortingOrder, set_sortingOrder);
 		L.RegVar("zSpace", get_zSpace, set_zSpace);
+		L.RegVar("timeScale", get_timeScale, set_timeScale);
+		L.RegVar("sortedSlots", get_sortedSlots, null);
+		L.RegVar("sortingGroup", get_sortingGroup, null);
 		L.EndClass();
 	}
 
@@ -58,17 +72,46 @@ public class DragonBones_UnityArmatureComponentWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int LoadData(IntPtr L)
+	static int CollectBones(IntPtr L)
 	{
 		try
 		{
-			ToLua.CheckArgsCount(L, 3);
+			ToLua.CheckArgsCount(L, 1);
 			DragonBones.UnityArmatureComponent obj = (DragonBones.UnityArmatureComponent)ToLua.CheckObject(L, 1, typeof(DragonBones.UnityArmatureComponent));
-			UnityEngine.TextAsset arg0 = (UnityEngine.TextAsset)ToLua.CheckUnityObject(L, 2, typeof(UnityEngine.TextAsset));
-			System.Collections.Generic.List<string> arg1 = (System.Collections.Generic.List<string>)ToLua.CheckObject(L, 3, typeof(System.Collections.Generic.List<string>));
-			DragonBones.DragonBonesData o = obj.LoadData(arg0, arg1);
-			ToLua.PushObject(L, o);
-			return 1;
+			obj.CollectBones();
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int ShowBones(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			DragonBones.UnityArmatureComponent obj = (DragonBones.UnityArmatureComponent)ToLua.CheckObject(L, 1, typeof(DragonBones.UnityArmatureComponent));
+			obj.ShowBones();
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int RemoveBones(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			DragonBones.UnityArmatureComponent obj = (DragonBones.UnityArmatureComponent)ToLua.CheckObject(L, 1, typeof(DragonBones.UnityArmatureComponent));
+			obj.RemoveBones();
+			return 0;
 		}
 		catch(Exception e)
 		{
@@ -95,7 +138,7 @@ public class DragonBones_UnityArmatureComponentWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_dragonBonesJSON(IntPtr L)
+	static int get_unityData(IntPtr L)
 	{
 		object o = null;
 
@@ -103,32 +146,13 @@ public class DragonBones_UnityArmatureComponentWrap
 		{
 			o = ToLua.ToObject(L, 1);
 			DragonBones.UnityArmatureComponent obj = (DragonBones.UnityArmatureComponent)o;
-			UnityEngine.TextAsset ret = obj.dragonBonesJSON;
+			DragonBones.UnityDragonBonesData ret = obj.unityData;
 			ToLua.Push(L, ret);
 			return 1;
 		}
 		catch(Exception e)
 		{
-			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index dragonBonesJSON on a nil value" : e.Message);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_textureAtlasJSON(IntPtr L)
-	{
-		object o = null;
-
-		try
-		{
-			o = ToLua.ToObject(L, 1);
-			DragonBones.UnityArmatureComponent obj = (DragonBones.UnityArmatureComponent)o;
-			System.Collections.Generic.List<string> ret = obj.textureAtlasJSON;
-			ToLua.PushObject(L, ret);
-			return 1;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index textureAtlasJSON on a nil value" : e.Message);
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index unityData on a nil value" : e.Message);
 		}
 	}
 
@@ -167,6 +191,196 @@ public class DragonBones_UnityArmatureComponentWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index animationName on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_isUGUI(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			DragonBones.UnityArmatureComponent obj = (DragonBones.UnityArmatureComponent)o;
+			bool ret = obj.isUGUI;
+			LuaDLL.lua_pushboolean(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index isUGUI on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_zorderIsDirty(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			DragonBones.UnityArmatureComponent obj = (DragonBones.UnityArmatureComponent)o;
+			bool ret = obj.zorderIsDirty;
+			LuaDLL.lua_pushboolean(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index zorderIsDirty on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_sortingMode(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			DragonBones.UnityArmatureComponent obj = (DragonBones.UnityArmatureComponent)o;
+			DragonBones.SortingMode ret = obj.sortingMode;
+			ToLua.Push(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index sortingMode on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_flipX(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			DragonBones.UnityArmatureComponent obj = (DragonBones.UnityArmatureComponent)o;
+			bool ret = obj.flipX;
+			LuaDLL.lua_pushboolean(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index flipX on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_flipY(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			DragonBones.UnityArmatureComponent obj = (DragonBones.UnityArmatureComponent)o;
+			bool ret = obj.flipY;
+			LuaDLL.lua_pushboolean(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index flipY on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_addNormal(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			DragonBones.UnityArmatureComponent obj = (DragonBones.UnityArmatureComponent)o;
+			bool ret = obj.addNormal;
+			LuaDLL.lua_pushboolean(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index addNormal on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_slotsRoot(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			DragonBones.UnityArmatureComponent obj = (DragonBones.UnityArmatureComponent)o;
+			UnityEngine.GameObject ret = obj.slotsRoot;
+			ToLua.Push(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index slotsRoot on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_bonesRoot(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			DragonBones.UnityArmatureComponent obj = (DragonBones.UnityArmatureComponent)o;
+			UnityEngine.GameObject ret = obj.bonesRoot;
+			ToLua.Push(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index bonesRoot on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_unityBones(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			DragonBones.UnityArmatureComponent obj = (DragonBones.UnityArmatureComponent)o;
+			System.Collections.Generic.List<DragonBones.UnityBone> ret = obj.unityBones;
+			ToLua.PushObject(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index unityBones on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_boneHierarchy(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			DragonBones.UnityArmatureComponent obj = (DragonBones.UnityArmatureComponent)o;
+			bool ret = obj.boneHierarchy;
+			LuaDLL.lua_pushboolean(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index boneHierarchy on a nil value" : e.Message);
 		}
 	}
 
@@ -266,7 +480,7 @@ public class DragonBones_UnityArmatureComponentWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int set_dragonBonesJSON(IntPtr L)
+	static int get_timeScale(IntPtr L)
 	{
 		object o = null;
 
@@ -274,18 +488,18 @@ public class DragonBones_UnityArmatureComponentWrap
 		{
 			o = ToLua.ToObject(L, 1);
 			DragonBones.UnityArmatureComponent obj = (DragonBones.UnityArmatureComponent)o;
-			UnityEngine.TextAsset arg0 = (UnityEngine.TextAsset)ToLua.CheckUnityObject(L, 2, typeof(UnityEngine.TextAsset));
-			obj.dragonBonesJSON = arg0;
-			return 0;
+			float ret = obj.timeScale;
+			LuaDLL.lua_pushnumber(L, ret);
+			return 1;
 		}
 		catch(Exception e)
 		{
-			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index dragonBonesJSON on a nil value" : e.Message);
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index timeScale on a nil value" : e.Message);
 		}
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int set_textureAtlasJSON(IntPtr L)
+	static int get_sortedSlots(IntPtr L)
 	{
 		object o = null;
 
@@ -293,13 +507,51 @@ public class DragonBones_UnityArmatureComponentWrap
 		{
 			o = ToLua.ToObject(L, 1);
 			DragonBones.UnityArmatureComponent obj = (DragonBones.UnityArmatureComponent)o;
-			System.Collections.Generic.List<string> arg0 = (System.Collections.Generic.List<string>)ToLua.CheckObject(L, 2, typeof(System.Collections.Generic.List<string>));
-			obj.textureAtlasJSON = arg0;
+			System.Collections.Generic.List<DragonBones.Slot> ret = obj.sortedSlots;
+			ToLua.PushObject(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index sortedSlots on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_sortingGroup(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			DragonBones.UnityArmatureComponent obj = (DragonBones.UnityArmatureComponent)o;
+			UnityEngine.Rendering.SortingGroup ret = obj.sortingGroup;
+			ToLua.Push(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index sortingGroup on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_unityData(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			DragonBones.UnityArmatureComponent obj = (DragonBones.UnityArmatureComponent)o;
+			DragonBones.UnityDragonBonesData arg0 = (DragonBones.UnityDragonBonesData)ToLua.CheckUnityObject(L, 2, typeof(DragonBones.UnityDragonBonesData));
+			obj.unityData = arg0;
 			return 0;
 		}
 		catch(Exception e)
 		{
-			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index textureAtlasJSON on a nil value" : e.Message);
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index unityData on a nil value" : e.Message);
 		}
 	}
 
@@ -338,6 +590,196 @@ public class DragonBones_UnityArmatureComponentWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index animationName on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_isUGUI(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			DragonBones.UnityArmatureComponent obj = (DragonBones.UnityArmatureComponent)o;
+			bool arg0 = LuaDLL.luaL_checkboolean(L, 2);
+			obj.isUGUI = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index isUGUI on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_zorderIsDirty(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			DragonBones.UnityArmatureComponent obj = (DragonBones.UnityArmatureComponent)o;
+			bool arg0 = LuaDLL.luaL_checkboolean(L, 2);
+			obj.zorderIsDirty = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index zorderIsDirty on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_sortingMode(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			DragonBones.UnityArmatureComponent obj = (DragonBones.UnityArmatureComponent)o;
+			DragonBones.SortingMode arg0 = (DragonBones.SortingMode)ToLua.CheckObject(L, 2, typeof(DragonBones.SortingMode));
+			obj.sortingMode = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index sortingMode on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_flipX(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			DragonBones.UnityArmatureComponent obj = (DragonBones.UnityArmatureComponent)o;
+			bool arg0 = LuaDLL.luaL_checkboolean(L, 2);
+			obj.flipX = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index flipX on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_flipY(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			DragonBones.UnityArmatureComponent obj = (DragonBones.UnityArmatureComponent)o;
+			bool arg0 = LuaDLL.luaL_checkboolean(L, 2);
+			obj.flipY = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index flipY on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_addNormal(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			DragonBones.UnityArmatureComponent obj = (DragonBones.UnityArmatureComponent)o;
+			bool arg0 = LuaDLL.luaL_checkboolean(L, 2);
+			obj.addNormal = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index addNormal on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_slotsRoot(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			DragonBones.UnityArmatureComponent obj = (DragonBones.UnityArmatureComponent)o;
+			UnityEngine.GameObject arg0 = (UnityEngine.GameObject)ToLua.CheckUnityObject(L, 2, typeof(UnityEngine.GameObject));
+			obj.slotsRoot = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index slotsRoot on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_bonesRoot(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			DragonBones.UnityArmatureComponent obj = (DragonBones.UnityArmatureComponent)o;
+			UnityEngine.GameObject arg0 = (UnityEngine.GameObject)ToLua.CheckUnityObject(L, 2, typeof(UnityEngine.GameObject));
+			obj.bonesRoot = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index bonesRoot on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_unityBones(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			DragonBones.UnityArmatureComponent obj = (DragonBones.UnityArmatureComponent)o;
+			System.Collections.Generic.List<DragonBones.UnityBone> arg0 = (System.Collections.Generic.List<DragonBones.UnityBone>)ToLua.CheckObject(L, 2, typeof(System.Collections.Generic.List<DragonBones.UnityBone>));
+			obj.unityBones = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index unityBones on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_boneHierarchy(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			DragonBones.UnityArmatureComponent obj = (DragonBones.UnityArmatureComponent)o;
+			bool arg0 = LuaDLL.luaL_checkboolean(L, 2);
+			obj.boneHierarchy = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index boneHierarchy on a nil value" : e.Message);
 		}
 	}
 
@@ -395,6 +837,25 @@ public class DragonBones_UnityArmatureComponentWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index zSpace on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_timeScale(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			DragonBones.UnityArmatureComponent obj = (DragonBones.UnityArmatureComponent)o;
+			float arg0 = (float)LuaDLL.luaL_checknumber(L, 2);
+			obj.timeScale = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index timeScale on a nil value" : e.Message);
 		}
 	}
 }

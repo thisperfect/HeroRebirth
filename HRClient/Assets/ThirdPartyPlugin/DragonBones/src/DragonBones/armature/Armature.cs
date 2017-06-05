@@ -335,11 +335,16 @@ namespace DragonBones
          */
         public void Dispose()
         {
-            _delayDispose = true;
-
-            if (!_lockDispose && _armatureData != null)
+            if (_armatureData != null)
             {
-                ReturnToPool();
+                if (_lockDispose)
+                {
+                    _delayDispose = true;
+                }
+                else
+                {
+                    ReturnToPool();
+                }
             }
         }
         /**
@@ -363,6 +368,13 @@ namespace DragonBones
                 return;
             }
 
+            var prevCacheFrameIndex = _animation._cacheFrameIndex;
+
+            // Update animations.
+            _animation._advanceTime(passedTime);
+
+            var currentCacheFrameIndex = _animation._cacheFrameIndex;
+
             // Bones and slots.
             if (_bonesDirty)
             {
@@ -376,13 +388,6 @@ namespace DragonBones
                 _sortSlots();
             }
 
-            var prevCacheFrameIndex = _animation._cacheFrameIndex;
-
-            // Update animations.
-            _animation._advanceTime(passedTime);
-
-            var currentCacheFrameIndex = _animation._cacheFrameIndex;
-            
             int i = 0, l = 0;
 
             if (currentCacheFrameIndex < 0 || currentCacheFrameIndex != prevCacheFrameIndex)

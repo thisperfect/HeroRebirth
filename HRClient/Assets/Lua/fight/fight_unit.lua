@@ -1,6 +1,6 @@
 -- 一个战场单元
 -- 英雄
-local heroprefab = {
+ heroprefab = {
 [1] = "hero_brute_dragon",
 [2] = "hero_centaur",
 [3] = "hero_faith_healer",
@@ -99,14 +99,12 @@ function FightUnit:Create( side, kind, attr, callback )
 	self.m_side = side;
 	self.m_kind = kind;
 	self.m_speed_attack = custom.rand( 30, 60 )
-	LoadPrefabAsyn( heroprefab[kind], function( obj )
-			self.m_obj = GameObject.Instantiate( obj );
-			self.m_obj.transform:SetParent( GameManager.FightScence.transform:Find("Land").transform );
-			self.m_obj.transform.localScale = Vector3( side, 1, 1 );
-			if callback then
-				callback();
-			end
-		end );
+	self.m_obj = eye.objectPoolManager:Get( heroprefab[kind] );
+	self.m_obj.transform:SetParent( GameManager.FightScence.transform:Find("Land").transform );
+	self.m_obj.transform.localScale = Vector3( side, 1, 1 );
+	if callback then
+		callback();
+	end
 end
 
 -- 创建神邸
