@@ -334,7 +334,7 @@ int fight_start( int fight_index )
 	return 0;
 }
 
-// 战场逻辑10帧一次，1秒3次
+// 战场逻辑1秒3次
 void fight_logic()
 {
 	for ( int tmpi = 0; tmpi < g_fight_maxnum; tmpi++ )
@@ -342,7 +342,7 @@ void fight_logic()
 		if ( g_fight[tmpi].state == FIGHT_STATE_SETHERO )
 		{
 			g_fight[tmpi].turns++;
-			if ( g_fight[tmpi].turns >= 90 )
+			if ( g_fight[tmpi].turns >= 45 )
 			{
 				fight_start( tmpi );
 			}

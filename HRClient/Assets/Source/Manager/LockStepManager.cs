@@ -13,8 +13,10 @@ public class LockStepManager : MonoBehaviour {
 
     // 游戏回合：游戏回合就是游戏逻辑的更新。每个帧同步回合拥有的游戏回合次数是由性能控制的。比如为50ms，也就是每次帧同步回合有4次游戏回合。也就是每秒有20次游戏回合。
     private int initialGameFrameTurnLength = 50;
+
+
     public int LockstepTurnLength = 200;
-    public int GameFrameTurnLength = 30;
+    public int GameFrameTurnLength = 50;
 
     // 当前帧同步中游戏的帧数
     private int GameFrame = 0;

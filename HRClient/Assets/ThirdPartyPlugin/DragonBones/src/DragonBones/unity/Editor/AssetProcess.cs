@@ -99,7 +99,7 @@ namespace DragonBones
 			foreach(string texturePath in imagePaths){
 				TextureImporter texImporter = (TextureImporter)TextureImporter.GetAtPath(texturePath);
 				if(texImporter!=null){
-					texImporter.textureType = TextureImporterType.Advanced;
+					texImporter.textureType = TextureImporterType.Default;
 					#if UNITY_5_5_OR_NEWER
 					texImporter.textureCompression = TextureImporterCompression.Uncompressed;
 					#else

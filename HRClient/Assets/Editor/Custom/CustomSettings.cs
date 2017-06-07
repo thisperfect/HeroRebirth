@@ -172,6 +172,7 @@ public static class CustomSettings
         _GT(typeof(NetworkManager)),
         _GT(typeof(Localization)),
         _GT(typeof(DeviceHelper)),
+        _GT(typeof(OpenUDIDPhone.OpenUDID)),
 		_GT(typeof(UnitMove)),
 
         // UI

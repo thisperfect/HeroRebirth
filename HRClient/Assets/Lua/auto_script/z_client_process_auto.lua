@@ -251,6 +251,10 @@ function proc_fightturns_C( recvValue )
 	-- process.
 	-- EventProtocol.addEventListener( "proc_fightturns_C", function( recvValue ) end )
 	--EventProtocol.dispatchEvent( "proc_fightturns_C", recvValue );
-	GetFightRoom():Logic( recvValue );
+	--[[for i=1, recvValue.m_count, 1 do
+		GetFightRoom():AddUnit( {m_side = recvValue.m_list[i].m_side, m_kind = recvValue.m_list[i].m_kind, m_offsetx = -200} )
+	end
+	GetFightRoom():Logic( recvValue );--]]
+	GetFightRoom():AddTurnCommand( recvValue );
 end
 

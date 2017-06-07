@@ -169,6 +169,9 @@ public static class LuaBinder
 		L.RegFunction("ReapplyDrivenProperties", UnityEngine_RectTransform_ReapplyDrivenProperties);
 		L.EndModule();
 		L.EndModule();
+		L.BeginModule("OpenUDIDPhone");
+		OpenUDIDPhone_OpenUDIDWrap.Register(L);
+		L.EndModule();
 		L.BeginModule("UITextTimeCountdown");
 		UITextTimeCountdown_DirectTypeWrap.Register(L);
 		L.EndModule();

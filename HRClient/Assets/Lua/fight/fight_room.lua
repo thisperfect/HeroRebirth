@@ -1,9 +1,7 @@
 -- 一个战场房间
--- PVE战场 客户端驱动战斗逻辑，所有运算均在客户端，战斗结束，客户端上报战斗结果，服务器返回战斗奖励，不考虑断线情况
--- PVP战场 服务器驱动每秒10次驱动一个会和客户端战斗逻辑，客户端每秒10次上传操作，客户端每秒30次检查帧队列里是否有帧驱动
--- 断线重连，服务器发送当前第几回合和之前的所有操作列表，客户端快速跟上。
--- 录像只记录玩家所有的操作，格式第几帧4字节操作1字节数据4字节
--- 属于乐观帧锁定，网速好的玩家不会有问题，网速不好的会觉得卡，一会又快速追上
+-- 实时PVP模式
+-- 客户端每秒20次(50ms)运行着战斗逻辑
+-- 客户端每运行10次战斗逻辑，检查操作队列是否有数据，无数据，等待。有数据，执行数据内容，然后下轮游戏逻辑
 FightRoom = class("FightRoom")
 function FightRoom:ctor()
 	self:Reset();
@@ -13,10 +11,9 @@ function FightRoom:Reset()
 	self.m_fightid			=	0;				-- 战场ID
 	self.m_maxtime			=	0;				-- 战场时间
 	self.m_randseed			=	0;				-- 随机种子
-	self.m_turns			=	0;				-- 当前第几回合(N帧1个回合)
-	self.m_server_turns		=	0;				-- 当前第几回合(N帧1个回合)
+	self.m_turns			=	0;				-- 当前第几个游戏回合
+	self.m_serverturns		=	0;				-- 当前第几个游戏回合
 	self.m_auto_increment	=	0;				-- 自动增量，每增加一个单元自增
-	self.m_cmdqueue			=	Queue.new();	-- 服务器帧驱动队列
 	self.m_side				=	0;				-- 我是攻击方1还是防御方-1
 	
 	-- 我方
@@ -28,20 +25,16 @@ function FightRoom:Reset()
 	self.m_enemy_units		=	{};
 	self.m_enemy_unitnum 	=	0;	
 	self.m_enemy_god		=	nil;
-end
-
--- 帧驱动
-function FightRoom:FrameDrive()
-	while Queue.has( self.m_cmdqueue ) do
-		local op = Queue.popFirst( self.m_cmdqueue );
-		if op then
-			FightRoom:Logic();
-		end
-	end
+	
+	-- 帧同步相关
+	self.m_GameFrame		=	0;
+	self.m_LockStepTurnID	=	0;	
+	self.m_CommandQueue		=	Queue.new();	-- 帧同步回合队列		
 end
 
 -- 回合逻辑
 function FightRoom:Logic()
+	
 	-- 战斗单元逻辑
 	for k, v in pairs( self.m_our_units ) do
 		v:Logic();
@@ -49,12 +42,13 @@ function FightRoom:Logic()
 	for k, v in pairs( self.m_enemy_units ) do
 		v:Logic();
 	end
+	
+	-- 神邸逻辑
 	self.m_our_god:Logic( self );
 	self.m_enemy_god:Logic( self );
+	
+	-- 游戏总回合数
 	self.m_turns = self.m_turns + 1;
-end
-
-function myrand( down, up )
 end
 
 -- 创建一个战场
@@ -104,25 +98,31 @@ function FightRoom:Create( recvValue )
 	self.m_enemy_god:SetPos( 1400, 0 );
 	
 	-- 倒计时
-	FightDlgChangeCountdown( self.m_maxtime - self.m_server_turns/3 );
+	FightDlgChangeCountdown( self.m_maxtime );
 	
 	-- 血条
 	FightDlgChangeOurLife( 10000, 10000 );
 	FightDlgChangeEnemyLife( 10000, 10000 );
 	
 	
-	GetFightRoom():AddUnit( {m_side = -1, m_kind = 1, m_offsetx = -200} )
+	--GetFightRoom():AddUnit( {m_side = -1, m_kind = 1, m_offsetx = -200} )
 	--GetFightRoom():AddUnit( {m_side = -1, m_kind = 2, m_offsetx = -400} )
 	--GetFightRoom():AddUnit( {m_side = -1, m_kind = 3, m_offsetx = -600} )
 end
 
 -- 加入一个单元
 function FightRoom:AddUnit( recvValue )
-	local unitObj = FightUnit.new();		
-	unitObj:Create( recvValue.m_side, recvValue.m_kind, {}, function() 
-		unitObj:SetPos( -1400*recvValue.m_side + recvValue.m_offsetx, 0 );
+	local unitObj = FightUnit.new();
+	local side = 0;
+	if recvValue.m_side == self.m_side then	
+		side = 1; -- 我方
+	else
+		side = -1;-- 敌方
+	end	
+	unitObj:Create( side, recvValue.m_kind, {}, function() 
+		unitObj:SetPos( -1400*side + recvValue.m_offsetx, 0 );
 		unitObj:ChangeState( 1 );
-		if recvValue.m_side == self.m_side then
+		if side == 1 then
 			-- 加入我方
 			table.insert( self.m_our_units, unitObj );
 		else
@@ -131,6 +131,9 @@ function FightRoom:AddUnit( recvValue )
 		end
 	
 	end );
+	
+	-- 此处记录录像
+	-- 记录内容：帧号self.m_turns，干了什么事
 end
 
 -- 获取自动增量
@@ -148,8 +151,59 @@ function GetFightRoom()
 	return G_FightRoom;
 end
 
--- 战斗回合
+-- 添加指令
+function FightRoom:AddTurnCommand( recvValue )
+	self.m_serverturns = recvValue.m_turns
+	Queue.pushBack( self.m_CommandQueue, recvValue );
+end
+
+-- 帧同步回合
+function FightRoom:NextTurnCommand()
+	while Queue.has( self.m_CommandQueue ) do
+		local recvValue = Queue.popFirst( self.m_CommandQueue );
+		if recvValue and recvValue.m_turns == self.m_LockStepTurnID then
+			return recvValue;
+		end
+	end 
+	return nil;
+end
+
+-- 帧同步回合
+function FightRoom:LockStepTurn()
+	print( "LockStepTurnID: " .. self.m_LockStepTurnID .. "recvValue: "..self.m_serverturns );
+	-- 检查下一回合能否继续
+	local recvValue = GetFightRoom():NextTurnCommand();
+	if recvValue then
+		-- process actions
+		for i=1, recvValue.m_count, 1 do
+			GetFightRoom():AddUnit( {m_side = recvValue.m_list[i].m_side, m_kind = recvValue.m_list[i].m_kind, m_offsetx = -200} )
+		end
+		
+		self.m_LockStepTurnID = self.m_LockStepTurnID + 1;
+		return true;
+	end
+	return false;
+end
+
+-- 游戏回合
 function FightFrameTurn()
+	-- 帧同步回合
+	if GetFightRoom().m_fightid > 0 then
+		if GetFightRoom().m_GameFrame == 0 then
+			if GetFightRoom():LockStepTurn() == false then
+				return;
+			end
+		end	
+	end
+	
+	-- 战斗逻辑
 	GetFightRoom():Logic();
+	--print( ""..GetFightRoom().m_LockStepTurnID .. " GetFightRoom():Logic()" )
+	
+	-- 回合
+	GetFightRoom().m_GameFrame = GetFightRoom().m_GameFrame + 1;
+	if GetFightRoom().m_GameFrame == 10 then
+		GetFightRoom().m_GameFrame = 0;
+	end
 end
 

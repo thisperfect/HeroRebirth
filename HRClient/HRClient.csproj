@@ -108,6 +108,7 @@
     <Compile Include="Assets\Source\Base\Const.cs" />
     <Compile Include="Assets\Source\Base\Converter.cs" />
     <Compile Include="Assets\Source\Base\DeviceHelper.cs" />
+    <Compile Include="Assets\Source\Base\FullScreenSprite.cs" />
     <Compile Include="Assets\Source\Base\GameObjectPool.cs" />
     <Compile Include="Assets\Source\Base\Global.cs" />
     <Compile Include="Assets\Source\Base\Localization.cs" />
@@ -115,6 +116,7 @@
     <Compile Include="Assets\Source\Base\LuaFun.cs" />
     <Compile Include="Assets\Source\Base\LuaHelper.cs" />
     <Compile Include="Assets\Source\Base\ObjectPool.cs" />
+    <Compile Include="Assets\Source\Base\OpenUDID.cs" />
     <Compile Include="Assets\Source\Base\ShareData.cs" />
     <Compile Include="Assets\Source\Base\ShowFPS.cs" />
     <Compile Include="Assets\Source\Base\Utils.cs" />
@@ -192,6 +194,7 @@
     <Compile Include="Assets\Source\Generate\LuaInterface_DebuggerWrap.cs" />
     <Compile Include="Assets\Source\Generate\NetworkManagerWrap.cs" />
     <Compile Include="Assets\Source\Generate\ObjectPoolManagerWrap.cs" />
+    <Compile Include="Assets\Source\Generate\OpenUDIDPhone_OpenUDIDWrap.cs" />
     <Compile Include="Assets\Source\Generate\PathUtilWrap.cs" />
     <Compile Include="Assets\Source\Generate\ResourceManagerWrap.cs" />
     <Compile Include="Assets\Source\Generate\ShakeWrap.cs" />
@@ -324,7 +327,12 @@
     <Compile Include="Assets\Source\Manager\UIManager.cs" />
     <Compile Include="Assets\Source\Net\ByteBuffer.cs" />
     <Compile Include="Assets\Source\Net\IPv6SupportMidleware.cs" />
+    <Compile Include="Assets\Source\Net\NetWorkInfo.cs" />
     <Compile Include="Assets\Source\Net\SocketClient.cs" />
+    <Compile Include="Assets\Source\StandardAssets\Effects\ImageEffects\CameraMotionBlur.cs" />
+    <Compile Include="Assets\Source\StandardAssets\Effects\ImageEffects\PostEffectsBase.cs" />
+    <Compile Include="Assets\Source\StandardAssets\Effects\ImageEffects\PostEffectsHelper.cs" />
+    <Compile Include="Assets\Source\StandardAssets\Effects\ImageEffects\SunShafts.cs" />
     <Compile Include="Assets\Source\UI\RTL.cs" />
     <Compile Include="Assets\Source\UI\Tween\UITween.cs" />
     <Compile Include="Assets\Source\UI\Tween\UITweenCityBuilding.cs" />
@@ -494,6 +502,10 @@
     <None Include="Assets\Resources\PackAssets\Shader\SpriteGray.shader" />
     <None Include="Assets\Resources\PackAssets\Shader\SpriteMask.shader" />
     <None Include="Assets\Resources\PackAssets\Shader\SpriteTile.shader" />
+    <None Include="Assets\Resources\PackAssets\Shader\StandardAssets\CameraMotionBlur.shader" />
+    <None Include="Assets\Resources\PackAssets\Shader\StandardAssets\CameraMotionBlurDX11.shader" />
+    <None Include="Assets\Resources\PackAssets\Shader\StandardAssets\SimpleClear.shader" />
+    <None Include="Assets\Resources\PackAssets\Shader\StandardAssets\SunShaftsComposite.shader" />
     <None Include="Assets\Resources\PackAssets\Shader\UI-Default.shader" />
     <None Include="Assets\Resources\PackAssets\Shader\UIRenderTexture.shader" />
     <None Include="Assets\Resources\PackAssets\Shader\UI_Line.shader" />

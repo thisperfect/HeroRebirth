@@ -42,6 +42,8 @@ function GameManager.OnStart()
 		end
 	end
 	
+	print( OpenUDIDPhone.OpenUDID.value );
+	
 	-- 打开登陆界面
 	LoginModOpen();
 

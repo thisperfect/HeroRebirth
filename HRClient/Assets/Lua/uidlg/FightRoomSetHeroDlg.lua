@@ -70,7 +70,7 @@ end
 local m_speed = 0;
 local m_Countdown = 30;
 function FightRoomSetHeroDlgOnLogic( gameObject )
-	if m_speed == 30 and m_Countdown > 0 then
+	if m_speed == 60 and m_Countdown > 0 then
 		m_Countdown = m_Countdown - 1;
 		m_uiCountdown:GetComponent( typeof(UIText) ).text = m_Countdown;
 		m_speed = 0;

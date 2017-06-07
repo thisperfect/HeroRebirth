@@ -790,7 +790,7 @@ GameObject:
   - component: {fileID: 114848268069050274}
   m_Layer: 0
   m_Name: Camera
-  m_TagString: Untagged
+  m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -916,6 +916,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4319516817589660}
   - component: {fileID: 212720337936234270}
+  - component: {fileID: 114172784366163456}
   m_Layer: 8
   m_Name: Back
   m_TagString: Untagged
@@ -1249,7 +1250,7 @@ Transform:
   m_GameObject: {fileID: 1918583718893282}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.2, y: 1.2, z: 1.2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4374634333592188}
   m_RootOrder: 1
@@ -2221,6 +2222,17 @@ MonoBehaviour:
   delay: 0
   playOnEnable: 1
   y: -0.15
+--- !u!114 &114172784366163456
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1918583718893282}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29151fa739c488a488bda9109dd5658e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114245629424475254
 MonoBehaviour:
   m_ObjectHideFlags: 1

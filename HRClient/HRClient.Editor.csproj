@@ -157,6 +157,8 @@
     <Compile Include="Assets\Editor\Custom\LocalizeReload.cs" />
     <Compile Include="Assets\Editor\Custom\LuaUITemplate.cs" />
     <Compile Include="Assets\Editor\Custom\Packager.cs" />
+    <Compile Include="Assets\Source\StandardAssets\Editor\ImageEffects\CameraMotionBlurEditor.cs" />
+    <Compile Include="Assets\Source\StandardAssets\Editor\ImageEffects\SunShaftsEditor.cs" />
     <Compile Include="Assets\Source\UI\Editor\FontTools\BMFont.cs" />
     <Compile Include="Assets\Source\UI\Editor\FontTools\BMFontReader.cs" />
     <Compile Include="Assets\Source\UI\Editor\FontTools\BMGlyph.cs" />
@@ -236,6 +238,10 @@
     <None Include="Assets\Resources\PackAssets\Shader\SpriteGray.shader" />
     <None Include="Assets\Resources\PackAssets\Shader\SpriteMask.shader" />
     <None Include="Assets\Resources\PackAssets\Shader\SpriteTile.shader" />
+    <None Include="Assets\Resources\PackAssets\Shader\StandardAssets\CameraMotionBlur.shader" />
+    <None Include="Assets\Resources\PackAssets\Shader\StandardAssets\CameraMotionBlurDX11.shader" />
+    <None Include="Assets\Resources\PackAssets\Shader\StandardAssets\SimpleClear.shader" />
+    <None Include="Assets\Resources\PackAssets\Shader\StandardAssets\SunShaftsComposite.shader" />
     <None Include="Assets\Resources\PackAssets\Shader\UI-Default.shader" />
     <None Include="Assets\Resources\PackAssets\Shader\UIRenderTexture.shader" />
     <None Include="Assets\Resources\PackAssets\Shader\UI_Line.shader" />

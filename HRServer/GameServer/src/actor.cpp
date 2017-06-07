@@ -616,6 +616,8 @@ int actor_enterworld( int client_index, int actorid, int actor_index )
 		if ( actor_load( actor_index, actorid ) < 0 )
 			return -1;
 
+		g_actors[actor_index].fight_index = -1;
+
 		// 角色总数增加
 		g_actornum++;
 		actor_update_online( actorid, 1 );
@@ -625,7 +627,6 @@ int actor_enterworld( int client_index, int actorid, int actor_index )
 	// 登入log
 	g_actors[actor_index].accountid = account_in( actor_index, 0 );
 	g_actors[actor_index].cdkeywait = 0;
-	g_actors[actor_index].fight_index = -1;
 
 	// 角色信息
 	actor_getinfo( actor_index );

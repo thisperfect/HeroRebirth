@@ -576,7 +576,7 @@ int process_logic()
 		actors_logic(); // 执行所有的角色logic
 	}
 
-	// 战场10帧一次同步
+	// 战场帧同步
 	if ( g_speed % 10 == 0 )
 	{
 		fight_logic();
