@@ -3,6 +3,7 @@ SRC = \
 ../AutoS/src/auto_actor.cpp \
 ../AutoS/src/auto_actor_hero.cpp \
 ../AutoS/src/auto_actor_item.cpp \
+../AutoS/src/auto_data_hero.cpp \
 ../AutoS/src/auto_data_item.cpp \
 ../AutoS/src/auto_data_paycountry.cpp \
 ../AutoS/src/auto_data_paygoods.cpp \
@@ -30,6 +31,7 @@ client.cpp \
 db.cpp \
 dbredis.cpp \
 fight.cpp \
+fight_send.cpp \
 gamelog.cpp \
 gameproc.cpp \
 global.cpp \
@@ -68,6 +70,8 @@ $(EXE) : $(OBJ)
 ../AutoS/src/auto_actor_hero.o: ../AutoS/src/auto_actor_hero.cpp 
 	$(CC) $(CFLAGS) -c $(INCLUDE) $< -o $@
 ../AutoS/src/auto_actor_item.o: ../AutoS/src/auto_actor_item.cpp 
+	$(CC) $(CFLAGS) -c $(INCLUDE) $< -o $@
+../AutoS/src/auto_data_hero.o: ../AutoS/src/auto_data_hero.cpp 
 	$(CC) $(CFLAGS) -c $(INCLUDE) $< -o $@
 ../AutoS/src/auto_data_item.o: ../AutoS/src/auto_data_item.cpp 
 	$(CC) $(CFLAGS) -c $(INCLUDE) $< -o $@
@@ -122,6 +126,8 @@ db.o: db.cpp
 dbredis.o: dbredis.cpp 
 	$(CC) $(CFLAGS) -c $(INCLUDE) $<
 fight.o: fight.cpp 
+	$(CC) $(CFLAGS) -c $(INCLUDE) $<
+fight_send.o: fight_send.cpp 
 	$(CC) $(CFLAGS) -c $(INCLUDE) $<
 gamelog.o: gamelog.cpp 
 	$(CC) $(CFLAGS) -c $(INCLUDE) $<
