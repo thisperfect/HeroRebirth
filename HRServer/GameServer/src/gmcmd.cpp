@@ -131,7 +131,7 @@ int gm_sendtolocal( short cmd, int arg1, int arg2, int arg3, int arg4, char *str
 		return -1;
 	}
 
-	SLK_NetC_Gmlocalcmd Value = {};
+	SLK_NetU_Gmlocalcmd Value = {};
 	Value.m_cmd = cmd;
 	Value.m_value[0] = arg1;
 	Value.m_value[1] = arg2;

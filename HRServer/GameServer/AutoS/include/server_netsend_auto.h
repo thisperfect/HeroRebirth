@@ -28,7 +28,7 @@ int netsend_fightroomstart_S( int actor_index, char send_type, SLK_NetS_FightSta
 int netsend_fightturns_S( int actor_index, char send_type, SLK_NetS_FightTurns *pValue );
 
 int netsend_userawarded_S( int actor_index, char send_type, SLK_NetU_UserAwarded *pValue );
-int netsend_gmlocalcmd_S( int actor_index, char send_type, SLK_NetC_Gmlocalcmd *pValue );
+int netsend_gmlocalcmd_S( int actor_index, char send_type, SLK_NetU_Gmlocalcmd *pValue );
 int netsend_logined_S( int actor_index, char send_type, SLK_NetU_Logined *pValue );
 int netsend_timer_S( int actor_index, char send_type, char *pValue );
 

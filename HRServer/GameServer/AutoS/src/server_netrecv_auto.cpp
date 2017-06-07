@@ -1,6 +1,6 @@
+#include "server_netrecv_auto.h"
 #include "server_struct_auto.h"
 #include "server_process_auto.h"
-#include "server_netrecv_auto.h"
 #include "actor_send.h"
 #include "client.h"
 #include "wqueue.h"
@@ -22,11 +22,11 @@ int netrecv_userawarded_S( int client_index, char *data, int size )
 
 int netrecv_gmlocalcmd_S( int client_index, char *data, int size )
 {
-	SLK_NetC_Gmlocalcmd Value = {0};
+	SLK_NetU_Gmlocalcmd Value = {0};
 	int tmpsize = size;
 	char *ptr = data;
 
-	struct_NetC_Gmlocalcmd_recv( &ptr, &tmpsize, &Value );
+	struct_NetU_Gmlocalcmd_recv( &ptr, &tmpsize, &Value );
 
 	proc_gmlocalcmd_S( client_index, &Value );
 

@@ -76,7 +76,7 @@
         		<arg line="/c exit" />
     		</exec> 
 
-				<move file="../PublishSQL/CompareGame/hr_game_patch.sql" todir="./" />
+				<move file="../PublishSQL/CompareGame/hr_dev_game_patch.sql" todir="./" />
 	</target>
 	
 	
@@ -92,7 +92,7 @@
 		</scp>
 		
 		<scp todir="root:jiazhi198772@119.29.56.213:/usr/local/hero/sql"  port="22022" trust="true">
-		   <fileset file="./hr_game_patch.sql"/>
+		   <fileset file="./hr_dev_game_patch.sql"/>
 		</scp>
 		 
 	</target>

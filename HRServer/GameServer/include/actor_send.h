@@ -1,7 +1,6 @@
 #ifndef __ACTOR_SEND_H
 #define __ACTOR_SEND_H
 
-
 #define SENDTYPE_ACTOR		0	// 发给单个玩家
 #define SENDTYPE_WORLD		1	// 发给当前服务器
 #define SENDTYPE_FIGHT		2	// 发给战斗的双方

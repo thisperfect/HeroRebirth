@@ -680,7 +680,7 @@ int netsend_userawarded_S( int actor_index, char send_type, SLK_NetU_UserAwarded
 	return 0;
 }
 
-int netsend_gmlocalcmd_S( int actor_index, char send_type, SLK_NetC_Gmlocalcmd *pValue )
+int netsend_gmlocalcmd_S( int actor_index, char send_type, SLK_NetU_Gmlocalcmd *pValue )
 {
 	char tmpbuf[2048];
 	int tmpsize;
@@ -697,7 +697,7 @@ int netsend_gmlocalcmd_S( int actor_index, char send_type, SLK_NetC_Gmlocalcmd *
 	ptrsubdata = ptr;
 	*(short *)ptr = CMDC_GMLOCALCMD; ptr+=sizeof(short); tmpsize+=sizeof(short);
 
-	struct_NetC_Gmlocalcmd_send( &ptr, &tmpsize, pValue );
+	struct_NetU_Gmlocalcmd_send( &ptr, &tmpsize, pValue );
 
 	*(unsigned short *)tmpbuf = tmpsize;
 

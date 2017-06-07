@@ -4,7 +4,7 @@
 
 int proc_command_S( int client_index, short cmd, char *ptr, int tmpsize, int exec_code );
 void proc_userawarded_S( int client_index, SLK_NetU_UserAwarded *pValue );
-void proc_gmlocalcmd_S( int client_index, SLK_NetC_Gmlocalcmd *pValue );
+void proc_gmlocalcmd_S( int client_index, SLK_NetU_Gmlocalcmd *pValue );
 void proc_logined_S( int client_index, SLK_NetU_Logined *pValue );
 void proc_timer_S( int client_index, char *pValue );
 void proc_login_S( int client_index, SLK_NetC_Login *pValue );

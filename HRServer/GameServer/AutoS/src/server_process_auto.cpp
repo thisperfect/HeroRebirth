@@ -20,7 +20,7 @@ void proc_userawarded_S( int client_index, SLK_NetU_UserAwarded *pValue )
 	write_gamelog( "[Serv_List]_idx:%d", client_index );
 }
 
-void proc_gmlocalcmd_S( int client_index, SLK_NetC_Gmlocalcmd *pValue )
+void proc_gmlocalcmd_S( int client_index, SLK_NetU_Gmlocalcmd *pValue )
 {
 	// process.
 	int result = actor_command( client_index, pValue->m_cmd, pValue->m_value, pValue->m_msg );

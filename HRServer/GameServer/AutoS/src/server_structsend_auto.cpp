@@ -131,7 +131,7 @@ int struct_NetU_UserAwarded_send( char **pptr, int *psize, SLK_NetU_UserAwarded 
 	return 0;
 }
 
-int struct_NetC_Gmlocalcmd_send( char **pptr, int *psize, SLK_NetC_Gmlocalcmd *pValue )
+int struct_NetU_Gmlocalcmd_send( char **pptr, int *psize, SLK_NetU_Gmlocalcmd *pValue )
 {
 	int tmpi = 0;
 

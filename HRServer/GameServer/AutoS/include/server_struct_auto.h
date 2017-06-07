@@ -69,19 +69,19 @@ struct _slk_NetU_UserAwarded {
 };
 typedef struct _slk_NetU_UserAwarded SLK_NetU_UserAwarded;	//用户服务器返回兑换奖励
 
-struct _slk_NetC_Gmlocalcmd {
+struct _slk_NetU_Gmlocalcmd {
 	short m_cmd;	//指令
 	int m_value[4];	//数值参数
 	short m_msglen;	//字符串长度
 	char m_msg[1024];	//字符串参数
 };
-typedef struct _slk_NetC_Gmlocalcmd SLK_NetC_Gmlocalcmd;	//本地GM信息
+typedef struct _slk_NetU_Gmlocalcmd SLK_NetU_Gmlocalcmd;	//本地GM信息
 
 int struct_NetU_Logined_send( char **pptr, int *psize, SLK_NetU_Logined *pValue );
 int struct_NetU_Logined_recv( char **pptr, int *psize, SLK_NetU_Logined *pValue );
 int struct_NetU_UserAwarded_send( char **pptr, int *psize, SLK_NetU_UserAwarded *pValue );
 int struct_NetU_UserAwarded_recv( char **pptr, int *psize, SLK_NetU_UserAwarded *pValue );
-int struct_NetC_Gmlocalcmd_send( char **pptr, int *psize, SLK_NetC_Gmlocalcmd *pValue );
-int struct_NetC_Gmlocalcmd_recv( char **pptr, int *psize, SLK_NetC_Gmlocalcmd *pValue );
+int struct_NetU_Gmlocalcmd_send( char **pptr, int *psize, SLK_NetU_Gmlocalcmd *pValue );
+int struct_NetU_Gmlocalcmd_recv( char **pptr, int *psize, SLK_NetU_Gmlocalcmd *pValue );
 
 #endif
