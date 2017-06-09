@@ -166,6 +166,17 @@ function LoginModOpenTestLogin()
 		end 
 	
 	end );
+	
+	-- test
+--[[	for i=1, 100, 1 do
+		Invoke( function() 
+						local prefab = LoadPrefab( "UIU_Damage" ) 
+						local obj = GameObject.Instantiate( prefab );
+						obj.transform:SetParent( m_Dlg.transform );
+						--obj.transform.localScale = Vector3( 1, 1, 1 );
+						obj.transform:Find("Text"):GetComponent("UIText").text = custom.rand(10, 100);
+		end, i, obj)
+	end--]]
 end
 
 -- 关闭测试模式登陆

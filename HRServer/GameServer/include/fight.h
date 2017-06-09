@@ -38,6 +38,7 @@ int fight_quit( int actor_index );
 int fight_ready( int actor_index );
 int fight_ready_check( int fight_index );
 int fight_start( int fight_index );
+int fight_timeout( int fight_index );
 void fight_logic();
 char fight_getside( int actor_index );
 int fight_command( int actor_index, SLK_NetC_FightCommand *pValue );

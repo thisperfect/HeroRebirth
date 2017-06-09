@@ -36,8 +36,8 @@ function FightUnit:Reset()
 	self.m_attackcd		=	0;	-- 攻击冷却
 	
 	-- 基础属性
-	self.m_life						=	0;	-- 当前生命值(固定数值)
-	self.m_life_max					=	0;	-- 生命值(固定数值)
+	self.m_life						=	1000;	-- 当前生命值(固定数值)
+	self.m_life_max					=	1000;	-- 生命值(固定数值)
 	self.m_attack					=	0;	-- 攻击(固定数值)
 	self.m_defence					=	0;	-- 防御(固定数值)
 	
@@ -71,10 +71,14 @@ function FightUnit:Reset()
 	self.m_buffs			=	{};
 	-- 事件
 	self.m_events			=	{};
+	-- 目标
+	self.m_target			=	nil;
+	self.m_levent			=	false
 end
 
 -- 回合逻辑
 function FightUnit:Logic()
+	
 	for k, v in pairs( self.m_buffs ) do
 		v:Logic( self );
 	end
@@ -88,7 +92,7 @@ function FightUnit:Logic()
 		elseif self.m_state == 2 then
 			self:Attack();
 		elseif self.m_state == 3 then
-			self:Dead();
+			
 		end
 	end
 end
@@ -102,6 +106,16 @@ function FightUnit:Create( side, kind, attr, callback )
 	self.m_obj = eye.objectPoolManager:Get( heroprefab[kind] );
 	self.m_obj.transform:SetParent( GameManager.FightScence.transform:Find("Land").transform );
 	self.m_obj.transform.localScale = Vector3( side, 1, 1 );
+	
+--[[	local UIU_HPProgress = self.m_target.m_obj.transform:Find("UIU_HPProgress");
+	if UIU_HPProgress == nil then
+		UIU_HPProgress = GameObject.Instantiate( LoadPrefab( "UIU_HPProgress" ) );
+		UIU_HPProgress.transform:SetParent( self.m_target.m_obj.transform );
+		UIU_HPProgress.transform.localScale = Vector3( 1, 1, 1 );
+		UIU_HPProgress.transform.localPosition = Vector3( 0, 170, 0 );
+	end--]]
+	self.m_obj.transform:Find("UIU_HPProgress").gameObject:SetActive( false );
+						
 	if callback then
 		callback();
 	end
@@ -117,6 +131,16 @@ function FightUnit:CreateGod( side, kind, attr )
 	self.m_obj = GameObject.Instantiate( prefab );
 	self.m_obj.transform:SetParent( GameManager.FightScence.transform:Find("Land").transform );
 	self.m_obj.transform.localScale = Vector3( side, 1, 1 );
+	
+--[[	local UIU_HPProgress = self.m_target.m_obj.transform:Find("UIU_HPProgress");
+	if UIU_HPProgress == nil then
+		UIU_HPProgress = GameObject.Instantiate( LoadPrefab( "UIU_HPProgress" ) );
+		UIU_HPProgress.transform:SetParent( self.m_target.m_obj.transform );
+		UIU_HPProgress.transform.localScale = Vector3( 1, 1, 1 );
+		UIU_HPProgress.transform.localPosition = Vector3( 0, 170, 0 );
+	end--]]
+	self.m_obj.transform:Find("UIU_HPProgress").gameObject:SetActive( false );
+	
 end
 
 -- 删除
@@ -134,7 +158,7 @@ function FightUnit:AddEvent( event )
 	table.insert( self.m_events, event );
 end
 
--- 删除
+-- 播放
 function FightUnit:Play( actionName, loop )
 	self.m_obj.transform:GetChild(0):GetComponent( "UnityArmatureComponent" ).animation:Play( actionName, loop );
 end
@@ -168,7 +192,11 @@ function FightUnit:ChangeState( state )
 		self.m_obj:GetComponent( "UnitMove" ).stat = 1;
 	elseif state == 3 then
 		actionName = "death";
-		self.m_obj:GetComponent( "UnitMove" ).stat = 1;
+		self.m_obj:GetComponent( "UnitMove" ).stat = 0;
+		self.m_obj.transform:GetChild(0):GetComponent( "UnityArmatureComponent" ).animation:Play( actionName, 1 );
+		Invoke(function( obj ) 
+			eye.objectPoolManager:Release( heroprefab[self.m_kind], self.m_obj );				
+		end, 1, self.m_obj, "Destroy_"..self.m_id )
 	end
 end
 
@@ -194,23 +222,78 @@ end
 function FightUnit:Attack()
 	self.m_attackcd = self.m_attackcd + 1
 	if self.m_attackcd == self.m_speed_attack then
+		if self.m_target == nil or self.m_target.m_state == 3 then
+			self.m_attackcd = 0;
+			return
+		end
 		self.m_obj.transform:GetChild(0):GetComponent( "UnityArmatureComponent" ).animation:Play( actionName, 1 );
+		
+		-- 帧事件
+		self.m_levent = function( type, eventObject ) 
+				if eventObject.name == "vfx_attack" then
+					if self.m_target then
+						local damage = custom.rand(10, 500);
+						-- 血字
+						local prefab = LoadPrefab( "UIU_Damage" ) 
+						local obj = GameObject.Instantiate( prefab );
+						obj.transform:SetParent( GameManager.FightScence.transform:Find("Land").transform );
+						obj.transform.localScale = Vector3( 1, 1, 1 );
+						obj.transform.localPosition = Vector3( self.m_target.m_obj.transform.localPosition.x, self.m_target.m_obj.transform.localPosition.y+160, 0 );
+						obj.transform:Find("Text"):GetComponent("UIText").text = damage;
+						Invoke(function( obj ) 
+							GameObject.Destroy( obj );
+						end, 1, obj )
+						
+						-- 血条
+						self.m_target.m_life = self.m_target.m_life - damage
+						
+						local UIU_HPProgress = self.m_target.m_obj.transform:Find("UIU_HPProgress");
+						UIU_HPProgress:GetComponent("UIProgress"):SetValue( self.m_target.m_life/self.m_target.m_life_max )
+						UIU_HPProgress.gameObject:SetActive( true );
+						Invoke(function( hpobj ) 
+							hpobj.transform:Find("UIU_HPProgress").gameObject:SetActive( false );
+						end, 3, self.m_target.m_obj, "Destroy_UIU_HPProgress_"..self.m_target.m_id )
+						
+						-- 死亡
+						if self.m_target.m_life <= 0 then
+							InvokeStop( "Destroy_UIU_HPProgress_"..self.m_target.m_id )
+							
+							if self.m_target.m_job < 100 then
+								self.m_target:Dead();
+								self.m_target = nil;
+							else
+								-- 游戏胜利
+								
+								self.m_target = nil;
+							end
+						end
+					end
+					self.m_obj.transform:GetChild(0):GetComponent( "UnityArmatureComponent" ).armature.eventDispatcher:RemoveEventListener("frameEvent", self.m_levent )
+				end		
+		end	
+		self.m_obj.transform:GetChild(0):GetComponent( "UnityArmatureComponent" ).armature.eventDispatcher:AddEventListener("frameEvent", self.m_levent )		
 		self.m_attackcd = 0;
 	end
 end
 
 -- 死亡
 function FightUnit:Dead()
-	
+	self:ChangeState( 3 );
 end
 
 -- 发现目标
 function FightUnit:FindTarget()
+	if self.m_state == 3 then
+		return
+	end
+	local god = nil;
 	local targetList = {};
 	if self.m_side == -1 then
 		targetList = GetFightRoom().m_our_units;
+		god = GetFightRoom().m_our_god;
 	else
 		targetList = GetFightRoom().m_enemy_units;
+		god = GetFightRoom().m_enemy_god;
 	end
 	
 	local myPos = cc.p( self.m_posx, self.m_posy );
@@ -218,12 +301,21 @@ function FightUnit:FindTarget()
 	local minDistance = 100000;
 	for k, v in pairs( targetList ) do
 		local d = cc.pGetDistance(myPos,{x=v.m_posx,y=v.m_posy});
-		if d < minDistance and d < 100 then
+		if d < minDistance and d < 120 and v.m_state ~= 3 then
 			minDistance = d;
 			targetUnit = v
 		end
 	end
 	
+	-- 没找到敌人，看看神邸
+	if targetUnit == nil then
+		local d = cc.pGetDistance(myPos,{x=god.m_posx,y=god.m_posy});
+		if d < 120 then
+			targetUnit = god;
+		end
+	end
+	
+	self.m_target = targetUnit;
 	if targetUnit ~= nil then
 		self:ChangeState( 2 );
 	else

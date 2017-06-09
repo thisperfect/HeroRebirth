@@ -247,6 +247,11 @@ struct _slk_NetS_FightTurns {
 };
 typedef struct _slk_NetS_FightTurns SLK_NetS_FightTurns;	//每回合战斗驱动
 
+struct _slk_NetS_FightTimeout {
+	int m_fightid;	//战斗超时
+};
+typedef struct _slk_NetS_FightTimeout SLK_NetS_FightTimeout;	//战斗超时
+
 struct _slk_NetS_AwardInfo {
 	int m_kind;	//种类
 	int m_num;	//数量
@@ -303,6 +308,7 @@ int struct_NetS_FightRoomReady_send( char **pptr, int *psize, SLK_NetS_FightRoom
 int struct_NetS_FightStart_send( char **pptr, int *psize, SLK_NetS_FightStart *pValue );
 int struct_NetS_FightCommand_send( char **pptr, int *psize, SLK_NetS_FightCommand *pValue );
 int struct_NetS_FightTurns_send( char **pptr, int *psize, SLK_NetS_FightTurns *pValue );
+int struct_NetS_FightTimeout_send( char **pptr, int *psize, SLK_NetS_FightTimeout *pValue );
 int struct_NetS_AwardInfo_send( char **pptr, int *psize, SLK_NetS_AwardInfo *pValue );
 int struct_NetS_AwardInfoList_send( char **pptr, int *psize, SLK_NetS_AwardInfoList *pValue );
 int struct_NetS_Experience_send( char **pptr, int *psize, SLK_NetS_Experience *pValue );

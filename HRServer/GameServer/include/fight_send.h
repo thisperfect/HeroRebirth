@@ -17,14 +17,17 @@ int fightroom_sethero_sendroom( int fight_index );
 int fightroom_sethero_sendactor( int fight_index, int actor_index );
 
 // 发送战斗开始
-int fightroom_start_sendroom( int fight_index );
+int fight_start_sendroom( int fight_index );
 
 // 发送战斗开始
-int fightroom_start_sendactor( int fight_index, int actor_index );
+int fight_start_sendactor( int fight_index, int actor_index );
 
 // 发送战斗回合
-int fightroom_turns_sendroom( int fight_index );
+int fight_turns_sendroom( int fight_index );
 
 // 发送战斗回合
-int fightroom_turns_sendactor( int fight_index, int actor_index );
+int fight_turns_sendactor( int fight_index, int actor_index );
+
+// 发送战斗超时
+int fight_timeout_sendactor( int fight_index, int actor_index );
 #endif

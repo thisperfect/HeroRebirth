@@ -315,6 +315,12 @@ function struct_NetS_FightTurns_recv( buffer )
 	return recvValue;
 end
 
+function struct_NetS_FightTimeout_recv( buffer )
+	local recvValue = {};
+	recvValue.m_fightid = buffer:ReadInt();
+	return recvValue;
+end
+
 function struct_NetS_AwardInfo_recv( buffer )
 	local recvValue = {};
 	recvValue.m_kind = buffer:ReadInt();

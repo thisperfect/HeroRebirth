@@ -104,8 +104,9 @@ function FightRoom:Create( recvValue )
 	FightDlgChangeOurLife( 10000, 10000 );
 	FightDlgChangeEnemyLife( 10000, 10000 );
 	
-	
-	--GetFightRoom():AddUnit( {m_side = -1, m_kind = 1, m_offsetx = -200} )
+	if self.m_fightid < 0 then
+		GetFightRoom():AddUnit( {m_side = -1, m_kind = 1, m_offsetx = -200} )
+	end
 	--GetFightRoom():AddUnit( {m_side = -1, m_kind = 2, m_offsetx = -400} )
 	--GetFightRoom():AddUnit( {m_side = -1, m_kind = 3, m_offsetx = -600} )
 end
@@ -185,6 +186,7 @@ function FightRoom:LockStepTurn()
 	return false;
 end
 
+local GMONSTER = 0
 -- 游戏回合
 function FightFrameTurn()
 	-- 帧同步回合
@@ -204,6 +206,14 @@ function FightFrameTurn()
 	GetFightRoom().m_GameFrame = GetFightRoom().m_GameFrame + 1;
 	if GetFightRoom().m_GameFrame == 10 then
 		GetFightRoom().m_GameFrame = 0;
+	end
+	
+	
+	--
+	GMONSTER = GMONSTER + 1;
+	if GetFightRoom().m_fightid < 0 and GMONSTER == 500 then
+		GetFightRoom():AddUnit( {m_side = -1, m_kind = custom.rand( 1, 7 ), m_offsetx = -200} )
+		GMONSTER = 0;
 	end
 end
 

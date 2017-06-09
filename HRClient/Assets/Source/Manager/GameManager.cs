@@ -194,7 +194,14 @@ public class GameManager : MonoBehaviour {
             return;
 
         if ( name != "" )
+        {
+            if ( _InvokeList.ContainsKey( name ) )
+            {
+                StopCoroutine( _InvokeList[name] );
+                _InvokeList.Remove( name );
+            }
             _InvokeList.Add( name, StartCoroutine( Execute( delayExecute, delay, param, name ) ) );
+        }
         else
             StartCoroutine( Execute( delayExecute, delay, param, name ) );
 

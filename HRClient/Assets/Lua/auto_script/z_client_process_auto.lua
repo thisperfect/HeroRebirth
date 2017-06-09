@@ -258,3 +258,18 @@ function proc_fightturns_C( recvValue )
 	GetFightRoom():AddTurnCommand( recvValue );
 end
 
+-- m_fightid=0,
+function proc_fighttimeout_C( recvValue )
+	-- process.
+	-- EventProtocol.addEventListener( "proc_fighttimeout_C", function( recvValue ) end )
+	EventProtocol.dispatchEvent( "proc_fighttimeout_C", recvValue );
+	FightDlgClose();
+	if GameManager.MainCityScence ~= nil then
+		GameManager.MainCityScence.gameObject:SetActive( true );
+	end
+	if GameManager.FightScence ~= nil then
+		GameObject.Destroy( GameManager.FightScence );
+	end
+	MainDlgOpen();
+end
+

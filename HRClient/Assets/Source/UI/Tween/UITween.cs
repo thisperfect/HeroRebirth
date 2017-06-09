@@ -17,11 +17,18 @@ public abstract class UITween : MonoBehaviour
 	public LoopType loopType;
 	public float	delay;
 	public bool		playOnEnable = false;
+    public bool		playOnStart = false;
 
 	protected bool			_Forward = true;
 	protected Tweener		_Tweener;
 
-	protected virtual void OnEnable()
+    protected virtual void Start()
+    {
+        if ( playOnStart )
+            Play( true );
+    }
+
+    protected virtual void OnEnable()
 	{
 		if( playOnEnable )
 			Play( true );
@@ -29,7 +36,8 @@ public abstract class UITween : MonoBehaviour
 
 	protected virtual void OnDisable()
 	{
-		_Tweener.Pause();
+        if( _Tweener != null )
+		    _Tweener.Pause();
 	}
 
 	protected virtual void Awake()
@@ -38,17 +46,21 @@ public abstract class UITween : MonoBehaviour
 	
 	public virtual void ToInit()
 	{
-		_Tweener.Kill( false );
+        if( _Tweener != null )
+		    _Tweener.Kill( false );
 	}
 	
 	public virtual void Play( bool forward )
-	{		
-		_Tweener.SetEase( ease );
-		_Tweener.OnComplete( OnFinished );
-		_Tweener.SetLoops( loop, loopType );
-		_Tweener.SetDelay( delay );
+	{
+        if ( _Tweener != null )
+        {
+            _Tweener.SetEase( ease );
+            _Tweener.OnComplete( OnFinished );
+            _Tweener.SetLoops( loop, loopType );
+            _Tweener.SetDelay( delay );
 
-		_Forward = forward;
+            _Forward = forward;
+        }
 	}
 
     public bool IsPlaying()

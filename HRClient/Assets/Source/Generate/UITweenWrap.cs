@@ -21,6 +21,7 @@ public class UITweenWrap
 		L.RegVar("loopType", get_loopType, set_loopType);
 		L.RegVar("delay", get_delay, set_delay);
 		L.RegVar("playOnEnable", get_playOnEnable, set_playOnEnable);
+		L.RegVar("playOnStart", get_playOnStart, set_playOnStart);
 		L.RegVar("isPlaying", get_isPlaying, null);
 		L.RegFunction("OnFinish", UITween_OnFinish);
 		L.EndClass();
@@ -266,6 +267,25 @@ public class UITweenWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_playOnStart(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UITween obj = (UITween)o;
+			bool ret = obj.playOnStart;
+			LuaDLL.lua_pushboolean(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index playOnStart on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int get_isPlaying(IntPtr L)
 	{
 		object o = null;
@@ -464,6 +484,25 @@ public class UITweenWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index playOnEnable on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_playOnStart(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UITween obj = (UITween)o;
+			bool arg0 = LuaDLL.luaL_checkboolean(L, 2);
+			obj.playOnStart = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index playOnStart on a nil value" : e.Message);
 		}
 	}
 

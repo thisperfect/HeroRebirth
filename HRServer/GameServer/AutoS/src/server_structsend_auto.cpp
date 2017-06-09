@@ -399,6 +399,14 @@ int struct_NetS_FightTurns_send( char **pptr, int *psize, SLK_NetS_FightTurns *p
 	return 0;
 }
 
+int struct_NetS_FightTimeout_send( char **pptr, int *psize, SLK_NetS_FightTimeout *pValue )
+{
+	int tmpi = 0;
+
+	LKSET_DWORD_SEND( (*pptr), &pValue->m_fightid, (*psize) );
+	return 0;
+}
+
 int struct_NetS_AwardInfo_send( char **pptr, int *psize, SLK_NetS_AwardInfo *pValue )
 {
 	int tmpi = 0;

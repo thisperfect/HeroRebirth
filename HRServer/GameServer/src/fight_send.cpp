@@ -115,7 +115,7 @@ int fightroom_sethero_sendactor( int fight_index, int actor_index )
 }
 
 // 战斗开始属性
-static int _fightroom_start_make( int fight_index, SLK_NetS_FightStart *pValue )
+static int _fight_start_make( int fight_index, SLK_NetS_FightStart *pValue )
 {
 	FIGHT_CHECK_INDEX( fight_index );
 	pValue->m_fightid = g_fight[fight_index].id;
@@ -129,11 +129,11 @@ static int _fightroom_start_make( int fight_index, SLK_NetS_FightStart *pValue )
 }
 
 // 发送战斗开始
-int fightroom_start_sendroom( int fight_index )
+int fight_start_sendroom( int fight_index )
 {
 	FIGHT_CHECK_INDEX( fight_index );
 	SLK_NetS_FightStart pValue = { 0 };
-	_fightroom_start_make( fight_index, &pValue );
+	_fight_start_make( fight_index, &pValue );
 	for ( int i = 0; i < FIGHT_ACTORNUM; i++ )
 	{
 		if ( g_fight[fight_index].attack_index[i] >= 0 )
@@ -151,19 +151,19 @@ int fightroom_start_sendroom( int fight_index )
 }
 
 // 发送战斗开始
-int fightroom_start_sendactor( int fight_index, int actor_index )
+int fight_start_sendactor( int fight_index, int actor_index )
 {
 	FIGHT_CHECK_INDEX( fight_index );
 	ACTOR_CHECK_INDEX( actor_index );
 	SLK_NetS_FightStart pValue = { 0 };
-	_fightroom_start_make( fight_index, &pValue );
+	_fight_start_make( fight_index, &pValue );
 	pValue.m_side = fight_getside( actor_index );
 	netsend_fightroomstart_S( actor_index, SENDTYPE_ACTOR, &pValue );
 	return 0;
 }
 
 // 战斗回合属性
-static int _fightroom_turns_make( int fight_index, SLK_NetS_FightTurns *pValue )
+static int _fight_turns_make( int fight_index, SLK_NetS_FightTurns *pValue )
 {
 	pValue->m_turns = g_fight[fight_index].turns;
 	for ( int tmpi = 0; tmpi < 10; tmpi++ )
@@ -176,22 +176,33 @@ static int _fightroom_turns_make( int fight_index, SLK_NetS_FightTurns *pValue )
 }
 
 // 发送战斗回合
-int fightroom_turns_sendroom( int fight_index )
+int fight_turns_sendroom( int fight_index )
 {
 	FIGHT_CHECK_INDEX( fight_index );
 	SLK_NetS_FightTurns pValue = { 0 };
-	_fightroom_turns_make( fight_index, &pValue );
+	_fight_turns_make( fight_index, &pValue );
 	netsend_fightturns_S( fight_index, SENDTYPE_FIGHT, &pValue );
 	return 0;
 }
 
 // 发送战斗回合
-int fightroom_turns_sendactor( int fight_index, int actor_index )
+int fight_turns_sendactor( int fight_index, int actor_index )
 {
 	FIGHT_CHECK_INDEX( fight_index );
 	ACTOR_CHECK_INDEX( actor_index );
 	SLK_NetS_FightTurns pValue = { 0 };
-	_fightroom_turns_make( fight_index, &pValue );
+	_fight_turns_make( fight_index, &pValue );
 	netsend_fightturns_S( actor_index, SENDTYPE_ACTOR, &pValue );
+	return 0;
+}
+
+// 发送战斗超时
+int fight_timeout_sendactor( int fight_index, int actor_index )
+{
+	FIGHT_CHECK_INDEX( fight_index );
+	ACTOR_CHECK_INDEX( actor_index );
+	SLK_NetS_FightTimeout pValue = { 0 };
+	pValue.m_fightid = g_fight[fight_index].id;
+	netsend_fighttimeout_S( actor_index, SENDTYPE_ACTOR, &pValue );
 	return 0;
 }

@@ -119,7 +119,7 @@ int fight_match( int actor_index )
 		}
 		else if ( g_fight[g_actors[actor_index].fight_index].state == FIGHT_STATE_START )
 		{
-			fightroom_start_sendactor( g_actors[actor_index].fight_index, actor_index );
+			fight_start_sendactor( g_actors[actor_index].fight_index, actor_index );
 		}
 		return -1;
 	}
@@ -157,6 +157,31 @@ int fight_match( int actor_index )
 			fightroom_sethero_sendroom( fight_index );
 		}
 	}
+	return 0;
+}
+
+// ∆•≈‰≥¨ ±
+int fight_match_timeout( int fight_index )
+{
+	FIGHT_CHECK_INDEX( fight_index );
+	if ( g_fight[fight_index].state != FIGHT_STATE_MATCH )
+	{
+		return -1;
+	}
+	for ( int i = 0; i < FIGHT_ACTORNUM; i++ )
+	{
+		int actor_index = g_fight[fight_index].attack_index[i];
+		if ( actor_index >= 0 && actor_index < g_maxactornum )
+		{
+			g_actors[actor_index].fight_index = -1;
+		}
+		actor_index = g_fight[fight_index].defense_index[i];
+		if ( actor_index >= 0 && actor_index < g_maxactornum )
+		{
+			g_actors[actor_index].fight_index = -1;
+		}
+	}
+	fight_changestate( fight_index, FIGHT_STATE_NORMAL );
 	return 0;
 }
 
@@ -330,7 +355,31 @@ int fight_start( int fight_index )
 {
 	FIGHT_CHECK_INDEX( fight_index );
 	fight_changestate( fight_index, FIGHT_STATE_START );
-	fightroom_start_sendroom( fight_index );
+	fight_start_sendroom( fight_index );
+	return 0;
+}
+
+// ’Ω∂∑≥¨ ±
+int fight_timeout( int fight_index )
+{
+	FIGHT_CHECK_INDEX( fight_index );
+	g_fight[fight_index].state = FIGHT_STATE_NORMAL;
+	g_fight[fight_index].id = 0;
+	for ( int i = 0; i < FIGHT_ACTORNUM; i++ )
+	{
+		int actor_index = g_fight[fight_index].attack_index[i];
+		if ( actor_index >= 0 && actor_index < g_maxactornum )
+		{
+			fight_timeout_sendactor( fight_index, actor_index );
+			g_actors[actor_index].fight_index = -1;
+		}
+		actor_index = g_fight[fight_index].defense_index[i];
+		if ( actor_index >= 0 && actor_index < g_maxactornum )
+		{
+			fight_timeout_sendactor( fight_index, actor_index );
+			g_actors[actor_index].fight_index = -1;
+		}
+	}
 	return 0;
 }
 
@@ -339,7 +388,15 @@ void fight_logic()
 {
 	for ( int tmpi = 0; tmpi < g_fight_maxnum; tmpi++ )
 	{
-		if ( g_fight[tmpi].state == FIGHT_STATE_SETHERO )
+		if ( g_fight[tmpi].state == FIGHT_STATE_MATCH )
+		{ // ∆•≈‰≥¨ ±
+			g_fight[tmpi].turns++;
+			if ( g_fight[tmpi].turns > 60 )
+			{
+				fight_match_timeout( tmpi );
+			}
+		}
+		else if ( g_fight[tmpi].state == FIGHT_STATE_SETHERO )
 		{
 			g_fight[tmpi].turns++;
 			if ( g_fight[tmpi].turns >= 45 )
@@ -349,8 +406,13 @@ void fight_logic()
 		}
 		else if ( g_fight[tmpi].state == FIGHT_STATE_START )
 		{
-			fightroom_turns_sendroom( tmpi );
+			fight_turns_sendroom( tmpi );
 			g_fight[tmpi].turns++;
+
+			if ( g_fight[tmpi].turns > 150*3 )
+			{
+				fight_timeout( tmpi );
+			}
 		}
 	}
 }

@@ -1,6 +1,6 @@
-#include "server_netrecv_auto.h"
 #include "server_struct_auto.h"
 #include "server_process_auto.h"
+#include "server_netrecv_auto.h"
 #include "actor_send.h"
 #include "client.h"
 #include "wqueue.h"

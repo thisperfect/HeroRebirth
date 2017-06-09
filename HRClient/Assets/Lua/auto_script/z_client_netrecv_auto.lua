@@ -120,6 +120,11 @@ function netrecv_fightturns_C( buffer )
 	proc_fightturns_C( recvValue );
 end
 
+function netrecv_fighttimeout_C( buffer )
+	local recvValue = struct_NetS_FightTimeout_recv( buffer );
+	proc_fighttimeout_C( recvValue );
+end
+
 Proc_Command = {
 	[CMDS_LOGIN]=netrecv_login_C;
 	[CMDS_LIST]=netrecv_list_C;
@@ -145,6 +150,7 @@ Proc_Command = {
 	[CMDS_FIGHTROOMREADY]=netrecv_fightroomready_C;
 	[CMDS_FIGHTROOMSTART]=netrecv_fightroomstart_C;
 	[CMDS_FIGHTTURNS]=netrecv_fightturns_C;
+	[CMDS_FIGHTTIMEOUT]=netrecv_fighttimeout_C;
 }
 
 function in_proc_command_C( cmd, buffer )

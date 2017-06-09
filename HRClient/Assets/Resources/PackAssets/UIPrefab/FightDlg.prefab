@@ -387,6 +387,7 @@ MonoBehaviour:
   loopType: 0
   delay: 0
   playOnEnable: 0
+  playOnStart: 0
   from: {x: 0, y: 80}
   to: {x: 0, y: 0}
 --- !u!114 &114078817208658136
@@ -462,6 +463,7 @@ MonoBehaviour:
   loopType: 0
   delay: 0
   playOnEnable: 0
+  playOnStart: 0
   from: {x: 0, y: -180}
   to: {x: 0, y: 0}
 --- !u!114 &114316215669324922

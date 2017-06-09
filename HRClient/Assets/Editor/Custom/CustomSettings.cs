@@ -174,6 +174,7 @@ public static class CustomSettings
         _GT(typeof(DeviceHelper)),
         _GT(typeof(OpenUDIDPhone.OpenUDID)),
 		_GT(typeof(UnitMove)),
+        _GT(typeof(ProgressSprite)),
 
         // UI
         _GT(typeof(UIMod)),
@@ -258,6 +259,8 @@ public static class CustomSettings
         _GT(typeof(DragonBones.DragonBonesData)),
         _GT(typeof(DragonBones.Transform)),
         _GT(typeof(DragonBones.TransformObject)),
+        _GT(typeof(DragonBones.BaseObject)),
+        _GT(typeof(DragonBones.EventObject)),
         _GT(typeof(DragonBones.UnityArmatureComponent)),
         // END
 

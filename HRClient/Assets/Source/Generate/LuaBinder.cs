@@ -29,6 +29,7 @@ public static class LuaBinder
 		LocalizationWrap.Register(L);
 		DeviceHelperWrap.Register(L);
 		UnitMoveWrap.Register(L);
+		ProgressSpriteWrap.Register(L);
 		UIModWrap.Register(L);
 		UISystemWrap.Register(L);
 		UIManagerWrap.Register(L);
@@ -198,10 +199,11 @@ public static class LuaBinder
 		DragonBones_DragonBonesDataWrap.Register(L);
 		DragonBones_TransformWrap.Register(L);
 		DragonBones_TransformObjectWrap.Register(L);
+		DragonBones_BaseObjectWrap.Register(L);
+		DragonBones_EventObjectWrap.Register(L);
 		DragonBones_UnityArmatureComponentWrap.Register(L);
 		DragonBones_BaseFactoryWrap.Register(L);
 		DragonBones_TimelineState_DragonBones_AnimationFrameData_DragonBones_AnimationDataWrap.Register(L);
-		DragonBones_BaseObjectWrap.Register(L);
 		DragonBones_FrameData_DragonBones_AnimationFrameDataWrap.Register(L);
 		DragonBones_TimelineData_DragonBones_AnimationFrameDataWrap.Register(L);
 		DragonBones_TweenFrameData_DragonBones_BoneFrameDataWrap.Register(L);

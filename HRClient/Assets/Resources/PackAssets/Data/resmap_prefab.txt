@@ -14,3 +14,5 @@ MainDlg	PackAssets/UIPrefab/MainDlg	uiprefab	MainDlg
 FightDlg	PackAssets/UIPrefab/FightDlg	uiprefab	FightDlg
 FightRoomInfoDlg	PackAssets/UIPrefab/FightRoomInfoDlg	uiprefab	FightRoomInfoDlg
 FightRoomSetHeroDlg	PackAssets/UIPrefab/FightRoomSetHeroDlg	uiprefab	FightRoomSetHeroDlg
+UIU_Damage	PackAssets/UIPrefab/UIUnit/UIU_Damage	uiprefab	UIU_Damage
+UIU_HPProgress	PackAssets/UIPrefab/UIUnit/UIU_HPProgress	uiprefab	UIU_HPProgress
